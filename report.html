@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>타이타닉 생존률 분석 보고서</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1b33;
+      --card:#122143;
+      --muted:#9fb3d9;
+      --text:#e9f0ff;
+      --accent:#41d1ff;
+      --accent2:#7c5cff;
+      --border:rgba(255,255,255,.10);
+      --shadow: 0 16px 40px rgba(0,0,0,.35);
+      --radius:18px;
+      --radius2:24px;
+    }
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 420px at 12% 8%, rgba(65,209,255,.18), transparent 55%),
+        radial-gradient(900px 420px at 88% 12%, rgba(124,92,255,.18), transparent 55%),
+        radial-gradient(1000px 700px at 50% 110%, rgba(65,209,255,.10), transparent 55%),
+        var(--bg);
+      line-height:1.6;
+    }
+    a{color:inherit; text-decoration:none;}
+
+    /* Layout */
+    .container{max-width:1100px; margin:0 auto; padding:0 18px;}
+    header{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(11,18,32,.75), rgba(11,18,32,.35));
+      border-bottom:1px solid var(--border);
+    }
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800;
+      letter-spacing:-.2px;
+    }
+    .logo{
+      width:34px; height:34px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(65,209,255,.95), rgba(124,92,255,.95));
+      box-shadow: 0 10px 24px rgba(65,209,255,.15);
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.25);
+    }
+    .logo svg{opacity:.95}
+
+    nav{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .pill{
+      font-size:13px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color:var(--muted);
+      transition: transform .15s ease, background .15s ease, color .15s ease;
+      white-space:nowrap;
+    }
+    .pill:hover{transform: translateY(-1px); background: rgba(255,255,255,.10); color:var(--text);}
+
+    /* Hero */
+    .hero{
+      padding:34px 0 18px;
+    }
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    .heroMain{
+      background: linear-gradient(180deg, rgba(18,33,67,.9), rgba(15,27,51,.7));
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding:22px;
+      overflow:hidden;
+      position:relative;
+    }
+    .heroMain:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(600px 260px at 12% 18%, rgba(65,209,255,.18), transparent 60%),
+                  radial-gradient(520px 240px at 90% 6%, rgba(124,92,255,.20), transparent 60%);
+      pointer-events:none;
+    }
+    .heroMain > *{position:relative;}
+    .kicker{
+      display:inline-flex; gap:8px; align-items:center;
+      font-size:12px;
+      color:rgba(233,240,255,.85);
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(65,209,255,.10);
+      border:1px solid rgba(65,209,255,.18);
+    }
+    h1{
+      margin:12px 0 8px;
+      font-size: clamp(26px, 3.6vw, 40px);
+      line-height:1.12;
+      letter-spacing:-.6px;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size:14.5px;
+      max-width: 60ch;
+    }
+    .stats{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:10px;
+    }
+    .stat{
+      padding:12px 12px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+    }
+    .stat .label{color:var(--muted); font-size:12px;}
+    .stat .value{font-weight:800; font-size:18px; margin-top:4px;}
+    .heroSide{
+      display:grid;
+      gap:16px;
+    }
+    .card{
+      background: rgba(18,33,67,.78);
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding:16px;
+    }
+    .card h3{margin:0 0 8px; font-size:15px;}
+    .card p{margin:0; color:var(--muted); font-size:13.5px;}
+    .badgeRow{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;}
+    .badge{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color:rgba(233,240,255,.92);
+    }
+
+    /* Content */
+    main{padding: 14px 0 54px;}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    section{
+      background: rgba(15,27,51,.70);
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding:18px;
+    }
+    section h2{
+      margin:0 0 10px;
+      font-size:18px;
+      letter-spacing:-.3px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+    }
+    .anchor{
+      font-size:12px;
+      color:var(--muted);
+      border:1px dashed rgba(255,255,255,.18);
+      padding:4px 8px;
+      border-radius:999px;
+    }
+    .twoCol{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:14px;
+      margin-top:12px;
+    }
+    .panel{
+      background: rgba(18,33,67,.66);
+      border:1px solid var(--border);
+      border-radius: 18px;
+      padding:14px;
+    }
+    .panel h4{margin:0 0 8px; font-size:14px;}
+    .panel ul{margin:0; padding-left:18px; color:var(--muted);}
+    .panel li{margin:6px 0;}
+
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+    }
+    th, td{
+      text-align:left;
+      padding:10px 12px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      font-size:13.5px;
+    }
+    th{color:rgba(233,240,255,.92); background: rgba(255,255,255,.06); font-weight:700;}
+    tr:last-child td{border-bottom:none;}
+    td{color:var(--muted);}
+
+    .callout{
+      margin-top:12px;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(65,209,255,.22);
+      background: linear-gradient(180deg, rgba(65,209,255,.10), rgba(255,255,255,.04));
+      color: rgba(233,240,255,.92);
+    }
+    .callout strong{color:var(--text);}
+
+    /* Footer */
+    footer{
+      border-top:1px solid var(--border);
+      padding:18px 0 28px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* Responsive */
+    @media (max-width: 920px){
+      .heroGrid{grid-template-columns:1fr;}
+      .twoCol{grid-template-columns:1fr;}
+      nav{justify-content:flex-start;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="topbar">
+        <a class="brand" href="#top">
+          <div class="logo" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 18.5C6.5 14 9.8 11 12 11c2.2 0 5.5 3 8 7.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M6.5 9.5C7.2 6.5 9.3 4.5 12 4.5c2.7 0 4.8 2 5.5 5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span>타이타닉 생존률 분석</span>
+        </a>
+        <nav aria-label="페이지 이동">
+          <a class="pill" href="#ch1">분석 목적</a>
+          <a class="pill" href="#ch2">활용 데이터</a>
+          <a class="pill" href="#ch3">분석 과정</a>
+          <a class="pill" href="#ch4">분석 결과</a>
+          <a class="pill" href="#ch5">예측·결론</a>
+          <a class="pill" href="#ch6">한계점</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div id="top" class="hero">
+    <div class="container">
+      <div class="heroGrid">
+        <div class="heroMain">
+          <div class="kicker">홈페이지 형식 보고서 · EDA 기반</div>
+          <h1>타이타닉 생존률 분석 보고서</h1>
+          <p class="subtitle">승객 데이터를 이용해 “누가 더 많이 살아남았는가?”를 살펴보고, 성별·계급·요금·가족 동반 여부 같은 사회적 조건이 생존에 어떤 영향을 주는지 정리했습니다.</p>
+          <div class="stats" role="list">
+            <div class="stat" role="listitem">
+              <div class="label">표본 수</div>
+              <div class="value">418명</div>
+            </div>
+            <div class="stat" role="listitem">
+              <div class="label">핵심 변수</div>
+              <div class="value">Sex · Pclass · Fare</div>
+            </div>
+            <div class="stat" role="listitem">
+              <div class="label">핵심 결론</div>
+              <div class="value">사회적 조건 영향 큼</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="heroSide">
+          <div class="card">
+            <h3>빠른 요약</h3>
+            <p>이 데이터에서는 <b>성별</b>이 생존을 가장 강하게 가릅니다. 1등급·고요금·가족 동반도 생존에 유리한 경향을 보입니다.</p>
+            <div class="badgeRow" aria-label="핵심 키워드">
+              <span class="badge">성별 효과</span>
+              <span class="badge">계급 구조</span>
+              <span class="badge">요금(경제력)</span>
+              <span class="badge">가족 동반</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>분석 흐름</h3>
+            <p>전처리 → 일변량/다변량 EDA → 상관관계 → 간단 예측(로지스틱 회귀) 순서로 진행했습니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="grid">
+
+      <section id="ch1">
+        <h2>Chapter.1 분석 목적 &amp; 배경 <span class="anchor">#ch1</span></h2>
+        <div class="twoCol">
+          <div class="panel">
+            <h4>왜 분석했나요?</h4>
+            <ul>
+              <li>타이타닉 사고에서 <b>생존에 영향을 준 조건</b>을 데이터로 확인</li>
+              <li>성별·계급·경제력 같은 <b>사회적 구조</b>가 생존과 연결되는지 탐색</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h4>기대하는 결과</h4>
+            <ul>
+              <li>생존률 차이를 만드는 핵심 요인 정리</li>
+              <li>보고서/수업 자료로 활용 가능한 요약 도출</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="ch2">
+        <h2>Chapter.2 활용 데이터 <span class="anchor">#ch2</span></h2>
+        <p style="margin:0 0 12px; color: var(--muted);">승객 418명의 정보를 사용했습니다. 주요 변수는 아래와 같습니다.</p>
+        <table aria-label="활용 데이터 변수 설명">
+          <thead>
+            <tr>
+              <th style="width:22%">구분</th>
+              <th>내용</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>생존 여부</td><td>생존(1), 사망(0)</td></tr>
+            <tr><td>객실 등급</td><td>1등급, 2등급, 3등급</td></tr>
+            <tr><td>성별</td><td>male, female</td></tr>
+            <tr><td>나이</td><td>승객의 나이</td></tr>
+            <tr><td>가족 정보</td><td>형제·배우자 수(SibSp), 부모·자녀 수(Parch)</td></tr>
+            <tr><td>요금</td><td>탑승 시 지불한 금액(Fare)</td></tr>
+            <tr><td>승선 항구</td><td>S, C, Q</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="ch3">
+        <h2>Chapter.3 분석 과정 <span class="anchor">#ch3</span></h2>
+        <div class="twoCol">
+          <div class="panel">
+            <h4>1) 데이터 전처리</h4>
+            <ul>
+              <li><b>Age</b>: 결측치를 평균값으로 대체</li>
+              <li><b>Sex</b>: 결측치를 최빈값으로 대체</li>
+              <li>이후 결측치 0개 상태로 분석 진행</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h4>2) 분석 방법</h4>
+            <ul>
+              <li>일변량 EDA: 변수 분포 확인</li>
+              <li>다변량 EDA: 생존과 변수 관계 확인</li>
+              <li>상관관계: 수치형 변수 간 관계 확인</li>
+              <li>간단 예측: 로지스틱 회귀로 Survived 예측</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="ch4">
+        <h2>Chapter.4 분석 결과 <span class="anchor">#ch4</span></h2>
+
+        <div class="twoCol">
+          <div class="panel">
+            <h4>4-1. 생존자 특성</h4>
+            <ul>
+              <li>전체적으로 사망자가 생존자보다 많음</li>
+              <li><b>여성 생존율이 매우 높고</b>, 남성은 매우 낮게 나타남</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h4>4-2. 객실 등급 특징</h4>
+            <ul>
+              <li>1등급 생존률이 가장 높음</li>
+              <li>3등급 승객이 가장 많고 생존률이 낮은 편</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="twoCol">
+          <div class="panel">
+            <h4>4-3. 요금·가족 동반</h4>
+            <ul>
+              <li>요금이 높을수록 생존이 유리한 경향</li>
+              <li>가족 동반(특히 소가족)이 생존에 유리할 수 있음</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h4>4-4. 나이</h4>
+            <ul>
+              <li>나이 단독으로는 생존을 잘 설명하기 어려움</li>
+              <li>성별·계급의 영향이 더 크게 나타남</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>핵심 메시지:</strong> 생존은 “개인 특성(나이)”보다 “사회적 조건(성별·계급·경제력·가족)”의 영향을 더 크게 받는 경향을 보입니다.
+        </div>
+
+        <div style="height:12px"></div>
+        <div class="panel">
+          <h4>4-5. 상관관계(수치형)</h4>
+          <ul>
+            <li><b>Pclass ↔ Fare</b>: 강한 음의 상관(1등급일수록 요금이 비쌈)</li>
+            <li><b>SibSp ↔ Parch</b>: 양의 상관(가족 동반 구조 반영)</li>
+            <li><b>Survived ↔ Fare/Pclass</b>: 약한 상관(사회경제적 요인 영향)</li>
+            <li><b>Survived ↔ Age</b>: 거의 상관 없음</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="ch5">
+        <h2>Chapter.5 예측 결과 및 결론 <span class="anchor">#ch5</span></h2>
+        <div class="twoCol">
+          <div class="panel">
+            <h4>예측 사례</h4>
+            <p style="margin:0 0 10px; color:var(--muted);">로지스틱 회귀로 조건을 넣었을 때의 예측 예시입니다.</p>
+            <table aria-label="예측 사례 입력값">
+              <thead>
+                <tr><th style="width:30%">항목</th><th>값</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>객실 등급</td><td>3등급</td></tr>
+                <tr><td>성별</td><td>female</td></tr>
+                <tr><td>나이</td><td>47</td></tr>
+                <tr><td>가족(형제·배우자)</td><td>1</td></tr>
+                <tr><td>가족(부모·자녀)</td><td>0</td></tr>
+                <tr><td>요금</td><td>7</td></tr>
+                <tr><td>승선 항구</td><td>S</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="panel">
+            <h4>예측 결과(요약)</h4>
+            <ul>
+              <li>예측: <b>생존(1)</b></li>
+              <li>생존 확률(모델 기준): <b>약 94%</b></li>
+              <li>설명: 이 데이터에서는 <b>여성</b> 조건이 매우 강하게 생존을 끌어올리는 패턴이 나타남</li>
+            </ul>
+            <div class="callout" style="margin-top:12px;">
+              <strong>주의:</strong> 이 예측은 “업로드된 데이터”의 패턴을 학습한 결과이며, 실제 타이타닉 전체 데이터의 역사적 사실과 완전히 같다고 단정할 수는 없습니다.
+            </div>
+          </div>
+        </div>
+
+        <div class="callout" style="margin-top:14px;">
+          <strong>종합 결론:</strong> 타이타닉 생존은 <b>성별</b>, <b>객실 등급</b>, <b>요금</b>, <b>가족 동반 여부</b> 같은 사회적 조건에 크게 영향을 받는 경향을 보였습니다.
+        </div>
+      </section>
+
+      <section id="ch6">
+        <h2>Chapter.6 분석의 한계점 <span class="anchor">#ch6</span></h2>
+        <div class="twoCol">
+          <div class="panel">
+            <h4>데이터 한계</h4>
+            <ul>
+              <li>표본 수가 제한적(418명)</li>
+              <li>일부 변수는 단순화되어 실제 상황의 모든 요소를 담지 못함</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h4>해석상의 주의</h4>
+            <ul>
+              <li>상관관계는 원인을 “증명”하지는 않음</li>
+              <li>모델 예측은 데이터 패턴에 의존하므로 과대해석 주의</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+        <div>
+          <b>타이타닉 생존률 분석 보고서</b><br/>
+          <span>EDA 결과를 바탕으로 구성한 웹페이지(홈페이지) 형식 문서</span>
+        </div>
+        <a class="pill" href="#top" style="display:inline-flex; align-items:center; gap:8px;">
+          ▲ 맨 위로
+        </a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
