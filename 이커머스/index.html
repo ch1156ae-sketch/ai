@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1280" />
+  <title>BLACKUP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --black: #000; --white: #fff; --font-en: 'Oswald', sans-serif; --font-ko: 'Noto Sans KR', sans-serif; }
+    body { font-family: var(--font-ko); background: var(--white); color: var(--black); min-width: 1280px; }
+
+    .top-nav { display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 150px; border-bottom: 1px solid #e0e0e0; background: var(--white); position: relative; }
+    .top-nav .shop-btn { font-family: var(--font-en); font-size: 20px; font-weight: 600; letter-spacing: .12em; cursor: pointer; }
+    .top-nav .logo {position: absolute; left: 50%; transform: translateX(-50%); }
+    .top-nav .right-icons { display: flex; gap: 28px; font-family: var(--font-en); font-size: 20px; font-weight: 500; letter-spacing: .08em; }
+    .top-nav .right-icons span { cursor: pointer; }
+
+    .sub-nav { background: var(--black); display: flex; justify-content: center; gap: 56px; height: 80px; align-items: center; }
+    .sub-nav a { font-family: var(--font-ko); font-size: 20px; color: var(--white); text-decoration: none; letter-spacing: .06em; transition: opacity .2s; }
+    .sub-nav a:hover { opacity: .65; }
+
+    .hero { position: relative; width: 100%; height: 900px; overflow: hidden; }
+    .hero img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .hero-arrows { position: absolute; right: 24px; bottom: 24px; display: flex; flex-direction: column; gap: 2px; }
+    .hero-arrows button { width: 36px; height: 36px; background: rgba(0,0,0,.55); border: none; color: var(--white); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s; }
+    .hero-arrows button:hover { background: var(--black); }
+
+    .section { padding: 60px 80px; }
+    .section-title { font-family: var(--font-en); font-size: 48px; font-weight: 700; letter-spacing: .06em; margin-bottom: 28px; }
+    .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
+    .col-card { cursor: pointer; }
+    .col-card:hover .card-img-wrap img { transform: scale(1.04); }
+    .card-img-wrap { width: 100%; aspect-ratio: 3/4; overflow: hidden; background: #d0d0d0; }
+    .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
+    .card-img-wrap.dark-bg { background: var(--black); }
+    .card-label { margin-top: 14px; }
+    .card-label h3 { font-family: var(--font-en); font-size: 28px; font-weight: 600; letter-spacing: .08em; margin-bottom: 4px; }
+    .card-label p { font-size: 16px; font-weight: 600 color: #666; }
+
+    .lookbook-section { padding: 60px 80px; text-align: center; }
+    .lookbook-section .main-title { font-family: var(--font-en); font-size: 28px; font-weight: 700; letter-spacing: .1em; margin-bottom: 6px; }
+    .lookbook-section .sub-title { font-size: 13px; color: #444; margin-bottom: 36px; }
+    .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; text-align: left; }
+    .product-card { cursor: pointer; }
+    .product-card:hover .product-img img { transform: scale(1.05); }
+    .product-img { width: 100%; aspect-ratio: 3/4; overflow: hidden; position: relative; background: #e0e0e0; }
+    .product-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .45s ease; }
+    .product-brand-tag { position: absolute; top: 10px; left: 10px; background: var(--white); font-family: var(--font-en); font-size: 9px; font-weight: 700; letter-spacing: .08em; padding: 3px 6px; line-height: 1.4; }
+    .wishlist-btn { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; background: transparent; border: none; cursor: pointer; font-size: 18px; color: #888; }
+    .wishlist-btn:hover { color: #000; }
+    .product-info { margin-top: 10px; }
+    .product-info .name { font-size: 16px; color: #333; margin-bottom: 4px; line-height: 1.4; font-weight: 700;}
+    .product-info .price { font-size: 13px; font-weight: 700; color: var(--black); }
+
+    .more-btn-wrap { display: flex; justify-content: center; margin-top: 40px; }
+    .more-btn { background: var(--black); color: var(--white); font-family: var(--font-ko); font-size: 12px; font-weight: 500; letter-spacing: .06em; padding: 14px 60px; border: none; cursor: pointer; }
+    .more-btn:hover { background: #222; }
+
+    footer { background: #1a1a1a; color: #aaa; padding: 48px 80px 36px; }
+    .footer-top { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px;  padding-bottom: 32px; margin-bottom: 28px; }
+    .footer-col h4 { font-family: var(--font-en); font-size: 12px; font-weight: 600; letter-spacing: .1em; color: var(--white); margin-bottom: 14px; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+    .footer-info, .footer-company { font-size: 10px; color: #ffffff; line-height: 1.8; }
+    .footer-company { text-align: right; }
+    .footer-copy { font-family: var(--font-en); font-size: 11px; color: #ffffff; margin-top: 16px; text-align: right; }
+  </style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="shop-btn">SHOP</div>
+  <div class="logo"><img src="images/logo.png" alt="로고"></div>
+  <div class="right-icons"><span>SEARCH</span><span>ACCOUNT</span><span>BAG : 0</span></div>
+</nav>
+
+<nav class="sub-nav">
+  <a href="#">25HS LOOKBOOK</a>
+  <a href="#">실시간 인기상품</a>
+  <a href="#">신상품</a>
+  <a href="#">B-BASIC &amp; B-DENIM</a>
+  <a href="#">트렌드 키워드</a>
+</nav>
+
+<section class="hero">
+    <img src="images/sliderimg.jpg" alt="sid">
+    <div class="hero-arrows">
+    <button>&#8679;</button>
+    <button>&#8681;</button>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section-title">ONLY BLACKUP</h2>
+  <div class="three-col">
+    <div class="col-card">
+        <div class="card-img-wrap"><img src="./images/ob1.jpg" alt="1"></div>
+        <div class="card-label"><h3>B-BASIC &amp; B-DENIM</h3><p>2025 HOT SUMMER 신상품 준비</p></div>
+    </div>
+    <div class="col-card">
+        <div class="card-img-wrap"><img src="./images/ob2.png" alt="2"></div>
+      <div class="card-label"><h3>BLACKUP PROJECT</h3><p>날개달 이케서비스</p></div>
+    </div>
+    <div class="col-card">
+        <div class="card-img-wrap"><img src="./images/ob3.jpg" alt="3"></div>
+      <div class="card-label"><h3>TODAY DELIVERY</h3><p>오늘도착 &#8594; 오늘출발</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="lookbook-section">
+  <h2 class="main-title">2025 HS LOOKBOOK</h2>
+  <p class="sub-title">핫썸머 신상품 판매</p>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-img">
+        <img src="images/hs1.jpg" alt="hs1">
+        <button class="wishlist-btn">&#9825;</button>
+      </div>
+      <div class="product-info"><p class="name">[MADE] 키르 도트 캡소매 반팔티</p><p class="price">29,000원</p></div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <img src="images/hs2.jpg" alt="hs2">
+        <button class="wishlist-btn">&#9825;</button>
+      </div>
+      <div class="product-info"><p class="name">[MADE] 키르 도트 캡소매 반팔티</p><p class="price">29,000원</p></div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <img src="images/hs3.jpg" alt="hs3">
+        <button class="wishlist-btn">&#9825;</button>
+      </div>
+      <div class="product-info"><p class="name">[MADE] 키르 도트 캡소매 반팔티</p><p class="price">29,000원</p></div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <img src="images/hs4.jpg" alt="hs4">
+        <button class="wishlist-btn">&#9825;</button>
+      </div>
+      <div class="product-info"><p class="name">[MADE] 키르 도트 캡소매 반팔티</p><p class="price">29,000원</p></div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <img src="images/hs5.jpg" alt="hs5">
+        <button class="wishlist-btn">&#9825;</button>
+      </div>
+      <div class="product-info"><p class="name">[MADE] 키르 도트 캡소매 반팔티</p><p class="price">29,000원</p></div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <img src="images/hs6.jpg" alt="hs6">
+
+        <button class="wishlist-btn">&#9825;</button>
+      </div>
+      <div class="product-info"><p class="name">[MADE] 키르 도트 캡소매 반팔티</p><p class="price">29,000원</p></div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <img src="images/hs7.jpg" alt="hs7">
+
+        <button class="wishlist-btn">&#9825;</button>
+      </div>
+      <div class="product-info"><p class="name">[MADE] 키르 도트 캡소매 반팔티</p><p class="price">29,000원</p></div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <img src="images/hs8.jpg" alt="hs8">
+        <button class="wishlist-btn">&#9825;</button>
+      </div>
+      <div class="product-info"><p class="name">[MADE] 키르 도트 캡소매 반팔티</p><p class="price">29,000원</p></div>
+    </div>
+  </div>
+  <div class="more-btn-wrap"><button class="more-btn">25HS 목록 전체 상품 보러가기</button></div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-col"><h4>AGREEMENT</h4></div>
+    <div class="footer-col"><h4>GUIDE</h4></div>
+    <div class="footer-col"><h4>PRIVACYPOLICY</h4></div>
+    <div class="footer-col"><h4>CONRACTUS</h4></div>
+    <div class="footer-col"><h4>SHOPPINGGUIDE</h4></div>
+    <div class="footer-col"><h4>CUSTOMERCARE</h4></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-info">
+      TEL : +82-1088-0313<br/>
+      E-MAIL : CONTACT@BLACKUP.COM<br/>
+      BUSINESS LICENSE : 299-87-03437<br/>
+      E-COMMERCE PERMIT : 2017-SEOUL MAPO-2273<br/>
+      ADDRESS : 04012 M 132, JANDARI-RO, MAPO-GU, SEOUL, REPUBLIC OF KOREA
+    </div>
+    <div class="footer-company">COMPANY : BKP CORP<br/>OWNER : CHOI YONHAE</div>
+  </div>
+  <p class="footer-copy">&copy; BLACKUP 2025</p>
+</footer>
+</body>
+</html>
