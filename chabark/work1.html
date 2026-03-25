@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>차박 어디로</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #e5e7eb;
+      font-family: Arial, sans-serif;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      height: 100dvh;
+      background: #fff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .text {
+      padding: 60px 28px 0;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 34px;
+      line-height: 1.25;
+      color: #2d3a60;
+      font-weight: 700;
+    }
+
+    h1 span {
+      font-size: 26px;
+      color: #6b7da5;
+      font-weight: 500;
+    }
+
+    p {
+      margin-top: 16px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #909ebd;
+    }
+
+    .visual {
+      position: relative;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: end;
+      padding-bottom: 40px;
+    }
+
+    .visual::before {
+      content: "";
+      position: absolute;
+      right: -40px;
+      bottom: -10px;
+      width: 115%;
+      height: 70%;
+      background: #f2f5fa;
+      border-radius: 60% 0 0 0;
+      z-index: 0;
+    }
+
+    .visual img {
+      position: relative;
+      width: 88%;
+      max-width: 320px;
+      z-index: 1;
+    }
+
+    .bottom {
+      padding: 0 24px 30px;
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #e6ebf4;
+    }
+
+    .dots span:first-child {
+      background: #526db0;
+    }
+
+    button {
+      width: 100%;
+      height: 56px;
+      border: none;
+      border-radius: 14px;
+      background: #526db0;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="text">
+      <h1>
+        차박<br>
+        어디로 <span>떠나야 할지 모르겠나요</span>
+      </h1>
+      <p>지도기반 위치 앱 및 키워드 검색으로 내가 원하는 장소를 한번에</p>
+    </div>
+
+    <div class="visual">
+      <img src="./images/w1image.png" alt="차박 어디로 일러스트">
+    </div>
+
+    <div class="bottom">
+      <div class="dots">
+        <span></span><span></span><span></span>
+      </div>
+      <button id="startBtn">시작하기</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("startBtn").onclick = function () {
+      alert("차박 탐색을 시작합니다!");
+    };
+  </script>
+</body>
+</html>
