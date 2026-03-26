@@ -27,7 +27,18 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 40px;
-      border-bottom: 1px solid #C8C8C8;
+      position: relative;
+    }
+
+    .header::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 1px;
+      background: #C8C8C8;
     }
 
     .logo {
