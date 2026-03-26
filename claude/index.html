@@ -63,6 +63,28 @@
       z-index: 10;
     }
 
+    /*
+      GNB 레이아웃 계산:
+      - 헤더 패딩 좌측: 40px
+      - 로고 너비: 160px
+      - 로고~GNB 마진: 80px
+      → GNB 시작점(1400px 기준 중앙): 40 + 160 + 80 = 280px
+        (하지만 헤더는 body 중앙 정렬이므로 서브메뉴 inner도 1400px 컨테이너 기준으로 계산)
+
+      GNB 너비: 787px, justify-content: space-between, 항목 6개
+      항목 간격: (787 - 각 항목 너비) / 5 로 균등 배분됨
+      
+      실측 기준 각 항목 중심 X (1400px 내):
+      - ABOUT:       ~280px (첫 항목 좌측)
+      - PRODUCTS:    ~413px
+      - PARTNERSHIP: ~546px
+      
+      submenu-inner padding-left = 해당 항목 좌측 X
+      ABOUT:       286px (원본 유지)
+      PRODUCTS:    413px → 약 413px
+      PARTNERSHIP: 546px → 약 546px
+    */
+
     .submenu-inner {
       width: 1400px;
       height: 70px;
@@ -71,7 +93,21 @@
       align-items: center;
       justify-content: flex-start;
       gap: 64px;
+    }
+
+    /* ABOUT 서브메뉴 */
+    .submenu-about .submenu-inner {
       padding-left: 286px;
+    }
+
+    /* PRODUCTS 서브메뉴 */
+    .submenu-products .submenu-inner {
+      padding-left: 413px;
+    }
+
+    /* PARTNERSHIP 서브메뉴 */
+    .submenu-partnership .submenu-inner {
+      padding-left: 546px;
     }
 
     .submenu-inner a {
@@ -167,6 +203,34 @@
       opacity: 1;
     }
 
+    /* keep 1st menu active when submenu is open */
+    .header-area:has(.about-item:hover) .about-item > a,
+    .header-area:has(.submenu-about:hover) .about-item > a {
+      color: #D97757;
+    }
+    .header-area:has(.about-item:hover) .about-item > a::after,
+    .header-area:has(.submenu-about:hover) .about-item > a::after {
+      opacity: 1;
+    }
+
+    .header-area:has(.products-item:hover) .products-item > a,
+    .header-area:has(.submenu-products:hover) .products-item > a {
+      color: #D97757;
+    }
+    .header-area:has(.products-item:hover) .products-item > a::after,
+    .header-area:has(.submenu-products:hover) .products-item > a::after {
+      opacity: 1;
+    }
+
+    .header-area:has(.partnership-item:hover) .partnership-item > a,
+    .header-area:has(.submenu-partnership:hover) .partnership-item > a {
+      color: #D97757;
+    }
+    .header-area:has(.partnership-item:hover) .partnership-item > a::after,
+    .header-area:has(.submenu-partnership:hover) .partnership-item > a::after {
+      opacity: 1;
+    }
+
     .util {
       display: flex;
       align-items: center;
@@ -186,14 +250,12 @@
       white-space: nowrap;
     }
 
-    /* 매장찾기 */
     .btn-store {
       width: 91px;
       height: 39px;
       background: #333333;
     }
 
-    /* 클로드마켓 */
     .btn-global {
       width: 106px;
       height: 39px;
@@ -215,7 +277,7 @@
         <li class="products-item"><a href="#">PRODUCTS</a></li>
         <li class="partnership-item"><a href="#">PARTNERSHIP</a></li>
         <li><a href="#">EDUCATION</a></li>
-        <li><a href="#">WHAT’S NEW</a></li>
+        <li><a href="#">WHAT'S NEW</a></li>
         <li><a href="#">SUPPORT</a></li>
       </ul>
 
@@ -255,3 +317,5 @@
   </div>
 </body>
 </html>
+
+
