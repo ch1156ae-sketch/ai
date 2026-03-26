@@ -15,7 +15,6 @@
       background: #ffffff;
       font-family: 'Noto Sans KR', sans-serif;
       min-width: 1400px;
-      /* 요소들이 수직으로 쌓이도록 변경하고 가운데 정렬 */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -26,7 +25,7 @@
       width: 100%;
       display: flex;
       justify-content: center;
-      z-index: 10; /* 헤더 영역이 이미지 섹션보다 위로 오도록 설정 */
+      z-index: 10;
     }
 
     .header {
@@ -52,12 +51,10 @@
       pointer-events: none;
     }
 
-    /* ── GNB li: 서브메뉴 기준점 ── */
     .gnb li {
       position: relative;
     }
 
-    /* ── 세로형 서브메뉴 ── */
     .submenu-wrap {
       position: absolute;
       top: 80px;
@@ -105,7 +102,6 @@
       background: #D97757;
     }
 
-    /* hover 시 서브메뉴 표시 */
     .about-item:hover .submenu-about,
     .submenu-about:hover,
     .products-item:hover .submenu-products,
@@ -117,7 +113,6 @@
       pointer-events: auto;
     }
 
-    /* ── 로고 ── */
     .logo {
       width: 160px;
       height: 35px;
@@ -134,7 +129,6 @@
       object-fit: contain;
     }
 
-    /* ── GNB ── */
     .gnb {
       width: 787px;
       height: 80px;
@@ -179,7 +173,6 @@
       transition: opacity 0.2s ease;
     }
 
-    /* 기존 코드에서 글자색이 흰색으로 덮어씌워지던 부분 수정 */
     .gnb a:hover {
       color: #ffffff; 
     }
@@ -188,19 +181,25 @@
       opacity: 1;
     }
 
-    /* 서브메뉴 열릴 때 GNB 항목도 활성 상태 유지 */
+    /* 🔥 추가된 부분 */
+    .gnb li:nth-child(4) a:hover,
+    .gnb li:nth-child(5) a:hover,
+    .gnb li:nth-child(6) a:hover {
+      color: #333333;
+    }
+
     .about-item:hover > a,
     .products-item:hover > a,
     .partnership-item:hover > a {
       color: #D97757;
     }
+
     .about-item:hover > a::after,
     .products-item:hover > a::after,
     .partnership-item:hover > a::after {
       opacity: 1;
     }
 
-    /* ── UTIL 버튼 ── */
     .util {
       display: flex;
       align-items: center;
@@ -232,7 +231,6 @@
       background: #D97757;
     }
 
-    /* ── 추가된 메인 이미지 섹션 (Hero Section) ── */
     .hero-section {
       width: 100%;
       height: 800px;
@@ -244,8 +242,7 @@
     <header class="header">
       <h1 class="logo">
         <a href="#">
-          <!-- 로고 이미지가 없는 경우를 대비해 텍스트 추가 (선택사항) -->
-            <img src="images/Logo.png" alt="로고">
+          <img src="images/Logo.png" alt="로고">
         </a>
       </h1>
 
@@ -295,8 +292,7 @@
       </div>
     </header>
   </div>
-  
-  <!-- 새롭게 추가된 섹션 -->
+
   <div class="hero-section">
     <img src="images/main visual.png" alt="메인">
   </div>
