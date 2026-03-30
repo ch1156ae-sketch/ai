@@ -7,26 +7,50 @@ body{
     padding: 0;
 }
 div{
-    width: 644px;
+    width: 640px;
     border: 2px solid #FE0000;
     margin: 0 auto;
-    padding: 42px 16px 16px;
+    padding: 36px 24px;
 }
 div h1{
     background: #FFFF00;
     color: #000;
     text-align: center;
+    font-weight: 700;
+    padding: 24px 0px 16px 0px;
+    margin-bottom: 28px;
+}
+div h2{
+    background: #D3D3D3;
+    text-align: center;
+    font-weight: 400;
+    font-size: 24px;
+    padding: 16px 0px 10px 0px;
+    margin-bottom: 24px;
+}
+div p{
+    font-size: 18px;
+    margin-bottom: 24px;
 }
 div .p1{
     color: #0202E6;
 }
 div .p2{
-    
+    font-weight: 600;
+}
+
+div .p3{
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 48px;
 }
 
 div span{
     background: #80007D;
     color: #fff;
     font-size: 10px;
-    padding: 6px;
+    padding: 7px 5px;
+}
+div ul {
+    padding: 0px 24px 42px 24px;
 }
