@@ -1,0 +1,48 @@
+@charset "utf-8";
+
+body {
+    font-family: "맑은고딕", "Malgun Gothic Regular";
+      margin: 0;
+  background: #ffffff;
+}
+
+
+.wrap {
+  width: 600px;
+  margin: 80px auto;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #333;
+  padding: 12px;
+}
+
+th {
+  background-color: orange;
+  font-weight: bold;
+}
+
+/* 3열 (제목 포함) 하늘색 */
+th:nth-child(3),
+tbody td:nth-child(3) {
+  background-color: #d6ecff;
+}
+
+tbody td {
+  background-color: #f3fbe7; /* 기본 연노랑초록 */
+}
+
+/* 3열 하늘색 */
+tbody td:nth-child(3) {
+  background-color: #d6ecff;
+}

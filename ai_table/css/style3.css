@@ -1,0 +1,60 @@
+@charset "utf-8";
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 40px;
+  background-color: #ffffff;
+  font-family: "맑은 고딕", Malgun Gothic, sans-serif;
+}
+
+/* 링크 밑줄 제거 */
+a {
+  text-decoration: none;
+  color: blue;
+}
+
+/* 첫번째 테이블 */
+.sales-table {
+  width: 400px;
+  border-collapse: collapse;
+  margin: 0 auto 60px;
+  text-align: center;
+  background-color: #ffffff;
+  border: 1px solid #000;
+}
+
+.sales-table th,
+.sales-table td {
+  border: 1px solid #000;
+  padding: 10px;
+}
+
+/* 두번째 테이블 */
+.info-table {
+  width: 400px;
+  border-collapse: collapse;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #ffffff;
+  border: 1px solid #000;
+}
+
+.info-table th,
+.info-table td {
+  border: 1px solid #000;
+  padding: 10px;
+}
+
+/* 열 너비 설정 */
+.info-table th:first-child,
+.info-table td:first-child {
+  width: 130px;
+}
+
+.info-table th:last-child,
+.info-table td:last-child {
+  width: 270px;
+}
