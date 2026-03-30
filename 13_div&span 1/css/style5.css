@@ -1,0 +1,32 @@
+@charset "utf-8";
+body{
+    font-family: "맑은고딕";
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+div{
+    width: 644px;
+    border: 2px solid #FE0000;
+    margin: 0 auto;
+    padding: 42px 16px 16px;
+}
+div h1{
+    background: #FFFF00;
+    color: #000;
+    text-align: center;
+}
+div .p1{
+    color: #0202E6;
+}
+div .p2{
+    
+}
+
+div span{
+    background: #80007D;
+    color: #fff;
+    font-size: 10px;
+    padding: 6px;
+}

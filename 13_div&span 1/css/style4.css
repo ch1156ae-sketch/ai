@@ -1,0 +1,66 @@
+@charset "utf-8";
+body{
+    font-family: "맑은 고딕";
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+div{
+    width: 630px;
+    border: 1px dotted #000;
+    margin: 0 auto;
+    padding: 36px 16px;
+}
+div h1{
+    margin-bottom: 26px;
+}
+div h2{
+    margin-bottom: 26px;
+    color: #fff;
+    background-color: #000;
+    padding: 9px 6px;
+}
+div .h22{
+    background: none;
+    color: blue;
+}
+div p{
+    margin-bottom: 24px;
+    text-align: justify;/*양쪽 정렬*/
+}
+div p .span1{
+    font-weight: 600;
+    color: #A53439;
+}
+
+div p .span2{
+    font-weight: 600;
+    color: blue;
+}
+div .last{
+    font-weight: 600;
+    color: blue;
+    letter-spacing: -1px;
+    line-height: 16px;
+}
+div .free{
+    background: rgb(39, 141, 39);
+    color: #fff;
+    font-size: 14px;
+    padding: 4px;
+}
+
+div .p1{
+    /*자간*/
+    letter-spacing: 5px;
+}
+
+div .p2{
+    /*행간 */
+    line-height: 28px;
+}
+
+div .p3{
+    letter-spacing: -2px;
+}
