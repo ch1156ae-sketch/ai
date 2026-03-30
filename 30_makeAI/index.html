@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=], initial-scale=1.0">
+    <title>Beauty</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <!-- Cursor -->
+<div id="cursor"></div>
+ 
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">LUMÉ</a>
+  <ul class="nav-links">
+    <li><a href="#products">컬렉션</a></li>
+    <li><a href="#philosophy">브랜드 철학</a></li>
+    <li><a href="#ritual">뷰티 리추얼</a></li>
+    <li><a href="#testimonials">리뷰</a></li>
+  </ul>
+  <button class="nav-cta">Shop Now</button>
+</nav>
+ 
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">2025 Signature Collection</p>
+    <h1 class="hero-title">
+      아름다움은<br>
+      <em>감정에서</em><br>
+      피어난다
+    </h1>
+    <p class="hero-sub">자연에서 영감을 받은 성분과 감성적인 향기로 당신만의 뷰티 리추얼을 완성하세요.</p>
+    <div class="hero-actions">
+      <button class="btn-primary">컬렉션 보기</button>
+      <button class="btn-ghost">브랜드 스토리</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img class="hero-img" src="./images/hero.png" alt="hero">
+    <div class="hero-img-overlay"></div>
+    <div class="hero-float">
+      <p class="hero-float-label">올해의 고객</p>
+      <p class="hero-float-num">48,000+</p>
+      <p class="hero-float-desc">전 세계 뷰티 애호가</p>
+    </div>
+  </div>
+</section>
+ 
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marqueeTrack">
+    <!-- JS로 복제 -->
+  </div>
+</div>
+ 
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <div class="reveal">
+    <p class="section-eyebrow">Our Philosophy</p>
+    <h2 class="section-title">
+      피부가 아닌<br>
+      <em>영혼을</em><br>
+      위한 뷰티
+    </h2>
+  </div>
+  <div class="reveal reveal-delay-1">
+    <p>LUMÉ는 뷰티가 단순한 외면의 변화가 아니라 내면과의 연결임을 믿습니다. 우리의 모든 제품은 자연에서 수확한 순수한 성분으로 만들어지며, 과학과 감성의 균형을 추구합니다.</p>
+    <p>피부 유형에 관계없이 모든 사람이 자신만의 빛을 발견할 수 있도록, 우리는 매일 더 나은 공식을 연구합니다.</p>
+    <div class="philosophy-stats">
+      <div>
+        <p class="stat-num">97%</p>
+        <p class="stat-label">천연 성분 함유</p>
+      </div>
+      <div>
+        <p class="stat-num">12년</p>
+        <p class="stat-label">뷰티 연구 경력</p>
+      </div>
+      <div>
+        <p class="stat-num">0%</p>
+        <p class="stat-label">동물 실험</p>
+      </div>
+      <div>
+        <p class="stat-num">34개국</p>
+        <p class="stat-label">글로벌 유통</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="products-header reveal">
+    <div>
+      <p class="section-eyebrow">Featured Collection</p>
+      <h2 class="section-title">베스트셀러</h2>
+    </div>
+    <a href="#" class="products-link">전체 컬렉션 보기 →</a>
+  </div>
+  <div class="products-grid">
+    <div class="product-card reveal">
+      <div class="product-img-wrap">
+        <img class="product-img" src="./images/sc.png" alt="sc">
+        <span class="product-badge">베스트셀러</span>
+        <div class="product-overlay"></div>
+        <button class="product-quick">빠른 구매</button>
+      </div>
+      <div class="product-info">
+        <h3 class="product-name">Lumière Serum</h3>
+        <p class="product-sub">비타민 C · 히알루론산 · 장미 추출물</p>
+        <p class="product-price">₩ 89,000</p>
+      </div>
+    </div>
+    <div class="product-card reveal reveal-delay-1">
+      <div class="product-img-wrap">
+        <img class="product-img" src="./images/cream.png" alt="cream">
+        <div class="product-overlay"></div>
+        <button class="product-quick">빠른 구매</button>
+      </div>
+      <div class="product-info">
+        <h3 class="product-name">Velvet Moisture Cream</h3>
+        <p class="product-sub">시어 버터 · 세라마이드 · 피오니</p>
+        <p class="product-price">₩ 76,000</p>
+      </div>
+    </div>
+    <div class="product-card reveal reveal-delay-2">
+      <div class="product-img-wrap">
+        <img class="product-img" src="./images/oil.png" alt="oil">
+        <span class="product-badge">New</span>
+        <div class="product-overlay"></div>
+        <button class="product-quick">빠른 구매</button>
+      </div>
+      <div class="product-info">
+        <h3 class="product-name">Dew Facial Oil</h3>
+        <p class="product-sub">로즈힙 · 아르간 · 자스민</p>
+        <p class="product-price">₩ 62,000</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- RITUAL -->
+<section class="ritual" id="ritual">
+  <div class="reveal">
+    <p class="section-eyebrow">Beauty Ritual</p>
+    <h2 class="section-title">당신만의<br><em>뷰티 의식</em>을<br>만들어보세요</h2>
+  </div>
+  <div class="ritual-steps reveal reveal-delay-1">
+    <div class="ritual-step">
+      <span class="step-num">01</span>
+      <div>
+        <h3 class="step-title">클렌징 &amp; 준비</h3>
+        <p class="step-desc">순한 클렌저로 피부를 깨끗하게 정돈하고, 미지근한 물로 부드럽게 세안합니다. 이 과정은 다음 단계를 위한 캔버스를 만듭니다.</p>
+      </div>
+    </div>
+    <div class="ritual-step">
+      <span class="step-num">02</span>
+      <div>
+        <h3 class="step-title">에센스 &amp; 세럼</h3>
+        <p class="step-desc">Lumière 세럼을 손바닥에 덜어 체온으로 데운 후, 가볍게 눌러 흡수시킵니다. 핵심 성분이 피부 깊숙이 침투합니다.</p>
+      </div>
+    </div>
+    <div class="ritual-step">
+      <span class="step-num">03</span>
+      <div>
+        <h3 class="step-title">보습 &amp; 마무리</h3>
+        <p class="step-desc">Velvet 크림으로 마무리하여 수분 장벽을 강화합니다. 하루 종일 촉촉하고 빛나는 피부를 경험하세요.</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="testimonials-header reveal">
+    <p class="section-eyebrow">Customer Stories</p>
+    <h2 class="section-title">그들의 이야기</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <p class="stars">★ ★ ★ ★ ★</p>
+      <p class="testimonial-text">Lumière 세럼을 한 달간 사용했는데, 피부 톤이 눈에 띄게 맑아졌어요. 매일 아침 이 루틴이 기다려질 정도로 향이 너무 좋아요.</p>
+      <p class="testimonial-author">김지은 · 서울</p>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-1">
+      <p class="stars">★ ★ ★ ★ ★</p>
+      <p class="testimonial-text">천연 성분인데도 효과가 강력해서 놀랐어요. 건조한 피부 고민이 해결됐고 화장도 훨씬 잘 받아요. 이제 없으면 안 되는 제품입니다.</p>
+      <p class="testimonial-author">박수현 · 부산</p>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-2">
+      <p class="stars">★ ★ ★ ★ ★</p>
+      <p class="testimonial-text">패키지부터 향, 텍스처까지 모든 것이 럭셔리해요. 비건 인증 제품인데 이 정도 퀄리티라니. 주변에 계속 추천하고 있어요.</p>
+      <p class="testimonial-author">이미나 · 제주</p>
+    </div>
+  </div>
+</section>
+ 
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <p class="section-eyebrow reveal">Stay Connected</p>
+  <h2 class="section-title reveal">뷰티 인사이트를<br><em>가장 먼저</em> 받아보세요</h2>
+  <p class="reveal">신제품 출시, 시즌 오퍼, 그리고 피부 전문가의 팁을 뉴스레터로 전달해 드립니다.</p>
+  <div class="newsletter-form reveal">
+    <input class="newsletter-input" type="email" placeholder="이메일을 입력해주세요" />
+    <button class="newsletter-btn">구독하기</button>
+  </div>
+</section>
+ 
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <p class="footer-brand-name">LUMÉ</p>
+      <p class="footer-brand-desc">감성과 과학이 만나는 곳에서, 우리는 당신의 피부가 본연의 아름다움을 드러낼 수 있도록 돕습니다.</p>
+    </div>
+    <div>
+      <p class="footer-col-title">컬렉션</p>
+      <ul class="footer-links">
+        <li><a href="#">스킨케어</a></li>
+        <li><a href="#">세럼 & 에센스</a></li>
+        <li><a href="#">크림 & 오일</a></li>
+        <li><a href="#">선케어</a></li>
+        <li><a href="#">리미티드 에디션</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">브랜드</p>
+      <ul class="footer-links">
+        <li><a href="#">우리의 이야기</a></li>
+        <li><a href="#">성분 연구소</a></li>
+        <li><a href="#">지속 가능성</a></li>
+        <li><a href="#">뷰티 블로그</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">고객 지원</p>
+      <ul class="footer-links">
+        <li><a href="#">피부 타입 진단</a></li>
+        <li><a href="#">배송 & 반품</a></li>
+        <li><a href="#">자주 묻는 질문</a></li>
+        <li><a href="#">1:1 문의</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 LUMÉ. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="#">Instagram</a>
+      <a href="#">Pinterest</a>
+      <a href="#">YouTube</a>
+    </div>
+  </div>
+</footer>
+<script src="./script/script.js"></script>
+</body>
+</html>
