@@ -50,6 +50,7 @@
     transition: box-shadow 0.3s;
   }
   nav.scrolled { box-shadow: 0 2px 24px rgba(0,102,255,0.10); }
+
   .nav-logo {
     display: flex; align-items: center; gap: 10px;
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -57,20 +58,33 @@
     text-decoration: none;
     letter-spacing: -0.5px;
   }
-  .nav-logo .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); display: inline-block; }
-  .nav-links { display: flex; align-items: center; gap: 36px; }
-  .nav-links a {
+  .nav-logo .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--blue); display: inline-block;
+  }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 36px;
+  }
+  .nav-links a,
+  .nav-links button {
     font-size: 15px; font-weight: 500; color: var(--gray);
     text-decoration: none; transition: color 0.2s;
+    background: none; border: none; cursor: pointer; font-family: inherit;
   }
-  .nav-links a:hover { color: var(--blue); }
+  .nav-links a:hover,
+  .nav-links button:hover { color: var(--blue); }
+
   .nav-cta {
-    background: var(--blue); color: var(--white) !important;
+    background: var(--blue) !important; color: var(--white) !important;
     padding: 10px 22px; border-radius: 10px;
     font-weight: 700 !important; font-size: 14px !important;
     transition: background 0.2s, transform 0.2s !important;
   }
-  .nav-cta:hover { background: var(--blue-light) !important; transform: translateY(-1px); }
+  .nav-cta:hover {
+    background: var(--blue-light) !important;
+    transform: translateY(-1px);
+  }
 
   .hero {
     min-height: 100vh;
@@ -112,8 +126,8 @@
     0%, 100% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.5; transform: scale(0.8); }
   }
+
   .hero-title {
-    font-family: 'Noto Sans KR', sans-serif;
     font-size: clamp(36px, 4.5vw, 56px);
     font-weight: 900; line-height: 1.2;
     color: var(--dark); letter-spacing: -1.5px;
@@ -131,18 +145,31 @@
     font-size: 18px; color: var(--gray); line-height: 1.7;
     margin-bottom: 40px; font-weight: 400;
   }
+
   .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
-  .btn-primary {
+
+  .btn-primary,
+  .btn-white {
     display: inline-flex; align-items: center; gap: 8px;
+    border: none; cursor: pointer; font-family: inherit;
+    text-decoration: none;
+  }
+
+  .btn-primary {
     background: var(--blue); color: var(--white);
     padding: 16px 32px; border-radius: 14px;
-    font-size: 16px; font-weight: 700; text-decoration: none;
+    font-size: 16px; font-weight: 700;
     box-shadow: 0 8px 32px rgba(0,102,255,0.30);
     transition: all 0.25s; letter-spacing: -0.3px;
   }
-  .btn-primary:hover { background: var(--blue-light); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,102,255,0.40); }
+  .btn-primary:hover {
+    background: var(--blue-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,102,255,0.40);
+  }
   .btn-primary svg { transition: transform 0.2s; }
   .btn-primary:hover svg { transform: translateX(3px); }
+
   .btn-secondary {
     display: inline-flex; align-items: center; gap: 8px;
     background: var(--white); color: var(--dark);
@@ -169,19 +196,24 @@
     animation: float 4s ease-in-out infinite;
   }
   @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
   .card-header-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-  .card-icon { width: 42px; height: 42px; background: var(--blue-pale); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .card-icon {
+    width: 42px; height: 42px; background: var(--blue-pale);
+    border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px;
+  }
   .card-title-group { flex: 1; }
   .card-title-group strong { display: block; font-size: 15px; font-weight: 700; color: var(--dark); }
   .card-title-group span { font-size: 12px; color: var(--gray); }
+
   .progress-rows { display: flex; flex-direction: column; gap: 12px; }
-  .progress-row label { font-size: 12px; color: var(--gray); display: flex; justify-content: space-between; margin-bottom: 4px; }
   .progress-bar { height: 6px; background: var(--blue-pale); border-radius: 10px; overflow: hidden; }
   .progress-fill { height: 100%; border-radius: 10px; background: var(--blue); }
   .p1 { width: 82%; animation: grow 1.2s ease-out forwards; }
   .p2 { width: 68%; animation: grow 1.4s ease-out forwards; }
   .p3 { width: 91%; animation: grow 1.0s ease-out forwards; }
   @keyframes grow { from { width: 0; } }
+
   .card-tag-row { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
   .tag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px; }
   .tag.blue { background: var(--blue-pale); color: var(--blue); }
@@ -337,10 +369,9 @@
   }
   .cta-sub { font-size: 17px; color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 44px; }
   .btn-white {
-    display: inline-flex; align-items: center; gap: 10px;
     background: var(--white); color: var(--blue);
     padding: 18px 40px; border-radius: 14px;
-    font-size: 17px; font-weight: 800; text-decoration: none;
+    font-size: 17px; font-weight: 800;
     box-shadow: 0 8px 32px rgba(0,0,0,0.2);
     transition: all 0.25s; letter-spacing: -0.4px;
   }
@@ -365,6 +396,148 @@
   .reveal-delay-2 { transition-delay: 0.2s; }
   .reveal-delay-3 { transition-delay: 0.3s; }
   .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* modal */
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 22, 35, 0.58);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+  .modal.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .modal-dialog {
+    width: min(980px, 100%);
+    height: min(88vh, 820px);
+    background: #fff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 30px 100px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    transform: translateY(16px);
+    transition: transform 0.25s ease;
+  }
+  .modal.active .modal-dialog {
+    transform: translateY(0);
+  }
+  .modal-header {
+    height: 68px;
+    padding: 0 20px 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    flex-shrink: 0;
+    background: #fff;
+  }
+  .modal-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--dark);
+  }
+  .modal-close {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 12px;
+    background: #F3F6FB;
+    color: var(--dark);
+    font-size: 22px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .modal-close:hover {
+    background: #E7EEF9;
+  }
+  .modal-body {
+    flex: 1;
+    background: #fff;
+  }
+  .modal-body iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: #fff;
+  }
+
+  @media (max-width: 1100px) {
+    .hero-inner,
+    .why-inner {
+      grid-template-columns: 1fr;
+    }
+    .use-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .ba-grid {
+      grid-template-columns: 1fr;
+    }
+    .ba-divider {
+      width: 100%;
+      min-height: 56px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    nav,
+    .hero,
+    .section,
+    #cta-final,
+    footer {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    nav {
+      height: auto;
+      min-height: 68px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .nav-links {
+      width: 100%;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .hero {
+      padding-top: 120px;
+    }
+
+    .use-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-stats {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal {
+      padding: 12px;
+    }
+
+    .modal-dialog {
+      width: 100%;
+      height: 90vh;
+      border-radius: 18px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -375,7 +548,7 @@
     <a href="#before-after">변화 사례</a>
     <a href="#use-case">실무 활용법</a>
     <a href="#why">왜 못 쓰나요?</a>
-    <a href="GOOGLE_FORM_URL" class="nav-cta" rel="noopener">무료로 시작하기</a>
+    <button type="button" class="nav-cta open-modal-btn">무료로 시작하기</button>
   </div>
 </nav>
 
@@ -383,6 +556,7 @@
   <div class="hero-bg-dots"></div>
   <div class="hero-bg-circle c1"></div>
   <div class="hero-bg-circle c2"></div>
+
   <div class="hero-inner">
     <div class="hero-left">
       <div class="hero-badge"><span class="pulse"></span> 직장인 AI 실무 협업</div>
@@ -393,15 +567,16 @@
       </h1>
       <p class="hero-sub">막막한 직장인을 위한 실무 AI 협업 가이드.<br>이론 말고, 내일 바로 쓸 수 있는 방법만 알려드립니다.</p>
       <div class="hero-btns">
-        <a href="GOOGLE_FORM_URL" class="btn-primary" rel="noopener">
+        <button type="button" class="btn-primary open-modal-btn">
           지금 바로 시작하기
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
+        </button>
         <a href="#before-after" class="btn-secondary">
           변화 사례 보기
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9l-7 7-7-7"/></svg>
         </a>
       </div>
+
       <div class="hero-stats">
         <div class="stat">
           <div class="stat-num">3<span>시간</span></div>
@@ -427,26 +602,35 @@
             <span>오늘의 업무 현황</span>
           </div>
         </div>
+
         <div class="progress-rows">
           <div>
-            <label><span>📄 보고서 작성</span><span style="color:#0066FF;font-weight:700">82%</span></label>
+            <label style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:12px;color:#64748B;">
+              <span>📄 보고서 작성</span><span style="color:#0066FF;font-weight:700">82%</span>
+            </label>
             <div class="progress-bar"><div class="progress-fill p1"></div></div>
           </div>
           <div>
-            <label><span>📧 이메일 처리</span><span style="color:#0066FF;font-weight:700">68%</span></label>
+            <label style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:12px;color:#64748B;">
+              <span>📧 이메일 처리</span><span style="color:#0066FF;font-weight:700">68%</span>
+            </label>
             <div class="progress-bar"><div class="progress-fill p2"></div></div>
           </div>
           <div>
-            <label><span>📊 데이터 분석</span><span style="color:#0066FF;font-weight:700">91%</span></label>
+            <label style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:12px;color:#64748B;">
+              <span>📊 데이터 분석</span><span style="color:#0066FF;font-weight:700">91%</span>
+            </label>
             <div class="progress-bar"><div class="progress-fill p3"></div></div>
           </div>
         </div>
+
         <div class="card-tag-row">
           <span class="tag blue">⚡ 시간 절약 3h</span>
           <span class="tag green">✅ 완성도 UP</span>
           <span class="tag yellow">🎯 집중 업무 확보</span>
         </div>
       </div>
+
       <div class="hero-floating-badge">
         <span class="floating-badge-icon">⏱</span>
         <div class="floating-badge-text">
@@ -465,6 +649,7 @@
       <h2 class="section-title">AI를 쓰면 이렇게 바뀝니다</h2>
       <p class="section-sub">어제와 똑같은 일인데, 걸리는 시간은 완전히 달라집니다.</p>
     </div>
+
     <div class="ba-grid reveal reveal-delay-2">
       <div class="ba-col before">
         <span class="ba-col-label before-label">❌ AI 없이</span>
@@ -487,9 +672,11 @@
           </div>
         </div>
       </div>
+
       <div class="ba-divider">
         <div class="ba-divider-icon">→</div>
       </div>
+
       <div class="ba-col after">
         <span class="ba-col-label after-label">✅ AI 협업 후</span>
         <div class="ba-items">
@@ -524,6 +711,7 @@
         <p class="section-sub">이론이 아닙니다. 내일 출근해서 바로 적용하세요.</p>
       </div>
     </div>
+
     <div class="use-grid">
       <div class="use-card reveal reveal-delay-1">
         <span class="use-card-emoji">📄</span>
@@ -583,6 +771,7 @@
       <div class="why-empathy reveal">
         <div class="section-tag">💬 공감</div>
         <h2 class="section-title" style="margin-bottom:32px">혹시 이런 생각<br>해보신 적 있나요?</h2>
+
         <div class="empathy-card active">
           <span class="empathy-quote">💬</span>
           <div class="empathy-text">
@@ -590,6 +779,7 @@
             <strong>— 5년차 마케터</strong>
           </div>
         </div>
+
         <div class="empathy-card">
           <span class="empathy-quote">💬</span>
           <div class="empathy-text">
@@ -597,6 +787,7 @@
             <strong>— 7년차 기획자</strong>
           </div>
         </div>
+
         <div class="empathy-card">
           <span class="empathy-quote">💬</span>
           <div class="empathy-text">
@@ -605,10 +796,12 @@
           </div>
         </div>
       </div>
+
       <div class="why-answer reveal reveal-delay-2">
         <div class="section-tag">💡 답</div>
         <h2 class="section-title">AI를 못 쓰는 건<br>능력 문제가 아닙니다</h2>
         <p class="section-sub" style="margin-bottom:32px">방법을 몰라서입니다. 방법만 알면 지금 바로 바뀝니다.</p>
+
         <div class="why-point">
           <div class="why-point-num">01</div>
           <div class="why-point-text">
@@ -616,6 +809,7 @@
             <span>같은 AI도 어떻게 묻느냐에 따라 결과물이 완전히 달라집니다.</span>
           </div>
         </div>
+
         <div class="why-point">
           <div class="why-point-num">02</div>
           <div class="why-point-text">
@@ -623,6 +817,7 @@
             <span>내 업무 흐름에 맞게 AI를 끼워 넣는 설계가 필요합니다.</span>
           </div>
         </div>
+
         <div class="why-point">
           <div class="why-point-num">03</div>
           <div class="why-point-text">
@@ -630,11 +825,12 @@
             <span>딱 한 가지만 바꿔도 "이게 된다"는 확신이 생깁니다.</span>
           </div>
         </div>
+
         <div class="why-cta-row">
-          <a href="GOOGLE_FORM_URL" class="btn-primary" rel="noopener">
+          <button type="button" class="btn-primary open-modal-btn">
             무료로 방법 알아보기
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -644,14 +840,17 @@
 <section id="cta-final">
   <div class="cta-bg-shape s1"></div>
   <div class="cta-bg-shape s2"></div>
+
   <div class="cta-inner reveal">
     <div class="cta-overline">✦ 지금 시작하세요</div>
     <h2 class="cta-title">오늘부터 AI와 함께<br>일하세요</h2>
     <p class="cta-sub">어렵게 생각할 필요 없습니다.<br>지금 신청하면 실무에 바로 쓸 수 있는 방법을 알려드립니다.</p>
-    <a href="GOOGLE_FORM_URL" class="btn-white" rel="noopener">
+
+    <button type="button" class="btn-white open-modal-btn">
       무료 신청하기
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
+    </button>
+
     <p class="cta-note">* 비용 없음 · 부담 없음 · 언제든 취소 가능</p>
   </div>
 </section>
@@ -661,26 +860,44 @@
   <p style="margin-top:8px;font-size:13px">© 2026 AI협업. All rights reserved.</p>
 </footer>
 
+<!-- modal -->
+<div class="modal" id="formModal" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modalTitle">무료 신청하기</h3>
+      <button type="button" class="modal-close" id="closeModalBtn" aria-label="닫기">×</button>
+    </div>
+    <div class="modal-body">
+      <iframe
+        id="googleFormFrame"
+        src=""
+        title="Google Form"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin">
+      </iframe>
+    </div>
+  </div>
+</div>
+
 <script>
   const GOOGLE_FORM_URL = 'https://forms.gle/gWe2cqMN7JX4AcdP9';
-  document.querySelectorAll('a[href="GOOGLE_FORM_URL"]').forEach(a => {
-    a.href = GOOGLE_FORM_URL;
-  });
 
+  // nav scroll effect
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 20);
   });
 
+  // reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
   }, { threshold: 0.12 });
   reveals.forEach(el => observer.observe(el));
 
-  setTimeout(() => {
-    document.querySelector('.hero-badge')?.classList.add('visible');
-  }, 100);
+  // hero initial reveal
   document.querySelectorAll('.hero-left > *').forEach((el, i) => {
     el.classList.add('reveal');
     setTimeout(() => el.classList.add('visible'), 200 + i * 120);
@@ -688,6 +905,42 @@
   setTimeout(() => {
     document.querySelector('.hero-visual')?.classList.add('reveal', 'visible');
   }, 400);
+
+  // modal
+  const formModal = document.getElementById('formModal');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const googleFormFrame = document.getElementById('googleFormFrame');
+  const openModalBtns = document.querySelectorAll('.open-modal-btn');
+
+  function openModal() {
+    formModal.classList.add('active');
+    formModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    googleFormFrame.src = GOOGLE_FORM_URL;
+  }
+
+  function closeModal() {
+    formModal.classList.remove('active');
+    formModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    googleFormFrame.src = '';
+  }
+
+  openModalBtns.forEach(btn => {
+    btn.addEventListener('click', openModal);
+  });
+
+  closeModalBtn.addEventListener('click', closeModal);
+
+  formModal.addEventListener('click', (e) => {
+    if (e.target === formModal) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && formModal.classList.contains('active')) {
+      closeModal();
+    }
+  });
 </script>
 </body>
 </html>
