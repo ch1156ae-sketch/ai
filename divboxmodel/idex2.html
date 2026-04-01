@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travel Card UI</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #f3f3f3;
+      font-family: "Pretendard", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 40px;
+    }
+
+    .card-wrap {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: nowrap;
+    }
+
+    .card {
+      width: 480px;
+      height: 584px;
+      background: #ffffff;
+      border: 1px solid #e8e8e8;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-image {
+      width: 100%;
+      height: 284px;
+      overflow: hidden;
+      background: #ddd;
+      flex-shrink: 0;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-content {
+      height: 300px;
+      padding: 38px 30px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-category {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: 700;
+      color: #029D76;
+      margin-bottom: 23px;
+    }
+
+    .card-title {
+      font-size: 24px;
+      line-height: 1.2;
+      font-weight: 600;
+      color: #2d2d2d;
+      margin-bottom: 23px;
+      word-break: keep-all;
+      letter-spacing: -0.02em;
+      min-height: 58px;
+    }
+
+    .card-hashtags {
+      font-size: 17px;
+      line-height: 1.7;
+      color: #7a7a7a;
+      word-break: keep-all;
+      margin-bottom: 0;
+      min-height: 86px;
+    }
+
+    .card-price {
+      text-align: right;
+      font-size: 26px;
+      font-weight: 700;
+      color: #222;
+      margin-top: auto;
+      line-height: 1;
+    }
+
+    .price-unit {
+      font-size: 22px;
+      font-weight: 400;
+      margin-left: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card-wrap">
+
+    <div class="card">
+      <div class="card-image">
+        <img src="images/1.jpg" alt="서유럽 여행">
+      </div>
+      <div class="card-content">
+        <span class="card-category">해외여행</span>
+        <h2 class="card-title">[서유럽 여행] ★ 런던/프랑스/스위스/이<br>탈리아</h2>
+        <p class="card-hashtags">#6월연휴기준출발 #가족여행추천 #베스트상품</p>
+        <p class="card-price">3,199,000<span class="price-unit">원 ~</span></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-image">
+        <img src="images/2.jpg" alt="대만 여행">
+      </div>
+      <div class="card-content">
+        <span class="card-category">해외여행</span>
+        <h2 class="card-title">[대만/단수이/예루/스펀/지우펀] 3/4/<br>5일 ★BEST</h2>
+        <p class="card-hashtags">#스펀 천등체험 #센과치히로행방불명 지우펀 #기암괴석 예루해양공원</p>
+        <p class="card-price">529,000<span class="price-unit">원 ~</span></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-image">
+        <img src="images/3.jpg" alt="시드니 여행">
+      </div>
+      <div class="card-content">
+        <span class="card-category">해외여행</span>
+        <h2 class="card-title">[시드니] 베스트셀러 6/7일 <br>★ 전일정 4성급</h2>
+        <p class="card-hashtags">#블루마운틴 #오페라하우스 #시드니동물원 #저비스베이 #돌핀크루즈 #하버크루즈</p>
+        <p class="card-price">1,149,000<span class="price-unit">원 ~</span></p>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
+
