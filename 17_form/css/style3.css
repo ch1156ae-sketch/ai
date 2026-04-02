@@ -1,0 +1,12 @@
+@charset "utf-8";
+body{
+    font-family: "맑은 고딕";
+}
+form{
+    width: 528px;
+    height: 102px;
+}
+ol li{
+    list-style: none;
+    margin-left: -44px;
+}
