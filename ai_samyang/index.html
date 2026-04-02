@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community Section</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-width: 1280px;
+      background: #f3f3f3;
+      font-family: "Noto Sans KR", sans-serif;
+      color: #222;
+    }
+
+    .community-section {
+      width: 100%;
+      padding: 110px 0 78px;
+      position: relative;
+    }
+
+    .inner {
+      width: 920px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-title {
+      font-size: 42px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 24px;
+      color: #2d2d2d;
+    }
+
+    .section-desc {
+      font-size: 17px;
+      line-height: 1.55;
+      color: #2f2f2f;
+    }
+
+    .social-list {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 42px;
+    }
+
+    .social-item {
+      width: 44px;
+      height: 44px;
+    }
+
+    .social-list a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      text-decoration: none;
+      overflow: hidden;
+    }
+
+    .social-list img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .facebook { background: #4660ad; }
+    .instagram { background: #a97557; font-size: 17px !important; }
+    .blog { background: #46c61d; font-size: 16px !important; }
+    .twitter { background: #3cb8ea; }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 250px 380px 250px;
+      grid-template-rows: 343px 167px 167px;
+      gap: 18px 16px;
+    }
+
+    .card {
+      border: 1px solid #8d8d8d;
+      background: transparent;
+      position: relative;
+      transition: background 0.3s ease;
+    }
+
+    .card-empty {
+      grid-column: 1;
+      grid-row: 1 / 4;
+      min-height: 528px;
+      transition: background 0.3s ease;
+    }
+
+    .card-empty:hover {
+      background: #ff6a00;
+    }
+
+    .card-video {
+      padding: 20px 30px;
+    }
+
+    .card-contact {
+      padding: 18px 30px;
+    }
+
+    .card-small {
+      padding: 20px 24px;
+    }
+
+    .card-title {
+      font-size: 26px;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin-bottom: 14px;
+    }
+
+    .card-text {
+      font-size: 15px;
+      line-height: 1.35;
+      color: #111;
+      font-weight: 700;
+      word-break: keep-all;
+    }
+
+    .btn-more {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 72px;
+      height: 24px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: #ff6a00;
+      color: #fff;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 28px;
+    }
+
+    .card-contact .btn-more,
+    .card-product .btn-more {
+      margin-top: 26px;
+    }
+  
+    .card-video { grid-column: 2; grid-row: 1 / 3; }
+    .card-contact { grid-column: 2; grid-row: 3; }
+
+    .card-share { grid-column: 3; grid-row: 1; }
+    .card-notice { grid-column: 3; grid-row: 2; }
+    .card-product { grid-column: 3; grid-row: 3; }
+
+    /* hover colors */
+    .card-video:hover { background: #e6fff5; } /* 라이트 그레이 */
+    .card-share:hover { background: #e6f3ff; } /* 크림 베이지 */
+    .card-contact:hover { background: #fff8cc; } /* 페일 옐로우 */
+    .card-notice:hover { background: #e6e6fa; } /* 페일 아이보리 */
+    .card-product:hover { background: #ffe6f0; } /* 민트 화이트 */
+  </style>
+</head>
+<body>
+  <div class="community-section">
+    <div class="inner">
+      <div class="section-header">
+        <h1 class="section-title">COMMUNITY</h1>
+        <p class="section-desc">
+          삼양식품은 혁신적인 기술과 포용적인 사고로 여러분과 함께<br />
+          새로운 식문화를 만들어갑니다.
+        </p>
+      </div>
+
+      <div class="social-list">
+        <div class="social-item"><a href="#" class="facebook"><img src="./images/icons_facebook.png" alt="Facebook" /></a></div>
+        <div class="social-item"><a href="#" class="instagram"><img src="./images/icons_insta.png" alt="Instagram" /></a></div>
+        <div class="social-item"><a href="#" class="blog"><img src="./images/icons_blog.png" alt="Blog" /></a></div>
+        <div class="social-item"><a href="#" class="twitter"><img src="./images/icons_twitter.png" alt="Twitter" /></a></div>
+      </div>
+
+      <div class="content-grid">
+        <div class="card card-empty"></div>
+
+        <div class="card card-video">
+          <h2 class="card-title">홍보영상</h2>
+          <p class="card-text">
+            삼양식품의 다채로운 스토리를<br />
+            영상으로 보여드립니다.
+          </p>
+          <a href="#" class="btn-more">자세히보기</a>
+        </div>
+
+        <div class="card card-small card-share">
+          <h2 class="card-title">맛있는 나눔</h2>
+          <p class="card-text">모두가 행복한 맛있는 세상</p>
+          <a href="#" class="btn-more">자세히보기</a>
+        </div>
+
+        <div class="card card-contact">
+          <h2 class="card-title">고객 문의</h2>
+          <p class="card-text">
+            삼양식품에게<br />
+            여러분의 다양한 의견을 남겨주세요.
+          </p>
+          <a href="#" class="btn-more">자세히보기</a>
+        </div>
+
+        <div class="card card-small card-notice">
+          <h2 class="card-title">공지사항</h2>
+          <p class="card-text">삼양식품 개인정보취급방침 개정 안내</p>
+          <a href="#" class="btn-more">자세히보기</a>
+        </div>
+
+        <div class="card card-small card-product">
+          <h2 class="card-title">삼양식품 공식몰</h2>
+          <p class="card-text">
+            삼양식품의<br />
+            다양한 제품을 만나보세요.
+          </p>
+          <a href="#" class="btn-more">자세히보기</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
