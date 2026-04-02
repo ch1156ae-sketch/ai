@@ -90,11 +90,19 @@
 
     .content-grid {
       width: 1140px;
-      display: grid;
-      grid-template-columns: 312px 476px 312px;
-      grid-template-rows: 343px 167px 167px;
-      gap: 18px 16px;
+      display: flex;
+      gap: 19px;
     }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .col-left { width: 312px; }
+    .col-center { width: 476px; }
+    .col-right { width: 312px; }
 
     .card {
       border: 1px solid #8d8d8d;
@@ -104,8 +112,8 @@
     }
 
     .card-empty {
-      grid-column: 1;
-      grid-row: 1 / 4;
+      width: 100%;
+      height: 100%;
       min-height: 528px;
       transition: background 0.3s ease;
     }
@@ -165,12 +173,16 @@
       margin-top: 26px;
     }
   
-    .card-video { grid-column: 2; grid-row: 1 / 3; }
-    .card-contact { grid-column: 2; grid-row: 3; }
+    .card-video {
+      height: 528px;
+    }
+    .card-contact {
+      height: 167px;
+    }
 
-    .card-share { grid-column: 3; grid-row: 1; }
-    .card-notice { grid-column: 3; grid-row: 2; }
-    .card-product { grid-column: 3; grid-row: 3; }
+    .card-share { height: 343px; }
+    .card-notice { height: 167px; }
+    .card-product { height: 167px; }
 
     /* hover colors */
     .card-video:hover { background: #e6fff5; } /* 라이트 그레이 */
@@ -199,47 +211,54 @@
       </div>
 
       <div class="content-grid">
-        <div class="card card-empty"></div>
-
-        <div class="card card-video">
-          <h2 class="card-title">홍보영상</h2>
-          <p class="card-text">
-            삼양식품의 다채로운 스토리를<br />
-            영상으로 보여드립니다.
-          </p>
-          <a href="#" class="btn-more">자세히보기</a>
+        <div class="col col-left">
+          <div class="card card-empty"></div>
         </div>
 
-        <div class="card card-small card-share">
-          <h2 class="card-title">맛있는 나눔</h2>
-          <p class="card-text">모두가 행복한 맛있는 세상</p>
-          <a href="#" class="btn-more">자세히보기</a>
+        <div class="col col-center">
+          <div class="card card-video">
+            <h2 class="card-title">홍보영상</h2>
+            <p class="card-text">
+              삼양식품의 다채로운 스토리를<br />
+              영상으로 보여드립니다.
+            </p>
+            <a href="#" class="btn-more">자세히보기</a>
+          </div>
+
+          <div class="card card-contact">
+            <h2 class="card-title">고객 문의</h2>
+            <p class="card-text">
+              삼양식품에게<br />
+              여러분의 다양한 의견을 남겨주세요.
+            </p>
+            <a href="#" class="btn-more">자세히보기</a>
+          </div>
         </div>
 
-        <div class="card card-contact">
-          <h2 class="card-title">고객 문의</h2>
-          <p class="card-text">
-            삼양식품에게<br />
-            여러분의 다양한 의견을 남겨주세요.
-          </p>
-          <a href="#" class="btn-more">자세히보기</a>
-        </div>
+        <div class="col col-right">
+          <div class="card card-small card-share">
+            <h2 class="card-title">맛있는 나눔</h2>
+            <p class="card-text">모두가 행복한 맛있는 세상</p>
+            <a href="#" class="btn-more">자세히보기</a>
+          </div>
 
-        <div class="card card-small card-notice">
-          <h2 class="card-title">공지사항</h2>
-          <p class="card-text">삼양식품 개인정보취급방침 개정 안내</p>
-          <a href="#" class="btn-more">자세히보기</a>
-        </div>
+          <div class="card card-small card-notice">
+            <h2 class="card-title">공지사항</h2>
+            <p class="card-text">삼양식품 개인정보취급방침 개정 안내</p>
+            <a href="#" class="btn-more">자세히보기</a>
+          </div>
 
-        <div class="card card-small card-product">
-          <h2 class="card-title">삼양식품 공식몰</h2>
-          <p class="card-text">
-            삼양식품의<br />
-            다양한 제품을 만나보세요.
-          </p>
-          <a href="#" class="btn-more">자세히보기</a>
+          <div class="card card-small card-product">
+            <h2 class="card-title">삼양식품 공식몰</h2>
+            <p class="card-text">
+              삼양식품의<br />
+              다양한 제품을 만나보세요.
+            </p>
+            <a href="#" class="btn-more">자세히보기</a>
+          </div>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </body>
