@@ -2,6 +2,7 @@
 body{
     font-family: "맑은고딕";
     background-color: #111;
+    color: #fff;
 }
 *{
     margin: 0;
@@ -67,4 +68,12 @@ body{
     border: none;
     border-radius: 6px;
     cursor: pointer;
+}
+.formbox input[type="text"],
+.formbox input[type="email"],
+.formbox textarea {
+    color: #ffffff;}
+.formbox #msg{
+    font-size: 18px;
+    color: #fff;
 }
