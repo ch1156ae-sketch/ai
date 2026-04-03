@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트 페이지</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #3d2f5a;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1128px;
+            margin: 0 auto;
+            padding: 126px 16px;
+        }
+
+        .title {
+            text-align: center;
+            color: white;
+            font-size: 30px;
+            margin-bottom: 32px;
+        }
+
+        .title .bold {
+            font-weight: bold;
+        }
+
+        /* Countdown Timer */
+        .countdown {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .time-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .time-box {
+            width: 64px;
+            height: 80px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .time-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, #211730 50%, #413259 50%);
+        }
+
+        .time-box span {
+            position: relative;
+            z-index: 10;
+        }
+
+        .colon {
+            color: white;
+            font-size: 36px;
+            margin: 0 4px;
+        }
+
+        /* Dropdown Section */
+        .dropdown-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .dropdown-section span {
+            color: white;
+            font-size: 14px;
+        }
+
+        .dropdown-section select {
+            padding: 8px 16px;
+            border-radius: 4px;
+            background-color: #22c55e;
+            color: white;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Question Section */
+        .question-section {
+            width: 940px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+
+        .question-text {
+            text-align: center;
+            color: white;
+            margin-bottom: 24px;
+        }
+
+        .question-text p:first-child {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .question-text p:last-child {
+            font-size: 14px;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            width: 740px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 0 auto;
+            margin-bottom: 24px;
+        }
+
+        .product-card {
+            width: 233px;
+            height: 330px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card.selected {
+            box-shadow: 0 0 0 4px #7c3aed;
+        }
+
+        .product-name {
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .product-image {
+            width: 173px;
+            height: 128px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .product-divider {
+            padding-top: 12px;
+            margin-bottom: 12px;
+        }
+
+        .product-count {
+            text-align: center;
+        }
+
+        .product-count .number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #7c3aed;
+        }
+
+        .product-count .text {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .product-radio {
+            border-top: 1px solid #e5e7eb;
+            padding-top: 12px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .product-radio input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #7c3aed;
+        }
+
+        /* Submit Button */
+        .submit-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .submit-btn {
+            width: 468px;
+            height: 64px;
+            background-color: #7c3aed;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background-color: white;
+            border-radius: 8px;
+            max-width: 448px;
+            width: 100%;
+            padding: 24px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-header h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 36px;
+            color: #6b7280;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .close-btn:hover {
+            color: #374151;
+        }
+
+        .selected-product {
+            background-color: #f3f4f6;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .selected-product h3 {
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .selected-product-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .selected-product-info img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .selected-product-details p:first-child {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .selected-product-details p:last-child {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .selected-product-details .count-number {
+            color: #7c3aed;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+        }
+
+        .modal-submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #7c3aed;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .modal-submit-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Title -->
+        <h1 class="title">
+            매일 밤 <span class="bold">10시</span> 이벤트가 시작됩니다!
+        </h1>
+
+        <!-- Countdown Timer -->
+        <div class="countdown">
+            <div class="time-group">
+                <div class="time-box">
+                    <span id="hour1">0</span>
+                </div>
+                <div class="time-box">
+                    <span id="hour2">0</span>
+                </div>
+            </div>
+            <span class="colon">:</span>
+            <div class="time-group">
+                <div class="time-box">
+                    <span id="min1">0</span>
+                </div>
+                <div class="time-box">
+                    <span id="min2">0</span>
+                </div>
+            </div>
+            <span class="colon">:</span>
+            <div class="time-group">
+                <div class="time-box">
+                    <span id="sec1">0</span>
+                </div>
+                <div class="time-box">
+                    <span id="sec2">2</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dropdown Section -->
+        <div class="dropdown-section">
+            <span>회원님이 보다 빠르게 참여할 찾을 수 있도록</span>
+            <select>
+                <option>초록 검색상품 리워드체크</option>
+            </select>
+        </div>
+
+        <!-- Question Section -->
+        <div class="question-section">
+            <div class="question-text">
+                <p>Q. 3월 13일 문재 커넥츠에서 동영을 하려면 어떤 신청을 해야 할까요?</p>
+                <p>힌트: 000산정 / 3글자</p>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="product-grid" id="productGrid">
+                <!-- Products will be dynamically inserted here -->
+            </div>
+
+            <!-- Submit Button -->
+            <div class="submit-container">
+                <button class="submit-btn" onclick="openModal()">응모하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>상품 신청</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+
+            <div class="selected-product">
+                <h3>선택한 상품</h3>
+                <div class="selected-product-info">
+                    <img id="modalProductImage" src="" alt="">
+                    <div class="selected-product-details">
+                        <p id="modalProductName"></p>
+                        <p><span class="count-number" id="modalProductCount"></span>개 남음</p>
+                    </div>
+                </div>
+            </div>
+
+            <form id="applicationForm" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="userName">신청자 이름 *</label>
+                    <input type="text" id="userName" name="userName" placeholder="이름을 입력해주세요" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="userPhone">전화번호 *</label>
+                    <input type="tel" id="userPhone" name="userPhone" placeholder="010-0000-0000" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="userEmail">이메일 *</label>
+                    <input type="email" id="userEmail" name="userEmail" placeholder="example@email.com" required>
+                </div>
+
+                <button type="submit" class="modal-submit-btn">신청하기</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Products data
+        const products = [
+            { id: 1, name: '애플 워치 Series 11', rank: 1, image: 'https://images.unsplash.com/photo-1762768736724-443ee6a18e6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcHBsZSUyMHdhdGNoJTIwc2VyaWVzJTIwMTF8ZW58MXx8fHwxNzc1MTg5OTMxfDA&ixlib=rb-4.1.0&q=80&w=400' },
+            { id: 2, name: '네이버페이 5만원권', rank: 5, image: 'https://images.unsplash.com/photo-1733506312514-267f8134208a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYXZlciUyMHBheSUyMGdpZnQlMjBjYXJkJTIwZ3JlZW58ZW58MXx8fHwxNzc1MTg5OTMyfDA&ixlib=rb-4.1.0&q=80&w=400' },
+            { id: 3, name: '다이슨 스트레이트너', rank: 2, image: 'https://images.unsplash.com/photo-1708529589690-00e2bbb7f327?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkeXNvbiUyMHN0cmFpZ2h0ZW5lciUyMGhhaXIlMjB0b29sfGVufDF8fHx8MTc3NTE4OTkzMnww&ixlib=rb-4.1.0&q=80&w=400' },
+            { id: 4, name: '스탠리 텀블러 H2.0 텀블러', rank: 2, image: 'https://images.unsplash.com/photo-1692411643820-86e678337b5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdGFubGV5JTIwdHVtYmxlciUyMGN1cCUyMGJsdWV8ZW58MXx8fHwxNzc1MTg5OTMzfDA&ixlib=rb-4.1.0&q=80&w=400' },
+            { id: 5, name: '올리브영 3만원권', rank: 4, image: 'https://images.unsplash.com/photo-1774169285415-ebe4a44e8b95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvbGl2ZSUyMHlvdW5nJTIwZ2lmdCUyMGNhcmR8ZW58MXx8fHwxNzc1MTg5OTMzfDA&ixlib=rb-4.1.0&q=80&w=400' },
+            { id: 6, name: '스타벅스 아메리카노L 세트', rank: 6, image: 'https://images.unsplash.com/photo-1773409451227-8c624bf5cf1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdGFyYnVja3MlMjBpY2VkJTIwY29mZmVlJTIwZHJpbmt8ZW58MXx8fHwxNzc1MTg5OTMzfDA&ixlib=rb-4.1.0&q=80&w=400' },
+        ];
+
+        let selectedProductId = null;
+
+        // Initialize countdown timer
+        let hours = 10;
+        let minutes = 0;
+        let seconds = 2;
+
+        function updateTimer() {
+            document.getElementById('hour1').textContent = Math.floor(hours / 10);
+            document.getElementById('hour2').textContent = hours % 10;
+            document.getElementById('min1').textContent = Math.floor(minutes / 10);
+            document.getElementById('min2').textContent = minutes % 10;
+            document.getElementById('sec1').textContent = Math.floor(seconds / 10);
+            document.getElementById('sec2').textContent = seconds % 10;
+        }
+
+        function countdown() {
+            if (seconds > 0) {
+                seconds--;
+            } else if (minutes > 0) {
+                minutes--;
+                seconds = 59;
+            } else if (hours > 0) {
+                hours--;
+                minutes = 59;
+                seconds = 59;
+            } else {
+                return;
+            }
+            updateTimer();
+        }
+
+        // Start countdown
+        updateTimer();
+        setInterval(countdown, 1000);
+
+        // Render products
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.onclick = () => selectProduct(product.id);
+
+                card.innerHTML = `
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="product-divider">
+                        <div class="product-count">
+                            <span class="number">${product.rank}</span>
+                            <span class="text">개 남음</span>
+                        </div>
+                    </div>
+                    <div class="product-radio">
+                        <input type="radio" name="product" value="${product.id}" ${selectedProductId === product.id ? 'checked' : ''}>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+
+            // Update selected card styling
+            updateSelectedCard();
+        }
+
+        function selectProduct(productId) {
+            selectedProductId = productId;
+            renderProducts();
+        }
+
+        function updateSelectedCard() {
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach((card, index) => {
+                if (products[index].id === selectedProductId) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+        }
+
+        function openModal() {
+            if (selectedProductId === null) {
+                alert('상품을 선택해주세요.');
+                return;
+            }
+
+            const selectedProduct = products.find(p => p.id === selectedProductId);
+            document.getElementById('modalProductImage').src = selectedProduct.image;
+            document.getElementById('modalProductName').textContent = selectedProduct.name;
+            document.getElementById('modalProductCount').textContent = selectedProduct.rank;
+
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.getElementById('applicationForm').reset();
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('userName').value;
+            const phone = document.getElementById('userPhone').value;
+            const email = document.getElementById('userEmail').value;
+            const selectedProduct = products.find(p => p.id === selectedProductId);
+
+            alert(`신청이 완료되었습니다!\n\n상품: ${selectedProduct.name}\n이름: ${name}\n전화번호: ${phone}\n이메일: ${email}`);
+            closeModal();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Initial render
+        renderProducts();
+    </script>
+</body>
+</html>
