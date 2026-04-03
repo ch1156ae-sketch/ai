@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <h1>입력요소의 종류와 속성</h1>
+    <form action="" method="post">
+        <fieldset>
+            <legend>로그인</legend>
+            <ul>
+                <li>
+                    <label for="">아이디</label>
+                    <!--required 입력 요구 autofocus 자동 입력커서-->
+                    <input type="text" name="" id="" placeholder="아이디를 입력해주세요" required autofocus>
+                    <input type="button" value="중복확인">
+                </li>
+                <li>
+                    <label for="">패스워드</label>
+                    <input type="password" name="" id="" placeholder="패스워드를 입력하세요" required>
+                </li>
+                <button type="submit">로그인</button>
+                <button type="reset">취소</button>
+            </ul>
+        </fieldset>
+    </form>
+
+    <form action="" method="post">
+        <fieldset>
+            <legend>나의 정보</legend>
+            <ul>
+                <li>
+                    <label for="">e-mail:</label>
+                    <input type="email" name="" id="" placeholder="example@naver.com" required>
+                </li>
+                <li>
+                    <label for="">국적:</label>
+                    <label for="">내국인</label>
+                    <input type="radio" name="person" id="" checked value="내국인">
+                    <label for="">외국인</label>
+                    <input type="radio" name="person" id="" value="외국인">
+                </li>
+                <li>
+                    <label for="">search:</label>
+                    <!--readonly 읽기만 가능 타이핑 불가 disabled 폼기능끄기-->
+                    <input type="text" name="" id="" placeholder="webdesign" disabled>
+                </li>
+                <li>
+                    <label for="">url:</label>
+                    <input type="url" name="" id="" placeholder="http://">
+                </li>
+            </ul>
+            <button type="submit">전송</button>
+            <button type="reset">취소</button>
+        </fieldset>
+    </form>
+    
+    <form action="" method="post">
+        <fieldset>
+            <legend>나의 일정</legend>
+            <ul>
+                <li>
+                    <label for="">숫자입력</label>
+                    <input type="number" name="" id="" value="1" min="1" max="10">
+                </li>
+                <li>
+                    <label for="">전화번호</label>
+                    <input type="text" name="" id="" value="010" disabled> -
+                    <input type="text" class="tel" name="" id="" maxlength="4"> - 
+                    <input type="text" class="tel" name="" id="" maxlength="4">
+                </li>
+                <li>
+                    <label for="">난이도(상, 중, 하)</label>
+                    <input type="range" name="" id="" value="2" max="3">
+                </li>
+                <button type="submit">전송</button>
+                <button type="reset">취소</button>
+            </ul>
+        </fieldset>
+    </form>
+    <form action="">
+        <fieldset>
+            <legend>예약관리</legend>
+            <ul>
+                <li>
+                    <label for="">예약날짜</label>
+                    <input type="date" name="" id="">
+                </li>
+                <li>
+                    <label for="">예약시간</label>
+                    <input type="time" name="" id="">
+                </li>
+                <li>
+                    <label for="">예약날짜 및 시간</label>
+                    <input type="datetime-local" name="" id="">
+                </li>
+            </ul>
+            <button type="submit">전송</button>
+            <button type="reset">취소</button>
+        </fieldset>
+    </form>
+    <form action="" method="post">
+        <fieldset>
+            <legend>그래프(진행상황)</legend>
+            <ul>
+                <li>
+                    <label for="">color선택</label>
+                    <input type="color" name="" id="">
+                </li>
+                <li>
+                    <label for="">진행률 70%</label>
+                    <progress value="70" max="100"></progress>
+                </li>
+                <li>
+                    <label for="">사용량 50%</label>
+                    <meter value="50" max="100"></meter>
+                </li>
+            </ul>
+        </fieldset>
+        <div class="btn">
+            <button type="submit">전송</button>
+            <button type="reset">취소</button>
+        </div>
+    </form>
+</body>
+</html>
