@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>커넥츠 미러리스 이벤트</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Arial", "Apple SD Gothic Neo", sans-serif;
+      color: #222;
+      background: #ffffff;
+      min-width: 940px;
+    }
+
+    .page {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    main {
+      position: relative;
+    }
+
+    .hero {
+      width: 100%;
+      height: 566px;
+      background: radial-gradient(circle at 82% 10%, rgba(70,70,70,0.55), transparent 18%),
+                  radial-gradient(circle at 25% 30%, rgba(255,255,255,0.04), transparent 35%),
+                  linear-gradient(180deg, #171717 0%, #252525 55%, #2e2e2e 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0,0,0,0.28), rgba(0,0,0,0.05) 45%, rgba(0,0,0,0.25));
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      width: 940px;
+      margin: 0 auto;
+      position: relative;
+      height: 100%;
+      z-index: 2;
+    }
+
+    .top-nav {
+      width: 827px;
+      margin: 0 auto;
+      height: 50px;
+      position: relative;
+      padding-top: 26px;
+      color: #d7d7d7;
+      font-size: 13px;
+    }
+
+    .nav-left,
+    .nav-right {
+      position: absolute;
+      top: 28px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-left {
+      left: 0;
+      gap: 27px;
+      align-items: flex-end;
+    }
+
+    .nav-right {
+      right: 0;
+    }
+
+    .nav-left { left: 0; }
+    .nav-right { right: 0; }
+
+    .logo {
+      position: absolute;
+      left: 50%;
+      top: 22px;
+      transform: translateX(-50%);
+      color: #fff;
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+
+    .hero-title {
+      width: 100%;
+      text-align: center;
+      padding-top: 120px;
+      color: #fff;
+    }
+
+    .hero-title .small {
+      font-size: 30px;
+      color: #7a26ff;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
+    .hero-title .main {
+      font-size: 66px;
+      line-height: 1.12;
+      font-weight: 700;
+      letter-spacing: -3px;
+      margin-bottom: 20px;
+    }
+
+    .hero-title .sub {
+      font-size: 20px;
+      color: #e5e5e5;
+    }
+
+    
+
+    .product-stage {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 940px;
+      height: 260px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .product-stage img {
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .product {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .milk {
+      left: 10px;
+      bottom: 55px;
+      width: 84px;
+      height: 155px;
+      border-radius: 0 0 16px 16px;
+      background: linear-gradient(180deg, #f7f7f7 0%, #efe26b 42%, #f0dd55 100%);
+      color: #333;
+      font-weight: 700;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.28);
+    }
+
+    .drives {
+      left: 96px;
+      bottom: 68px;
+      width: 220px;
+      height: 170px;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    .drive {
+      width: 52px;
+      height: 150px;
+      border-radius: 6px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.28);
+      background: linear-gradient(180deg, #444, #111);
+    }
+
+    .drive:nth-child(2) { background: linear-gradient(180deg, #f0f0f0, #bcbcbc); }
+    .drive:nth-child(3) { background: linear-gradient(180deg, #1a72d8, #154890); }
+    .drive:nth-child(4) { background: linear-gradient(180deg, #f34b5f, #a92d3b); }
+
+    .tablet {
+      left: 330px;
+      bottom: 80px;
+      width: 265px;
+      height: 170px;
+      border: 4px solid #d0d0d0;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #4f4f4f, #111);
+      box-shadow: 0 14px 26px rgba(0,0,0,0.35);
+    }
+
+    .camera {
+      left: 308px;
+      bottom: 2px;
+      width: 340px;
+      height: 210px;
+      background: linear-gradient(180deg, #f7f7f7, #d8d8d8);
+      border-radius: 22px;
+      box-shadow: 0 14px 26px rgba(0,0,0,0.35);
+    }
+
+    .camera::before {
+      content: "";
+      position: absolute;
+      width: 148px;
+      height: 148px;
+      left: 97px;
+      top: 34px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #6ca3d8 0%, #1c2a35 18%, #111 28%, #212121 42%, #000 58%, #444 70%, #111 100%);
+      box-shadow: inset 0 0 0 18px #222, inset 0 0 0 34px #0f0f0f;
+    }
+
+    .camera::after {
+      content: "SONY";
+      position: absolute;
+      left: 130px;
+      top: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #5a5a5a;
+      letter-spacing: 1px;
+    }
+
+    .bubble {
+      left: 520px;
+      bottom: 188px;
+      width: 88px;
+      height: 88px;
+      background: #6f1cff;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.3;
+      box-shadow: 0 10px 18px rgba(0,0,0,0.24);
+    }
+
+    .bubble::after {
+      content: "";
+      position: absolute;
+      left: 12px;
+      bottom: -10px;
+      width: 18px;
+      height: 18px;
+      background: #6f1cff;
+      transform: rotate(45deg);
+    }
+
+    .coupon {
+      right: 30px;
+      bottom: 55px;
+      width: 228px;
+      height: 78px;
+      background: linear-gradient(90deg, #d0b077, #f0dfad 45%, #efe7cc);
+      color: #654;
+      font-weight: 700;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+    }
+
+    .card {
+      right: 106px;
+      bottom: 26px;
+      width: 285px;
+      height: 130px;
+      background: linear-gradient(180deg, #464154, #2b2637);
+      color: #fff;
+      font-size: 16px;
+      letter-spacing: 1px;
+      box-shadow: 0 14px 26px rgba(0,0,0,0.33);
+    }
+
+    .card span,
+    .coupon span,
+    .milk span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .product-visual {
+      width: 940px;
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .product-visual img {
+      width: 900px;
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .desc-section {
+      width: 100%;
+      min-width: 940px;
+      height: 443px;
+      background: #efefef;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .desc-inner {
+      width: 940px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    
+    
+    
+    
+    
+    
+    .desc-title {
+      text-align: center;
+      font-size: 26px;
+      color: #4a4a4a;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .desc-text {
+      width: 620px;
+      margin: 0 auto;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #8a8a8a;
+    }
+
+    .event-section {
+      width: 100%;
+      min-width: 940px;
+      height: 488px;
+      background: linear-gradient(-135deg, #b1c6f1 0%, #93d5de 55%, #c29be8 100%);
+      position: relative;
+      overflow: visible;
+    }
+
+    .event-inner {
+      width: 940px;
+      height: 488px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .media-wrap {
+      width: 622px;
+      height: 296px;
+      margin: 0 auto;
+      position: absolute;
+      left: 50%;
+      top: 28px;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    .video-box {
+      width: 522px;
+      height: 296px;
+      margin: 0 auto;
+      border: 5px solid #ffffff;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .video-box iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    
+
+    
+
+    
+
+    .side-arrow {
+      position: absolute;
+      top: 50%;
+      width: 22px;
+      height: 22px;
+      border-top: 6px solid #fff;
+      border-right: 6px solid #fff;
+      opacity: 0.9;
+    }
+
+    .side-arrow.left {
+      left: 0;
+      transform: translateY(-50%) rotate(-135deg);
+    }
+
+    .side-arrow.right {
+      right: 0;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .event-title {
+      color: rgba(255,255,255,0.92);
+      font-size: 18px;
+      margin-bottom: 18px;
+      position: relative;
+      display: inline-block;
+      padding: 0 18px;
+      margin-top: 204px;
+    }
+
+    .event-title::before,
+    .event-title::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 140px;
+      height: 1px;
+      background: rgba(255,255,255,0.55);
+    }
+
+    .event-title::before { right: 100%; }
+    .event-title::after { left: 100%; }
+
+    .steps-box {
+      width: 522px;
+      height: 140px;
+      margin: 0 auto 26px;
+      background: rgba(92, 106, 138, 0.62);
+      padding: 18px 16px;
+      color: #fff;
+    }
+
+    .steps {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .step {
+      width: 25%;
+      text-align: left;
+      position: relative;
+      padding-right: 6px;
+    }
+
+    .step:not(:last-child)::after {
+      content: ">";
+      position: absolute;
+      right: -4px;
+      top: -2px;
+      font-size: 24px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .step .num {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 0.3px;
+    }
+
+    .step p {
+      font-size: 11px;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.9);
+      word-break: keep-all;
+    }
+
+    .bottom-row {
+      width: 522px;
+      margin: 0 auto 62px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .note {
+      width: calc(100% - 111px);
+      text-align: left;
+      font-size: 12px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .apply-btn {
+      width: 111px;
+      height: 28px;
+      background: #6f1cff;
+      color: #fff;
+      font-size: 12px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-inner">
+        <nav class="top-nav">
+          <div class="nav-left">
+            <div>광고주센터</div>
+            <div>ROTICON</div>
+            <div>고객센터</div>
+          </div>
+          <div class="logo">CONECTS</div>
+          <div class="nav-right">
+            <div>로그인 / 회원가입</div>
+          </div>
+        </nav>
+
+        <div class="hero-title">
+          <div class="small">커넥츠가</div>
+          <div class="main">미러리스를밀어줄게</div>
+          <div class="sub">매일 밤 10시, 선착순 100% 증정</div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+    <div class="product-visual">
+      <img src="./images/camera.png" alt="제품 묶음 이미지" />
+    </div>
+
+    <section class="desc-section">
+      <div class="desc-inner">
+        <h2 class="desc-title">소중한 경험을 공유하는 여러분을 커넥츠가 응원합니다.</h2>
+        <p class="desc-text">
+          프리미엄 취업교육은 좋은 경험과 가치를 제공하기 위해 시작하게 되었습니다.<br>
+          커넥츠 프리미엄 리뷰를 통해서 사이트를 느껴본 여러분들의 리얼 활동과 체험 후기를
+          응원하며, 보다 특별한 혜택을 제공하고 있습니다.
+        </p>
+      </div>
+    </section>
+
+    <section class="event-section">
+      <div class="event-inner">
+        <div class="media-wrap">
+          <div class="side-arrow left"></div>
+          <div class="video-box">
+            <iframe src="https://www.youtube.com/embed/jS22KZkGzUU?si=IJVykLGWmP5OEhsb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <div class="side-arrow right"></div>
+        </div>
+
+        <div class="event-title">이벤트 참여방법</div>
+
+        <div class="steps-box">
+          <div class="steps">
+            <div class="step">
+              <div class="num">STEP 1</div>
+              <p>로그인을 해주세요.<br>(비회원일 경우 회원가입을 해주세요)</p>
+            </div>
+            <div class="step">
+              <div class="num">STEP 2</div>
+              <p>매일 밤 9시 50분에 공개되는 문제를 검색해 정답을 찾아주세요.</p>
+            </div>
+            <div class="step">
+              <div class="num">STEP 3</div>
+              <p>밤 10시 정각, 원하는 상품을 고르고 정답을 빠르게 제출!</p>
+            </div>
+            <div class="step">
+              <div class="num">STEP 4</div>
+              <p>10시 30분에 공지사항 당첨자 발표 게시판을 확인해주세요.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-row">
+          <div class="note">
+            단, 미러리스의 경우 필포가 드림 회원에만 제공됩니다.<br>
+            리뷰를 하는 데에 있어 도움이 될 수 있는 분들에 한해 선착순 참여하며,
+            판단 기준 등에 따라 2일 당첨이 제한됩니다.
+          </div>
+          <div class="apply-btn">평균가 신청</div>
+        </div>
+      </div>
+    </section>
+    </main>
+
+    
+  </div>
+</body>
+</html>
