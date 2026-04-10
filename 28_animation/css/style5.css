@@ -1,0 +1,114 @@
+@charset "utf-8";
+body{
+    font-family: "맑은 고딕";
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.box{
+    width: 1000px;
+    height: 1003px;
+    border: 5px solid red;
+    margin: 100px auto 0px;
+    position: relative;
+}
+
+.box .left{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -501.5px;
+    margin-left: -73px;
+    /* 애니메이션 실행 */
+    animation: left-ani 2s ease-in-out forwards;
+}
+
+@keyframes left-ani {
+    from{
+        left: 50%;
+    }
+    to{
+        left: 20%;
+    }
+}
+
+.box .right{
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    margin-top: -501.5px;
+    margin-right: -73px;
+    animation: right-ani 2s ease-in-out forwards;
+}
+
+@keyframes right-ani {
+    from{
+        right: 50%;
+    }
+    to{
+        right: 20%;
+    }
+}
+
+.box .title{
+    position: absolute;
+    /* 가로 세로 가운데 */
+    left: 50%;
+    top: 50%;
+    transform:  translate(-50%, -50%);
+    text-align: center;
+}
+.box .title h2{
+    font-size: 36px;
+    color: #333;
+    font-weight: 900;
+    opacity: 0;
+    animation: h2-ani 1s ease-in-out forwards  2s;
+}
+
+@keyframes h2-ani {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+.box .title p
+{
+    font-size: 18px;
+    color: #ccc;
+    font-weight: 600;
+    margin: 24px 0;
+    opacity: 0;
+    animation: p-ani 1s ease-in-out forwards 2.5s;
+}
+
+@keyframes p-ani {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    animation: btn-ani 1s ease-in-out forwards 3s;
+}
+
+@keyframes btn-ani {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
