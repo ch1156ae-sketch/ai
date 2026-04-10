@@ -1,0 +1,28 @@
+@charset "utf-8" ;
+
+body{
+
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+div{
+    width: 100px;
+    height: 100px;
+    background: red;
+    /* 원래 요소 */
+    transition: all 3s ease-in-out;
+    /* 크로스브라우징 */
+    -webkit-transition: all 3s;
+    -moz-transition: all 3s;
+    -o-transition: all 3s;
+    transition: all 0.5s ease-in-out 1s;
+}
+
+/* transition 사용불가 */
+div:hover {
+    width: 1500px;
+}
