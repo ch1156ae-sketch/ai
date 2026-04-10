@@ -1,0 +1,44 @@
+@charset "utf-8";
+body{
+
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+div{
+    width: 100px;
+    height:100px;
+    background: #000;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: box-ani 1s infinite forwards ;
+}
+
+/* 애니메이션 설정 */
+@keyframes box-ani {
+    0%{
+        left: 0;
+        top: 0;
+    }
+    25%{
+        left: 600px;
+        top: 0;
+    }
+    50%{
+        left: 600px;
+        top: 500px;
+    }
+    75%{
+        left: 0;
+        top: 500px;
+        background: yellow;
+    }
+    100%{
+        left: 0;
+        top: 0;
+    }
+}

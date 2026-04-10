@@ -1,0 +1,55 @@
+@charset "utf-8";
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    margin: 0 auto;
+}
+.boxwrap{
+    width: 1000px;
+    height: 300px;
+    border: 3px solid red;
+    position: relative;
+    margin: 100px auto;
+}
+
+.box{
+    width: 100px;
+    height: 100px;
+    background: yellow;
+    position: absolute;
+    left: 0px;
+    top: 0;
+    animation: box-ani 3s  forwards ;
+}
+
+@keyframes box-ani {
+    0%{
+        left: 0px;
+        top: 0px;
+    }
+    2%{
+        left: 900px;
+        top: 0px;
+    }
+    40%{
+        left: 900px;
+        top: 200px;
+    }
+    60%{
+        left: 0px;
+        top: 200px;
+    }
+    80%{
+        left: 0px;
+        top: 0px;
+    }
+    100%{
+        left: -103px;
+        top: 0px;
+    }
+    
+}

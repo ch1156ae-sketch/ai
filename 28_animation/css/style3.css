@@ -1,0 +1,47 @@
+@charset "utf-8";
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.boxwrap{
+    width: 1000px;
+    height: 300px;
+    border: 3px solid blue;
+    position: relative;
+    margin: 0 auto;
+}
+
+.box{
+    width: 100px;
+    height: 100px;
+    background: hotpink;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: box-ani 1s ease-in-out infinite forwards ;
+}
+
+@keyframes box-ani {
+    0%{
+        left: 0;
+        top: 0;
+    }
+    25%{
+        left: 900px;
+        top: 0;
+    }
+    50%{
+        left: 900px;
+        top: 200px;
+    }
+    75%{
+        left: 0;
+        top: 200px;
+    }
+    100%{
+        left: 0;
+        top: 0;
+    }
+}

@@ -1,0 +1,41 @@
+@charset "utf-8";
+
+body{
+
+}
+*{
+
+}
+
+div{
+    width: 100px;
+    height: 100px;
+    background: red;
+    position: absolute;
+    left: 0;
+    top: 0;
+    /* 애니메이션 실행 명령*/
+    animation-name: box;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    /* 애니메이션 위치초기화 방지 */
+    animation-fill-mode: forwards;
+    /* 애니메이션 반복 실행 */
+    animation-iteration-count: 5;
+    /* 애니메이션 무한 반복 */
+    animation-iteration-count: infinite;
+    /* 애니메이션 핑퐁 */
+    animation-direction: alternate;
+    animation-delay: 10s;
+    animation: box 2s 5s ease-in-out forwards infinite alternate;
+}
+/* 애니메이션 설정 */
+@keyframes box {
+    from{
+        left: 0;
+    }
+    
+    to{
+        left: 1000px;
+    }
+}
