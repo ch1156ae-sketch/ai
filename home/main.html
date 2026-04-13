@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>집반찬연구소 스타일 시안</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
+      background: #ffffff;
+      color: #222;
+      line-height: 1.4;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { display: block; width: 100%; }
+
+    .wrap {
+      width: 100%;
+      background: #ffffff;
+    }
+
+    .inner {
+      width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* header */
+    .topbar {
+      background: #fff;
+    }
+    .top-links {
+      width: 100%;   
+      margin: 0;  
+      display: flex;
+      justify-content: flex-end;
+      gap: 24px;
+      padding: 10px 0 6px;
+      font-size: 14px;
+      color: #757575;
+      font-weight: 500;
+    }
+    .header-main {
+      background: #fff;
+    }
+    .header-row {
+      width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 10px 0 14px;
+      margin-bottom: 20px;
+    }
+    .search-box {
+      width: 350px;
+      height: 50px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      display: flex;
+      overflow: hidden;
+      background: #fff;
+    }
+    .search-box input {
+      width: calc(100% - 50px);
+      height: 100%;
+      border: 0;
+      padding: 0 14px;
+      font-size: 14px;
+      color: #666;
+      outline: none;
+    }
+    .search-box button {
+      width: 50px;
+      height: 100%;
+      border: 0;
+      background: #fff;
+      cursor: pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .search-box button img{
+      width:20px;
+      height:20px;
+      object-fit:contain;
+    }
+    .logo {
+      width:158px;
+      height:62px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .logo img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+    .logo .mark {
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+    .logo .name {
+      font-family: "Pretendard", sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: #111111;
+      letter-spacing: -0.3px;
+      min-height: 36px;
+    }
+    
+    .gnb {
+      display: flex;
+      gap: 4px;
+      font-size: 17px;
+      color: #333333;
+      font-weight: 500;
+      align-items: center;
+    }
+    .gnb a{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+    .gnb a img{
+      width:18px;
+      height:18px;
+      object-fit:contain;
+      flex-shrink:0;
+    }
+
+    /* hero */
+    .hero {
+      background: #dbeceb;
+      padding: 0;
+    }
+    .hero-inner {
+      width: 100%;
+      margin: 0;
+    }
+    .hero img{
+      width:100%;
+      height:480px;
+      object-fit:cover;
+      display:block;
+    }
+
+    /* sections */
+    .section {
+      padding: 18px 0 0;
+    }
+    .inner > .section:first-child {
+      margin-top: 50px;
+    }
+    .section-title {
+      text-align: center;
+      font-family: "Pretendard", sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: #111111;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+    .section-sub {
+      text-align: center;
+      font-family: "Pretendard", sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: #505050;
+      margin-bottom: 26px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px 12px;
+    }
+    .card {
+      background: #ffffff;
+    }
+    .thumb {
+      position: relative;
+      width: 100%;
+      height: 370px;
+      background: #f7f5f1;
+      overflow: hidden;
+    }
+
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+    .plate, .food{ display:none; }
+
+    .lock {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      width: 42px;
+      height: 43px;
+    }
+    .lock img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+    .badge {
+      position: absolute;
+      left: 8px;
+      top: 8px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #BD2420;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info {
+      padding: 8px 2px 0;
+    }
+    
+    .info > * + * {
+      margin-top: 8px;
+    }
+
+    .label-row {
+      font-size: 10px;
+      margin-bottom: 0;
+    }
+    .label-hot {
+      font-family: "Pretendard", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #BD2420;
+      background: #F5DEDE;
+      margin-right: 4px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .label-best {
+      font-family: "Pretendard", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #F39F1A;
+      background: #FDF0DC;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-right: 4px;
+    }
+    .label-pop {
+      font-family: "Pretendard", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #316F35;
+      background: #DBE6DC;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-right: 4px;
+      display: inline-block;
+    }
+    .name {
+      font-size: 18px;
+      color: #111;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+    .desc {
+      font-family: "Pretendard", sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: #565656;
+    }
+    
+    .price {
+      font-family: "Pretendard", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #000;
+    }
+    .price .sale {
+      font-family: "Pretendard", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #d74a34;
+      margin-right: 4px;
+    }
+    .old {
+      font-family: "Pretendard", sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #999;
+      text-decoration: line-through;
+      margin-top: 2px !important; 
+    }
+
+    .benefits {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px 0 42px;
+    }
+    .benefit {
+      width: 389px;
+      height: 150px;
+      background: #f8f8f8;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+    .benefit .txt1 {
+      font-size: 20px;
+      color: #333;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .benefit .txt2 {
+      font-size: 24px;
+      color: #333;
+      font-weight: 500;
+      letter-spacing: -0.6px;
+    }
+    .benefit .icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .benefit .icon img{
+      width:48px;
+      height:48px;
+      object-fit:contain;
+    }
+    
+
+    .md-tabs {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      flex-wrap: wrap;
+    }
+    .md-tabs span {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      font-family: "Pretendard", sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #333333;
+    }
+    .md-tabs span.active {
+      background: #0D5611;
+      color: #fff;
+      border-color: #0D5611;
+    }
+
+    footer {
+      padding: 38px 0 60px;
+      color: #888;
+      font-size: 10px;
+    }
+    .footer-inner {
+      width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      padding-top: 24px;
+    }
+    .footer-title {
+      font-family: "Pretendard", sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 8px;
+    }
+    .footer-block p { margin-bottom: 4px; }
+    .footer-block:nth-child(2) p{
+      font-family: "Pretendard", sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #757575;
+    }
+    .footer-block:nth-child(2) p:nth-child(2){
+      color: #333333;
+      white-space: nowrap;
+    }
+    .footer-block:nth-child(2) p:nth-child(3),
+    .footer-block:nth-child(2) p:nth-child(4){
+      font-family: "Pretendard", sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #cccccc;
+    }
+    .footer-block p:nth-child(2){ margin-bottom: 0; }
+    .footer-block p:nth-child(3){ margin-bottom: 12px; }
+    .footer-block:nth-child(2) p:nth-child(2){ margin-bottom: 12px; }
+    .footer-block:nth-child(2) p:nth-child(3){ margin-bottom: 0; }
+    .footer-block:nth-child(2) p:nth-child(4){ margin-bottom: 0; }
+    .footer-block p:nth-child(2){
+      font-family: "Pretendard", sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #000;
+    }
+    .footer-block p:nth-child(3){
+      font-family: "Pretendard", sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: #000;
+    }
+    
+
+    @media (max-width: 1024px) {
+      .inner,
+      .top-links,
+      .header-row,
+      .hero-inner,
+      .footer-inner {
+        width: calc(100% - 32px);
+      }
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .benefits { grid-template-columns: 1fr; }
+      .header-row { gap: 14px; }
+      .logo { transform: none; }
+      .gnb { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="inner"> 
+    <div class="topbar">
+      <div class="top-links">
+        <a href="#">로그인</a>
+        <a href="#">회원가입</a>
+        <a href="#">나의정보</a>
+      </div>
+    </div>
+    </div>
+
+    <header class="header-main">
+      <div class="header-row">
+        <div class="search-box">
+          <input type="text" placeholder="반찬을 입력해주세요" />
+          <button>
+            <img src="./images/icons_search.png" alt="검색">
+          </button>
+        </div>
+
+        <div class="logo">
+          <img src="./images/logo.png" alt="로고">
+        </div>
+
+        <nav class="gnb">
+          <a href="#"><img src="./images/icons_call.svg" alt="전화주문 아이콘">전화주문</a>
+          <a href="#"><img src="./images/icons_brand.png" alt="브랜드 아이콘">브랜드</a>
+          <a href="#"><img src="./images/icons_banchan.png" alt="반찬보기 아이콘">반찬보기</a>
+          <a href="#"><img src="./images/icons_shop.png" alt="장바구니 아이콘">장바구니</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <img src="./images/img_hero.png" alt="메인배너">
+      </div>
+    </section>
+
+    <main class="inner">
+      <section class="section">
+        <h2 class="section-title">부담없는 알뜰 반찬</h2>
+        <p class="section-sub">착한 가격으로 챙기는 든든한 한 끼</p>
+        <div class="product-grid">
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img1.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div>
+            <div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">쭈꾸미 풋마늘 파스타</h3><p class="desc">봄기운 가득! 쭈꾸미와 풋마늘의 찰떡 궁합</p><p class="price"><span class="sale">7%</span>12,800원</p><p class="old">13,800원</p></div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img2.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div>
+            <div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">쭈꾸미 미나리 파스타</h3><p class="desc">지금이 제철! 쭈꾸미와 미나리의 만남</p><p class="price"><span class="sale">7%</span>12,800원</p><p class="old">13,800원</p></div>
+          </article>
+
+          <article class="card">
+            <div class="thumb"><img src="./images/img3.png" alt="상품이미지"><span class="lock"><img src="./images/icons_save.png" alt="lock"></span></div>
+            <div class="info"><div class="label-row"><span class="label-pop">인기</span> <span class="label-best">맵지않음</span></div><h3 class="name">잡채</h3><p class="desc">탱글한 면발과 맛깔진 고명이 가득</p><p class="price">12,800원</p></div>
+          </article>
+
+          <article class="card">
+            <div class="thumb"><img src="./images/img4.png" alt="상품이미지"><span class="lock"><img src="./images/icons_save.png" alt="lock"></span></div>
+            <div class="info"><h3 class="name">한끼 한돈제육_완조리</h3><p class="desc">혼자 먹기 딱 좋은. 1인분 제육볶음</p><p class="price">6,800원</p></div>
+          </article>
+
+          <article class="card">
+            <div class="thumb"><img src="./images/img5.png" alt="상품이미지"><span class="lock"><img src="./images/icons_save.png" alt="lock"></span></div>
+            <div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">[원더스푼] 된장국</h3><p class="desc">매일 먹어도 좋은 담백한 된장국</p><p class="price">3,300원</p></div>
+          </article>
+
+          <article class="card">
+            <div class="thumb"><img src="./images/img6.png" alt="상품이미지"><span class="lock"><img src="./images/icons_save.png" alt="lock"></span></div>
+            <div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">[원더스푼] 맑은 순두부찌개</h3><p class="desc">맵지 않은 순두부찌개. 아이도 OK</p><p class="price">4,300원</p></div>
+          </article>
+
+          <article class="card">
+            <div class="thumb"><img src="./images/img7.png" alt="상품이미지"><span class="lock"><img src="./images/icons_save.png" alt="lock"></span></div>
+            <div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">[원더스푼] 맛살 계란 덮밥</h3><p class="desc">고소한 맛살과 폭신한 계란의 부드러운 조합</p><p class="price">4,300원</p></div>
+          </article>
+
+          <article class="card">
+            <div class="thumb"><img src="./images/img8.png" alt="상품이미지"><span class="lock"><img src="./images/icons_save.png" alt="lock"></span></div>
+            <div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">[원더스푼] 한우 스테이크소스 덮밥</h3><p class="desc">한우의 풍미를 그대로 담은 스테이크소스</p><p class="price">4,500원</p></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top: 48px;">
+        <h2 class="section-title">집 밥 한끼</h2>
+        <p class="section-sub">치솟는 물가엔 현명한 소비</p>
+        <div class="product-grid">
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img21.png" alt="상품이미지">
+              <span class="badge">11%</span>
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div>
+            <div class="info"><h3 class="name">메추리알 간장조림</h3><p class="price"><span class="sale">11%</span>3,400원</p><p class="old">3,800원</p></div>
+          </article>
+          <article class="card">
+            <div class="thumb">
+              <span class="badge">12%</span>
+              <img src="./images/img22.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div>
+            <div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">한우야채카레</h3><p class="desc">부드러운 한우와 채소를 담아낸 진한 카레 한그릇</p><p class="price"><span class="sale">12%</span>3,800원</p><p class="old">4,300원</p></div>
+          </article>
+          <article class="card">
+            <div class="thumb">
+              <span class="badge">11%</span>
+              <img src="./images/img23.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div>
+            <div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">[원더스푼] 한우 소고기 미역국</h3><p class="desc">깊고 부드러운 국물 맛이 살아있는 든든한 미역국</p><p class="price"><span class="sale">11%</span>4,700원</p><p class="old">5,300원</p></div>
+          </article>
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img24.png" alt="상품이미지">
+              <span class="badge">12%</span>
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div>
+            <div class="info"><h3 class="name">한끼 한돈 김치두루치기_완조리</h3><p class="desc">한돈과 김치를 매콤하게 볶아낸 집밥 스타일 메인반찬</p><p class="price"><span class="sale">12%</span>6,400원</p><p class="old">7,300원</p></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top: 56px;">
+        <h2 class="section-title">새로 나온 반찬</h2>
+        <p class="section-sub">따끈따끈한 신메뉴 출시</p>
+        <div class="product-grid">
+          <article class="card"><div class="thumb">
+              <img src="./images/img31.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">[원더스푼] 두부덮밥</h3><p class="desc">매콤하고 구수한 된장 베이스의 한그릇</p><p class="price">3,500원</p></div></article>
+          <article class="card"><div class="thumb">
+              <img src="./images/img32.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">[원더스푼] 한돈 순두부 덮밥</h3><p class="desc">몽글몽글 부드러운 한돈 순두부 소스</p><p class="price">3,800원</p></div></article>
+          <article class="card"><div class="thumb">
+              <img src="./images/img33.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">[원더스푼] 한우 하이라이스 덮밥</h3><p class="desc">부드럽게 끓여낸 한우 하이라이스 소스</p><p class="price">4,300원</p></div></article>
+          <article class="card"><div class="thumb">
+              <img src="./images/img34.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">[원더스푼] 한우 삼색 소보로 덮밥</h3><p class="desc">알록달록 색감까지 맛있는 삼색 덮밥</p><p class="price">4,800원</p></div></article>
+
+          <article class="card"><div class="thumb">
+              <img src="./images/img35.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">맑은 한우 배추국_냉동</h3><p class="desc">담백하고 시원한 국물, 한우와 배추의 깊은 맛</p><p class="price">9,800원</p></div></article>
+          <article class="card"><div class="thumb">
+              <img src="./images/img36.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">소고기 무국(냉동)</h3><p class="desc">소고기와 무를 푹 끓여 시원한</p><p class="price">9,300원</p></div></article>
+          <article class="card"><div class="thumb">
+              <img src="./images/img37.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">한우사골곰탕(냉동)</h3><p class="desc">국물이 진하고 담백해요</p><p class="price">6,800원</p></div></article>
+          <article class="card"><div class="thumb">
+              <img src="./images/img38.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-hot">신제품</span> <span class="label-best">맵지않음</span></div><h3 class="name">배추 된장국(냉동)</h3><p class="desc">국산콩 된장과 배추로 구수한</p><p class="price">7,800원</p></div></article>
+        </div>
+
+        <div class="benefits">
+          <div class="benefit"><div><p class="txt1">1588-1234</p><p class="txt2">전화주문 바로가기</p></div><div class="icon"><img src="./images/call.png" alt="아이콘"></div></div>
+          <div class="benefit"><div><p class="txt1">우리가족 건강하게</p><p class="txt2">우리아이 영양식단 레벨업</p></div><div class="icon"><img src="./images/baby.png" alt="아이콘"></div></div>
+          <div class="benefit"><div><p class="txt1">프리미엄 온라인 반찬가게</p><p class="txt2">집반찬연구소의 이야기</p></div><div class="icon"><img src="./images/eat.png" alt="아이콘"></div></div>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top: 0;">
+        <h2 class="section-title">MD 추천 반찬</h2>
+        <p class="section-sub">이번 주 가장 추천하는 제품만 골라드려요.</p>
+        <div class="md-tabs">
+          <span class="active">비빔밥</span>
+          <span>국 / 찌개 / 탕</span>
+          <span>어린이반찬</span>
+          <span>볶음</span>
+          <span>무침</span>
+          <span>메인요리</span>
+          <span>조림</span>
+        </div>
+
+        <div class="product-grid">
+          <article class="card"><div class="thumb">
+              <img src="./images/img41.png" alt="상품이미지">
+              <span class="badge">13%</span>
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-best">맵지않음</span></div><h3 class="name">아이들 한우 비빔밥</h3><p class="desc">아이들도 맛있게 먹는 비빔밥 출시!</p><p class="price"><span class="sale">13%</span>9,400원</p><p class="old">10,800원</p></div></article>
+          <article class="card"><div class="thumb">
+              <img src="./images/img42.png" alt="상품이미지">
+              <span class="lock"><img src="../images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-pop">인기</span></div><h3 class="name">나물 비빔밥</h3><p class="desc">가심비 가득, 정성 가득 비빔밥</p><p class="price">10,800원</p></div></article>
+          <article class="card"><div class="thumb">
+              <img src="./images/img43.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-pop">인기</span></div><h3 class="name">한우 비빔밥</h3><p class="desc">고기를 더해 더 맛깔스러워진</p><p class="price">12,800원</p></div></article>
+          <article class="card"><div class="thumb">
+              <img src="./images/img44.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-pop">인기</span></div><h3 class="name">양념꼬막 비빔밥</h3><p class="desc">꼬막이 왔꼬막</p><p class="price">13,800원</p></div></article>
+
+          <article class="card"><div class="thumb">
+              <img src="./images/img45.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-pop">인기</span> <span class="label-best">맵지않음</span></div><h3 class="name">감자채볶음</h3><p class="desc">고소하면서 담백한 감자채볶음</p><p class="price">2,800원</p></div></article>
+          <article class="card"><div class="thumb">
+              <img src="./images/img46.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-pop">인기</span> <span class="label-best">맵지않음</span></div><h3 class="name">미역줄기볶음</h3><p class="desc">바다의 채소 미역줄기</p><p class="price">2,800원</p></div></article>
+          <article class="card"><div class="thumb">
+              <img src="./images/img47.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-best">맵지않음</span></div><h3 class="name">느타리버섯볶음</h3><p class="desc">담백한 버섯 특유의 향미가 일품</p><p class="price">3,800원</p></div></article>
+          <article class="card"><div class="thumb">
+              <img src="./images/img48.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="lock"></span>
+            </div><div class="info"><div class="label-row"><span class="label-pop">인기</span> <span class="label-best">맵지않음</span></div><h3 class="name">호두 멸치볶음</h3><p class="desc">담백한 버섯 특유의 향미가 일품</p><p class="price">4,800원</p></div></article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-block">
+          <p class="footer-title">고객센터</p>
+          <p>1588-3754</p>
+          <p>zipbanchan@sannamchon.co.kr</p>
+          <p>평일 08:30~17:30 / 토요일 08:30~12:00</p>
+          <p>점심시간 12:00~13:00</p>
+          <p>일요일, 공휴일은 휴무입니다.</p>
+        </div>
+        <div class="footer-block">
+          <p class="footer-title">집반찬연구소</p>
+          <p>인천광역시 서구 가석로 26(가좌동) 집반찬연구소    대표자 : 박종철<br>사업자등록번호 : 121-86-17743    통신판매업 신고번호 : 제 2023-인천서구-3834 호    개인정보보호책임자 : 정문채<br>제휴 문의 : zipbanchan@sannamchon.co.kr</p>
+          <p style="border-bottom:1px solid #e5e5e5; display:inline-block; padding-bottom:0; line-height:1.2;">집반찬연구소 소개&nbsp;&nbsp;이용약관&nbsp;&nbsp;개인정보처리방침</p>
+          <p>Copyright ⓒ SANNAMCHON CORP. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
