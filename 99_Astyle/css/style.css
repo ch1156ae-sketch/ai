@@ -31,6 +31,7 @@ header .gnb> ul{
     justify-content: space-between;
     align-items: center;
     
+    
 }
 
 header .gnb>ul li{
@@ -41,6 +42,7 @@ header .gnb>ul li{
     border: #333;
     text-align: center;
     position: relative;
+    border: 1px solid #333;
 }
 
 li:hover{
