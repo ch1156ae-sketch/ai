@@ -1,0 +1,237 @@
+@charset "utf-8";
+ /* hero */
+    .hero {
+      background: #dbeceb;
+      padding: 0;
+    }
+    .hero-inner {
+      width: 100%;
+      margin: 0;
+    }
+    .hero img{
+      width:100%;
+      height:480px;
+      object-fit:cover;
+      display:block;
+    }
+
+    /* sections */
+    .section {
+      padding: 18px 0 0;
+    }
+    .inner > .section:first-child {
+      margin-top: 50px;
+    }
+    .section-title {
+      text-align: center;
+      font-family: "Pretendard", sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: #111111;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+    .section-sub {
+      text-align: center;
+      font-family: "Pretendard", sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: #505050;
+      margin-bottom: 16px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px 12px;
+    }
+    .card {
+      background: #ffffff;
+    }
+    .thumb {
+      position: relative;
+      width: 100%;
+      height: 370px;
+      background: #f7f5f1;
+      overflow: hidden;
+    }
+
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+    .plate, .food{ display:none; }
+
+    .lock {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      width: 42px;
+      height: 43px;
+    }
+    .lock img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+    .badge {
+      position: absolute;
+      left: 8px;
+      top: 8px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #BD2420;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info {
+      padding: 8px 2px 0;
+    }
+    
+    .info > * + * {
+      margin-top: 8px;
+    }
+
+    .label-row {
+      font-size: 10px;
+      margin-bottom: 0;
+    }
+    .label-hot {
+      font-family: "Pretendard", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #BD2420;
+      background: #F5DEDE;
+      margin-right: 4px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .label-best {
+      font-family: "Pretendard", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #F39F1A;
+      background: #FDF0DC;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-right: 4px;
+    }
+    .label-pop {
+      font-family: "Pretendard", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #316F35;
+      background: #DBE6DC;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-right: 4px;
+      display: inline-block;
+    }
+    .name {
+      font-size: 18px;
+      color: #111;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+    .desc {
+      font-family: "Pretendard", sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: #565656;
+    }
+    
+    .price {
+      font-family: "Pretendard", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #000;
+    }
+    .price .sale {
+      font-family: "Pretendard", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #d74a34;
+      margin-right: 4px;
+    }
+    .old {
+      font-family: "Pretendard", sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #999;
+      text-decoration: line-through;
+      margin-top: 2px !important; 
+    }
+
+    .benefits {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px 0 42px;
+    }
+    .benefit {
+      width: 389px;
+      height: 150px;
+      background: #f8f8f8;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+    .benefit .txt1 {
+      font-size: 20px;
+      color: #333;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .benefit .txt2 {
+      font-size: 24px;
+      color: #333;
+      font-weight: 500;
+      letter-spacing: -0.6px;
+    }
+    .benefit .icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .benefit .icon img{
+      width:48px;
+      height:48px;
+      object-fit:contain;
+    }
+    
+
+    .md-tabs {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      flex-wrap: wrap;
+    }
+    .md-tabs span {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      font-family: "Pretendard", sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #333333;
+    }
+    .md-tabs span.active {
+      background: #0D5611;
+      color: #fff;
+      border-color: #0D5611;
+    }
