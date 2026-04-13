@@ -32,8 +32,8 @@
       background: #fff;
     }
     .top-links {
-      width: 980px;
-      margin: 0 auto;
+      width: 100%;   
+      margin: 0;  
       display: flex;
       justify-content: flex-end;
       gap: 24px;
@@ -49,9 +49,10 @@
       width: 1200px;
       margin: 0 auto;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: space-between;
       padding: 10px 0 14px;
+      margin-bottom: 20px;
     }
     .search-box {
       width: 350px;
@@ -432,7 +433,7 @@
       .header-row,
       .hero-inner,
       .footer-inner {
-        width: calc(1200px - 32px);
+        width: calc(100% - 32px);
       }
       .product-grid { grid-template-columns: repeat(2, 1fr); }
       .benefits { grid-template-columns: 1fr; }
@@ -444,6 +445,7 @@
 </head>
 <body>
   <div class="wrap">
+    <div class="inner"> 
     <div class="topbar">
       <div class="top-links">
         <a href="#">로그인</a>
@@ -451,11 +453,12 @@
         <a href="#">나의정보</a>
       </div>
     </div>
+    </div>
 
     <header class="header-main">
       <div class="header-row">
         <div class="search-box">
-          <input type="text" placeholder="신선한 집밥레시피" />
+          <input type="text" placeholder="반찬을 입력해주세요" />
           <button>
             <img src="./images/icons_search.png" alt="검색">
           </button>
