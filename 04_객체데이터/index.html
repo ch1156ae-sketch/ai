@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>객체데이터</title>
+</head>
+<body>
+    <!-- 객체를 선언하는 방법 -->
+    <!--  객체에 접근해서 data를 가져와서 (접근) -->
+    <!-- 객체 변수명.key값 -->
+    <!-- key값은 개발자가 만들어서 사용한다 -->
+
+    <script>
+
+        // 배열로 선언 처리
+        let score=[100, 90, 80, 70];
+        document.write(
+            `국어 점수 = ${score[0]}<br>
+             영어 점수 = ${score[1]}<br>
+             수학 점수 = ${score[2]}<br>
+             과학 점수 = ${score[3]}`
+            );
+
+        // 객체로 선언 처리
+        let score2={
+            kor:100,
+            eng:90,
+            math:80,
+            sci:70,
+        };
+
+        console.log(score2);
+        document.write(`<hr>`)
+        document.write(`
+            국어점수 = ${score2.kor}<br>
+            영어점수 = ${score2.eng}<br>
+            수학 점수 = ${score2.math}<br>
+            과학 점수 = ${score2.sci}<br>
+            `);
+
+    
+    </script>
+</body>
+</html>
