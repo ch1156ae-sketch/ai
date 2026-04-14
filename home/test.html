@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+    <title>상세페이지 메인 영역</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #fff;
+      font-family: "Pretendard", "Noto Sans KR", sans-serif;
+      color: #222;
+    }
+
+    .main-wrap {
+      width: 1200px;
+      margin: 60px auto 0;
+      padding: 40px;
+    }
+
+    .detail-main {
+      width: 100%;
+    }
+
+    .product-top {
+      display: flex;
+      gap: 52px;
+      align-items: flex-start;
+      margin-bottom: 40px;
+    }
+
+    .product-image {
+      width: 500px;
+      height: 500px;
+      flex-shrink: 0;
+      background: none;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: none;
+      object-position: center;
+    }
+
+    .product-info {
+      flex: 1;
+      padding-top: 10px;
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-title {
+      font-size: 36px;
+      line-height: 1.2;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .product-desc {
+      font-size: 16px;
+      font-weight: 400;
+      color: #7a7a7a;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .price-line {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .discount-rate {
+      font-size: 24px;
+      font-weight: 600;
+      color: #222;
+    }
+
+    .sale-price {
+      font-size: 24px;
+      font-weight: 600;
+      color: #222;
+      letter-spacing: -0.02em;
+    }
+
+    .original-price {
+      font-size: 16px;
+      font-weight: 400;
+      color: #a5a5a5;
+      text-decoration: line-through;
+      margin-bottom: 120px;
+    }
+
+    .purchase-box {
+      margin-top: auto;
+      border-top: 1px solid #d7d7d7;
+      
+    }
+
+    .purchase-row {
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #222;
+    }
+
+    .purchase-row + .purchase-row {
+      border-top: 1px solid #d7d7d7;
+    }
+
+    .purchase-row:last-child {
+      border-bottom: 0;
+      height: 58px;
+      color: #222;
+    }
+
+    .qty-box {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #d7d7d7;
+      background: #fff;
+      width: 107px;
+      height: 32px;
+      overflow: hidden;
+    }
+
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-size: 0;
+    }
+
+    /* minus */
+    .qty-btn::before {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 2px;
+      background: #B2B2B2;
+    }
+
+    /* plus */
+    .qty-btn:last-child::after {
+      content: "";
+      position: absolute;
+      width: 2px;
+      height: 12px;
+      background: #B2B2B2;
+    }
+
+    .qty-value {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #222;
+      border-left: 1px solid #ececec;
+      border-right: 1px solid #ececec;
+    }
+
+    .total-price {
+      font-size: 31px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #222;
+    }
+
+    .notice-bar,
+    .button-bar,
+    .detail-section,
+    .recommend-section,
+    .review-section {
+      padding-top: 40px;
+      padding-bottom: 60px;
+      margin-bottom: 60px;
+    }
+
+    /* notice-bar는 내부 중앙정렬 위해 padding 제거 */
+    .notice-bar {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .review-content {
+      width: 1120px;
+      margin: 0 auto;
+    }
+
+    .review-title {
+      font-family: "MaruBuri", serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: center;
+      color: #111;
+      margin-bottom: 56px;
+    }
+
+    .photo-review-label {
+      font-family: "Pretendard", sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 20px;
+    }
+
+    .photo-review-strip {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .photo-review-thumb {
+      width: 180px;
+      height: 180px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .photo-review-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .review-list {
+      border-top: 1px solid #e9e9e9;
+    }
+
+    .review-item {
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      gap: 40px;
+      padding: 24px 0;
+      border-bottom: 1px solid #efefef;
+    }
+
+    .review-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .review-user-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .review-user {
+      font-family: "Pretendard", sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+      color: #111;
+      letter-spacing: -0.02em;
+    }
+
+    .review-badge {
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: #E7F0E8;
+      color: #6E8B72;
+      font-family: "Pretendard", sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .review-stars {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .star {
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%230D6B1D' d='M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 17.8 5.8 20.3l1.6-6.8L2.2 8.9l6.9-.6L12 2z'/></svg>") no-repeat center/contain;
+    }
+
+    .star.off {
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23DFDFDF' d='M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 17.8 5.8 20.3l1.6-6.8L2.2 8.9l6.9-.6L12 2z'/></svg>") no-repeat center/contain;
+    }
+
+    
+
+    .review-date {
+      font-family: "Pretendard", sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1;
+      color: #A3A3A3;
+      letter-spacing: -0.02em;
+    }
+
+    .review-body {
+      padding-top: 6px;
+    }
+
+    .review-text {
+      font-family: "Pretendard", sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: #333;
+      margin-bottom: 20px;
+      word-break: keep-all;
+    }
+
+    .review-image {
+      width: 110px;
+      height: 110px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .review-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .review-more {
+      display: flex;
+      justify-content: center;
+      padding-top: 44px;
+    }
+
+    .review-more-btn {
+      width: 192px;
+      height: 48px;
+      border: 1px solid #D7D7D7;
+      border-radius: 999px;
+      background: #fff;
+      font-size: 18px;
+      color: #555;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .review-more-btn::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid #555;
+      border-bottom: 2px solid #555;
+      transform: rotate(45deg) translateY(-2px);
+    }
+
+    .notice-bar {
+      height: 80px;
+      background: #F5F5F5;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #1b1b1b;
+      font-weight: 500;
+      text-align: center;
+      gap: 6px;
+    }
+    }
+
+    .notice-bar .star {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      margin-right: 6px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%230D6B1D' d='M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 17.8 5.8 20.3l1.6-6.8L2.2 8.9l6.9-.6L12 2z'/></svg>") no-repeat center/contain;
+      font-size: 0;
+    }
+
+    .highlight-price {
+      color: #0D5611;
+      font-weight: 700;
+    }
+
+    .tab-menu {
+      width: 100%;
+      height: 96px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 170px;
+      border-bottom: 1px solid #D9D9D9;
+      position: relative;
+      margin-top: 32px;
+      padding-bottom: 20px;
+    }
+
+    .tab-item {
+      font-family: "Pretendard", sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1;
+      color: #A6A6A6;
+      position: relative;
+      cursor: pointer;
+      min-width: 120px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    }
+
+    .tab-item.active {
+      color: #0D6B1D;
+    }
+
+    .tab-item.active::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -21px;
+      width: 200px;
+      height: 2px;
+      background: #0D6B1D;
+    }
+
+    .tab-badge {
+      position: static;
+      min-width: 62px;
+      height: 28px;
+      padding: 0 10px;
+      border-radius: 4px;
+      background: #E7F0E8;
+      color: #0D6B1D;
+      font-family: "Pretendard", sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 28px;
+      text-align: center;
+    }
+    }
+
+    .detail-section {
+      margin-bottom: 0;
+      background: none;
+      padding: 40px 0 0;
+    }
+
+    .detail-content {
+      width: 1120px;
+      margin: 0 auto;
+      padding-top: 40px;
+    }
+
+    .detail-hero-image {
+      width: 800px;
+      height: 800px;
+      display: block;
+      object-fit: cover;
+      margin: 0 auto 40px;
+      background: #f3f0ed;
+    }
+
+    .detail-product-name {
+      width: 800px;
+      margin: 0 auto 40px;
+      font-size: 40px;
+      font-weight: 700;
+      font-family: "MaruBuri", serif;
+      line-height: 1.35;
+      color: #111;
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+
+    .detail-copy-title {
+      width: 800px;
+      margin: 0 auto 16px;
+      font-size: 20px;
+      font-weight: 600;
+      font-family: "Pretendard", sans-serif;
+      line-height: 1.4;
+      color: #111;
+      text-align: left;
+    }
+
+    .detail-copy-desc {
+      width: 800px;
+      margin: 0 auto 40px;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.75;
+      color: #333;
+      word-break: keep-all;
+      text-align: left;
+    }
+
+    .detail-divider {
+      width: 800px;
+      margin: 0 auto 124px;
+      border: 0;
+      border-top: 1px solid rgba(255,255,255,0.65);
+    }
+
+    .section-heading {
+      width: 800px;
+      margin: 0 auto 68px;
+      font-size: 40px;
+      font-weight: 700;
+      font-family: "MaruBuri", serif;
+      line-height: 1.3;
+      color: #111;
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+
+    .package-image {
+      width: 800px;
+      height: 600px;
+      display: block;
+      margin: 0 auto 32px;
+      background: #f3f0ed;
+      object-fit: cover;
+    }
+
+    .info-table {
+      width: 800px;
+      margin: 0 auto;
+      border-collapse: collapse;
+    }
+
+    .info-table tr {
+      border-bottom: 1px solid rgba(255,255,255,0.65);
+    }
+
+    .info-table td {
+      padding: 16px 0;
+      vertical-align: top;
+      font-size: 12px;
+      line-height: 1.7;
+      color: #333;
+      word-break: keep-all;
+    }
+
+    .info-table td.label {
+      width: 118px;
+      padding-right: 16px;
+      color: #8C7F80;
+      font-weight: 400;
+    }
+
+    .info-table td.value {
+      color: #222;
+      font-weight: 400;
+    }
+
+    .recommend-section {
+      margin-top: 0;
+      background: none;
+      padding: 40px 0;
+      border-top: 2px solid #111;
+      border-bottom: 2px solid #111;
+    }
+
+    .recommend-content {
+      width: 1120px;
+      margin: 0 auto;
+    }
+
+    .recommend-heading {
+      margin-bottom: 0;
+      text-align: center;
+    }
+
+    .recommend-title {
+      font-family: "MaruBuri", serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #111;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+      text-align: center;
+    }
+
+    .recommend-subtitle {
+      font-family: "MaruBuri", serif;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #7E7E7E;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .recommend-list {
+      display: flex;
+      gap: 16px;
+    }
+
+    .recommend-card {
+      width: 268px;
+      flex-shrink: 0;
+    }
+
+    .recommend-thumb {
+      width: 268px;
+      height: 268px;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #f4f1ee;
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .recommend-thumb img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .recommend-lock {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      width: 39.07px;
+      height: 40px;
+    }
+
+    .recommend-lock img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    
+
+    .recommend-name {
+      font-size: 18px;
+      font-weight: 700;
+      font-family: "Pretendard", sans-serif;
+      line-height: 1.4;
+      color: #111;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+      word-break: keep-all;
+    }
+
+    .recommend-desc {
+      font-size: 14px;
+      font-weight: 400;
+      font-family: "Pretendard", sans-serif;
+      line-height: 1.5;
+      color: #767676;
+      margin-bottom: 12px;
+      word-break: keep-all;
+    }
+
+    .recommend-price {
+      font-size: 18px;
+      font-weight: 700;
+      font-family: "Pretendard", sans-serif;
+      line-height: 1.3;
+      color: #111;
+      letter-spacing: -0.02em;
+    }
+
+    .review-section {
+      
+      margin-bottom: 60px;
+    }
+  </style>
+</head>
+<body>
+  <main class="main-wrap">
+    <section class="detail-main">
+      <div class="product-top">
+        <div class="product-image">
+          <img src="./images/photo main.jpg" alt="쭈꾸미 풋마늘 파스타" />
+        </div>
+
+        <div class="product-info">
+          <h1 class="product-title">쭈꾸미 풋마늘 파스타</h1>
+          <p class="product-desc">즐기는 기분 좋은 쭈꾸미와 풋마늘의 향긋한 맛</p>
+
+          <div class="price-line">
+            <span class="discount-rate">7%</span>
+            <strong class="sale-price">12,800원</strong>
+          </div>
+          <p class="original-price">13,800원</p>
+
+          <div class="purchase-box">
+            <div class="purchase-row">
+              <span>상품 수량</span>
+              <div class="qty-box" aria-label="상품 수량">
+                <span class="qty-btn">−</span>
+                <span class="qty-value">1</span>
+                <span class="qty-btn">＋</span>
+              </div>
+            </div>
+            <div class="purchase-row">
+              <span>총 상품 금액</span>
+              <strong class="total-price">12,800원</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notice-bar"><span class="star" aria-hidden="true"></span><span class="highlight-price">24,640</span>원부터 고객님이 선호한 반찬</div>
+      <div class="tab-menu">
+        <div class="tab-item active">반찬설명</div>
+        <div class="tab-item">상품정보</div>
+        <div class="tab-item">
+          <span class="tab-badge">6396</span>
+          상품후기
+        </div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-content">
+          <img class="detail-hero-image" src="./images/photo sub1.jpg" alt="메추리알 간장조림 110g" />
+
+          <h2 class="detail-product-name">메추리알 간장조림 110g</h2>
+
+          <h3 class="detail-copy-title">한 입에 쏙들어가는 동글동글 메추리알</h3>
+          <p class="detail-copy-desc">
+            한 입에 쏙 들어가 아이들이 먹기 좋은 메추리알 간장조림이에요. 집반찬연구소 맛간장에 간이 충분히 스며들도록 조렸어요. 밥
+            먹기 싫어하는 아이들도 메추리알 간장조림만 있으면 밥 한 그릇 뚝딱 한다니까요.
+          </p>
+
+          <hr class="detail-divider" />
+
+          <h3 class="section-heading">담음새</h3>
+
+          <img class="package-image" src="./images/photo sub2.jpg" alt="메추리알 간장조림 패키지 정보" />
+
+          <table class="info-table">
+            <tr>
+              <td class="label">제품명</td>
+              <td class="value">메추리알 간장조림</td>
+            </tr>
+            <tr>
+              <td class="label">용량</td>
+              <td class="value">110g</td>
+            </tr>
+            <tr>
+              <td class="label">원재료명 및 함량</td>
+              <td class="value">메추리알 59.4%(국내산), 정제수, 양조간장2-2, 맛간장3.1%(정제소금27%(국내산), 다시백(국산), 소맥(국산), 유기농설탕16.6%, 참기름(국내산),
+                주정, 가다랑, 효모, 구연산), 물엿, 글라닌3.1%(대두(국산), 소맥(국산)), 프락토올리고당, 요리맛술+에리루암, 다두, 밀, 조개류(굴) 함유</td>
+            </tr>
+            <tr>
+              <td class="label">제품명</td>
+              <td class="value">메추리알 간장조림</td>
+            </tr>
+            <tr>
+              <td class="label">보관방법(취급방법)</td>
+              <td class="value">0~10°C 냉장보관</td>
+            </tr>
+            <tr>
+              <td class="label">식품의 유형</td>
+              <td class="value">조림류</td>
+            </tr>
+            <tr>
+              <td class="label">포장재질</td>
+              <td class="value">용기(PP), 실링(PE)</td>
+            </tr>
+            <tr>
+              <td class="label">제조원 및 판매원</td>
+              <td class="value">집반찬연구소/인천광역시 서구 가좌로 26(가좌동)</td>
+            </tr>
+            <tr>
+              <td class="label">알레르기시설</td>
+              <td class="value">본 제품은 새우, 고등어, 땅콩, 우유, 메밀, 돼지고기, 복숭아, 토마토, 잣, 닭고기, 조개류(전복, 홍합 포함), 오징어, 소고기를 사용한 제품과 같은
+                제조 시설에서 제조하고 있습니다.</td>
+            </tr>
+            <tr>
+              <td class="label">부정/불량식품 신고표시</td>
+              <td class="value">불량 부정식품 신고번호는 국번없이 1399</td>
+            </tr>
+            <tr>
+              <td class="label">소비자분쟁해결기준</td>
+              <td class="value">본 제품은 공정거래위원회 고시 소비자분쟁해결기준에 의거 교환 또는 환불 보상받으실 수 있습니다.</td>
+            </tr>
+            <tr>
+              <td class="label">소비자 상담실</td>
+              <td class="value">1588-3754</td>
+            </tr>
+            <tr>
+              <td class="label">품목보고번호</td>
+              <td class="value">20010193033144</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="recommend-section">
+        <div class="recommend-content">
+          <div class="recommend-heading">
+            <h3 class="recommend-title">같이 먹으면 더 맛있는 반찬</h3>
+            <p class="recommend-subtitle">이 반찬을 보신 다른 고객님이 같이 담은 반찬이에요!</p>
+          </div>
+
+          <div class="recommend-list">
+            <div class="recommend-card">
+              <div class="recommend-thumb">
+                <img src="./images/ban4.jpg" alt="[원더스푼] 한돈 불고기소스 덮밥" />
+                <span class="recommend-lock"><img src="./images/sub1_icon_save.png" alt="저장" /></span>
+              </div>
+              <p class="recommend-name">[원더스푼] 한돈 불고기소스 덮밥</p>
+              <p class="recommend-desc">부드러운 한돈으로 만든 아이 첫 불고기 덮밥</p>
+              <p class="recommend-price">4,500원</p>
+            </div>
+
+            <div class="recommend-card">
+              <div class="recommend-thumb">
+                <img src="./images/ban3.jpg" alt="야채계란말이" />
+                <span class="recommend-lock"><img src="./images/sub1_icon_save.png" alt="저장" /></span>
+              </div>
+              <p class="recommend-name">야채계란말이</p>
+              <p class="recommend-desc">알차고 부드러운</p>
+              <p class="recommend-price">7,500원</p>
+            </div>
+
+            <div class="recommend-card">
+              <div class="recommend-thumb">
+                <img src="./images/ban2.jpg" alt="[원더스푼] 순한 닭고기볶음" />
+                <span class="recommend-lock"><img src="./images/sub1_icon_save.png" alt="저장" /></span>
+              </div>
+              <p class="recommend-name">[원더스푼] 순한 닭고기볶음</p>
+              <p class="recommend-desc">결대로 살아있는 부드러움, 씹는 재미가 쑥쑥!</p>
+              <p class="recommend-price">4,500원</p>
+            </div>
+
+            <div class="recommend-card">
+              <div class="recommend-thumb">
+                <img src="./images/ban1.jpg" alt="유자향 오이무피클" />
+                <span class="recommend-lock"><img src="./images/sub1_icon_save.png" alt="저장" /></span>
+              </div>
+              <p class="recommend-name">유자향 오이무피클</p>
+              <p class="recommend-desc">새콤달콤 깔끔한 집반찬연구소 피클</p>
+              <p class="recommend-price">3,900원</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="review-section">
+        <div class="review-content">
+          <h3 class="review-title">상품후기</h3>
+
+          <p class="photo-review-label">사진후기</p>
+          <div class="photo-review-strip">
+            <div class="photo-review-thumb"><img src="./images/review1.jpg" alt="사진 후기" /></div>
+            <div class="photo-review-thumb"><img src="./images/review2.jpg" alt="사진 후기" /></div>
+            <div class="photo-review-thumb"><img src="./images/review2.jpg" alt="사진 후기" /></div>
+            <div class="photo-review-thumb"><img src="./images/review2.jpg" alt="사진 후기" /></div>
+            <div class="photo-review-thumb"><img src="./images/review3.jpg" alt="사진 후기" /></div>
+            <div class="photo-review-thumb"><img src="./images/review4.jpg" alt="사진 후기" /></div>
+          </div>
+
+          <div class="review-list">
+            <div class="review-item">
+              <div class="review-meta">
+                <div class="review-user-line">
+                  <span class="review-user">장*준</span>
+                  <span class="review-badge">4회 구매</span>
+                  <div class="review-stars">
+                    <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star off"></span>
+                  </div>
+                </div>
+                <div class="review-date">2026.04.11</div>
+              </div>
+              <div class="review-body">
+                <p class="review-text">가장 무난한 반 찬으로 아이들이 가장 좋아해요.</p>
+                <div class="review-image"><img src="./images/r1.jpg" alt="후기 이미지" /></div>
+              </div>
+            </div>
+
+            <div class="review-item">
+              <div class="review-meta">
+                <div class="review-user-line">
+                  <span class="review-user">조*호</span>
+                  <span class="review-badge">14회 구매</span>
+                  <div class="review-stars">
+                    <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star off"></span>
+                  </div>
+                </div>
+                <div class="review-date">2026.04.10</div>
+              </div>
+              <div class="review-body">
+                <p class="review-text">택배 잘 받았고 매번 잘 먹고있습니다 ~</p>
+                <div class="review-image"><img src="./images/r2.jpg" alt="후기 이미지" /></div>
+              </div>
+            </div>
+
+            <div class="review-item">
+              <div class="review-meta">
+                <div class="review-user-line">
+                  <span class="review-user">이*학</span>
+                  <span class="review-badge">3회 구매</span>
+                  <div class="review-stars">
+                    <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+                  </div>
+                </div>
+                <div class="review-date">2026.04.07</div>
+              </div>
+              <div class="review-body">
+                <p class="review-text">맛있게 잘 먹겠습니다. 또 주문 할게요</p>
+              </div>
+            </div>
+
+            <div class="review-item">
+              <div class="review-meta">
+                <div class="review-user-line">
+                  <span class="review-user">김*상</span>
+                  <span class="review-badge">54회 구매</span>
+                  <div class="review-stars">
+                    <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+                  </div>
+                </div>
+                <div class="review-date">2026.04.05</div>
+              </div>
+              <div class="review-body">
+                <p class="review-text">가족들이 좋아해서 매주 여러가지로 주문합니다</p>
+                <div class="review-image"><img src="./images/r3.jpg" alt="후기 이미지" /></div>
+              </div>
+            </div>
+
+            <div class="review-item">
+              <div class="review-meta">
+                <div class="review-user-line">
+                  <span class="review-user">이*학</span>
+                  <span class="review-badge">2회 구매</span>
+                  <div class="review-stars">
+                    <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+                  </div>
+                </div>
+                <div class="review-date">2026.04.02</div>
+              </div>
+              <div class="review-body">
+                <p class="review-text">모든 반찬들이 맛있습니다. 앞으로도 자주 시켜먹을게요</p>
+                <div class="review-image"><img src="./images/r3.jpg" alt="후기 이미지" /></div>
+              </div>
+            </div>
+
+            <div class="review-item">
+              <div class="review-meta">
+                <div class="review-user-line">
+                  <span class="review-user">이*학</span>
+                  <span class="review-badge">2회 구매</span>
+                  <div class="review-stars">
+                    <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+                  </div>
+                </div>
+                <div class="review-date">2026.04.02</div>
+              </div>
+              <div class="review-body">
+                <p class="review-text">모든 반찬들이 맛있습니다. 앞으로도 자주 시켜먹을게요</p>
+                <div class="review-image"><img src="./images/r3.jpg" alt="후기 이미지" /></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="review-more">
+            <button type="button" class="review-more-btn">더보기</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+
