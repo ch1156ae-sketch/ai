@@ -204,7 +204,7 @@ body {
 
 .review-title {
   font-family: "MaruBuri", serif;
-  font-size: 62px;
+  font-size: 36px;
   font-weight: 700;
   line-height: 1.2;
   text-align: center;
@@ -481,7 +481,7 @@ body {
 .detail-product-name {
   width: 800px;
   margin: 0 auto 40px;
-  font-size: 40px;
+  font-size: 36px;
   font-weight: 700;
   font-family: "MaruBuri", serif;
   line-height: 1.35;
@@ -591,7 +591,7 @@ body {
 
 .recommend-title {
   font-family: "MaruBuri", serif;
-  font-size: 62px;
+  font-size: 36px;
   font-weight: 700;
   line-height: 1.25;
   color: #111;
@@ -759,7 +759,7 @@ body {
 }
 
 .review-cta-btn {
-  min-width: 260px;
+  min-width: 500px;
   height: 56px;
   padding: 0 28px;
   border-radius: 999px;
