@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>집반찬연구소 스타일 시안</title>
+  <style>
+    @charset "utf-8";
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+    }
+
+    body {
+      font-family: "Pretendard", "Noto Sans KR", sans-serif;
+      color: #111;
+      background: #fff;
+      line-height: 1.4;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .wrap {
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    .inner {
+      width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* topbar */
+    .topbar {
+      border-bottom: 1px solid #ececec;
+    }
+
+    .top-links {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 18px;
+      height: 42px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    /* header */
+    .header-main {
+      width: 100%;
+      background: #fff;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .header-row {
+      width: 1200px;
+      margin: 0 auto;
+      height: 96px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .search-box {
+      width: 320px;
+      height: 46px;
+      border: 1px solid #ddd;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      background: #fff;
+      flex-shrink: 0;
+    }
+
+    .search-box input {
+      flex: 1;
+      border: 0;
+      outline: 0;
+      font-size: 14px;
+      background: transparent;
+    }
+
+    .search-box button {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      width: 20px;
+      height: 20px;
+    }
+
+    .search-box button img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .logo {
+      flex-shrink: 0;
+    }
+
+    .logo img {
+      width: 180px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .gnb {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-shrink: 0;
+    }
+
+    .gnb a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    .gnb a img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+
+    /* hero */
+    .hero {
+      background: #dbeceb;
+      padding: 0;
+    }
+
+    .hero-inner {
+      width: 100%;
+      margin: 0;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* sections */
+    .section {
+      padding: 18px 0 0;
+    }
+
+    .inner > .section:first-child {
+      margin-top: 50px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 600;
+      color: #111111;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+
+    .section-sub {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 400;
+      color: #505050;
+      margin-bottom: 16px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px 12px;
+    }
+
+    .card {
+      background: #ffffff;
+    }
+
+    .thumb {
+      position: relative;
+      width: 100%;
+      height: 370px;
+      background: #f7f5f1;
+      overflow: hidden;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .lock {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      width: 42px;
+      height: 43px;
+    }
+
+    .lock img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .badge {
+      position: absolute;
+      left: 8px;
+      top: 8px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #BD2420;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info {
+      padding: 8px 2px 0;
+    }
+
+    .info > * + * {
+      margin-top: 8px;
+    }
+
+    .label-row {
+      font-size: 10px;
+      margin-bottom: 0;
+    }
+
+    .label-hot {
+      font-size: 13px;
+      font-weight: 700;
+      color: #BD2420;
+      background: #F5DEDE;
+      margin-right: 4px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .label-best {
+      font-size: 13px;
+      font-weight: 700;
+      color: #F39F1A;
+      background: #FDF0DC;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-right: 4px;
+    }
+
+    .label-pop {
+      font-size: 13px;
+      font-weight: 700;
+      color: #316F35;
+      background: #DBE6DC;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-right: 4px;
+      display: inline-block;
+    }
+
+    .name {
+      font-size: 18px;
+      color: #111;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .desc {
+      font-size: 15px;
+      font-weight: 500;
+      color: #565656;
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: 700;
+      color: #000;
+    }
+
+    .price .sale {
+      font-size: 18px;
+      font-weight: 700;
+      color: #d74a34;
+      margin-right: 4px;
+    }
+
+    .old {
+      font-size: 14px;
+      font-weight: 500;
+      color: #999;
+      text-decoration: line-through;
+      margin-top: 2px !important;
+    }
+
+    .benefits {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px 0 42px;
+      gap: 16px;
+    }
+
+    .benefit {
+      width: 389px;
+      height: 150px;
+      background: #f8f8f8;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    .benefit .txt1 {
+      font-size: 20px;
+      color: #333;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .benefit .txt2 {
+      font-size: 24px;
+      color: #333;
+      font-weight: 500;
+      letter-spacing: -0.6px;
+    }
+
+    .benefit .icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .benefit .icon img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+
+    .md-tabs {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .md-tabs span {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      font-size: 18px;
+      font-weight: 600;
+      color: #333333;
+    }
+
+    /* 모바일에서 3개씩 줄바꿈 */
+    @media screen and (max-width: 767px) {
+      .md-tabs {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .md-tabs span {
+        font-size: 11px;
+        padding: 6px 10px;
+      }
+
+      .md-tabs span:nth-child(4) {
+        margin-left: 0;
+      }
+
+      .md-tabs span:nth-child(n+4) {
+        margin-top: 6px;
+      }
+    }
+
+    .md-tabs span.active {
+      background: #0D5611;
+      color: #fff;
+      border-color: #0D5611;
+    }
+
+    /* footer */
+    footer {
+      margin-top: 60px;
+      border-top: 1px solid #ececec;
+      padding: 40px 0 60px;
+    }
+
+    .footer-inner {
+      width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 50px;
+    }
+
+    .footer-block {
+      flex: 1;
+    }
+
+    .footer-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #111;
+    }
+
+    .footer-block p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+
+    /* =========================
+       MOBILE ONLY
+       PC는 유지 / 모바일만 변경
+    ========================= */
+    @media screen and (max-width: 767px) {
+
+  /* 핵심: 시안처럼 여백 + 2열 + 밀도 조정 */
+
+  body {
+    overflow-x: hidden;
+  }
+
+  .inner,
+  main.inner,
+  .header-row,
+  .footer-inner,
+  .hero-inner {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .topbar { display: none; }
+
+  /* 헤더: 로고 + 아이콘 2개 */
+  .header-row {
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo img { width: 56px; }
+
+  .search-box {
+    width: auto;
+    border: 0;
+    padding: 0;
+    height: auto;
+    background: transparent;
+  }
+
+  .search-box input { display: none; }
+
+  .search-box button {
+    width: 20px;
+    height: 20px;
+  }
+
+  .gnb a { display: none; }
+
+  .gnb::after {
+    content: "☰";
+    font-size: 18px;
+  }
+
+  /* 히어로 */
+  .hero img {
+    height: 200px;
+  }
+
+  /* 타이틀 */
+  .section-title {
+    text-align: left;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .section-sub { display: none; }
+
+  /* 카드 2열 */
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 12px;
+  }
+
+  .thumb {
+    aspect-ratio: 1 / 1;
+    height: auto;
+  }
+
+  .lock {
+    width: 20px;
+    height: 20px;
+    right: 6px;
+    bottom: 6px;
+  }
+
+  .badge {
+    width: 32px;
+    height: 32px;
+    font-size: 10px;
+  }
+
+  .info { padding-top: 6px; }
+
+  .name {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .desc {
+    font-size: 10px;
+    color: #666;
+  }
+
+  .price { font-size: 12px; }
+  .old { font-size: 10px; }
+
+  /* 혜택: 시안처럼 세로 */
+  .benefits {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .benefit {
+    width: 100%;
+    height: 60px;
+  }
+
+  .benefit .txt1 { font-size: 10px; }
+  .benefit .txt2 { font-size: 14px; }
+
+  /* MD 탭 */
+  .md-tabs {
+    justify-content: flex-start;
+    gap: 6px;
+  }
+
+  .md-tabs span {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  /* 푸터 */
+  .footer-inner { display: block; }
+
+  .footer-block p { font-size: 11px; }
+}
+
+
+      body.is-mobile .wrap,
+      body.is-mobile .inner,
+      body.is-mobile main.inner,
+      body.is-mobile .header-row,
+      body.is-mobile .footer-inner,
+      body.is-mobile .hero-inner {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      body.is-mobile .inner,
+      body.is-mobile main.inner,
+      body.is-mobile .header-row,
+      body.is-mobile .footer-inner,
+      body.is-mobile .hero-inner {
+        padding-left: 20px;
+        padding-right: 20px;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+
+      body.is-mobile .topbar {
+        display: none;
+      }
+
+      body.is-mobile .header-main {
+        border-bottom: 0;
+        padding: 8px 0 6px;
+      }
+
+      body.is-mobile .header-row {
+        height: auto;
+        display: grid;
+        grid-template-columns: auto 1fr auto auto;
+        align-items: center;
+        gap: 8px;
+      }
+
+      body.is-mobile .logo {
+        order: 1;
+        width: auto;
+        justify-self: start;
+      }
+
+      body.is-mobile .logo img {
+        width: 58px;
+        height: auto;
+        display: block;
+      }
+
+      body.is-mobile .search-box {
+        order: 3;
+        width: auto;
+        height: auto;
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+        background: transparent;
+        justify-self: end;
+      }
+
+      body.is-mobile .search-box input {
+        display: none;
+      }
+
+      body.is-mobile .search-box button {
+        width: 22px;
+        height: 22px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      body.is-mobile .search-box button img {
+        width: 16px;
+        height: 16px;
+        object-fit: contain;
+      }
+
+      body.is-mobile .gnb {
+        order: 4;
+        width: auto;
+        gap: 0;
+        justify-self: end;
+      }
+
+      body.is-mobile .gnb a {
+        display: none;
+      }
+
+      body.is-mobile .gnb::after {
+        content: "☰";
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        font-size: 16px;
+        line-height: 1;
+        color: #333;
+      }
+
+      body.is-mobile .hero {
+        background: transparent;
+        padding: 0;
+      }
+
+      body.is-mobile .hero img {
+        width: 100%;
+        height: 184px;
+        object-fit: cover;
+        display: block;
+      }
+
+      body.is-mobile .section {
+        padding-top: 28px !important;
+      }
+
+      body.is-mobile .inner > .section:first-child {
+        margin-top: 0;
+      }
+
+      body.is-mobile .section-title {
+        text-align: left;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.4;
+        margin-bottom: 10px;
+        letter-spacing: -0.2px;
+      }
+
+      body.is-mobile .section-sub {
+        display: none;
+      }
+
+      body.is-mobile .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px 12px;
+      }
+
+      body.is-mobile .card {
+        width: 100%;
+      }
+
+      body.is-mobile .thumb {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        background: #f4f4f4;
+        overflow: hidden;
+      }
+
+      body.is-mobile .thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      body.is-mobile .lock {
+        right: 4px;
+        bottom: 4px;
+        width: 22px;
+        height: 22px;
+      }
+
+      body.is-mobile .badge {
+        left: 5px;
+        top: 5px;
+        width: 28px;
+        height: 28px;
+        font-size: 8px;
+        font-weight: 700;
+      }
+
+      body.is-mobile .info {
+        padding: 6px 0 0;
+      }
+
+      body.is-mobile .info > * + * {
+        margin-top: 3px;
+      }
+
+      body.is-mobile .label-row {
+        line-height: 1;
+        margin-bottom: 2px;
+      }
+
+      body.is-mobile .label-hot,
+      body.is-mobile .label-best,
+      body.is-mobile .label-pop {
+        font-size: 8px;
+        padding: 1px 3px;
+        margin-right: 2px;
+        border-radius: 3px;
+      }
+
+      body.is-mobile .name {
+        font-size: 10px;
+        line-height: 1.35;
+        font-weight: 600;
+        letter-spacing: -0.2px;
+        word-break: keep-all;
+      }
+
+      body.is-mobile .desc {
+        font-size: 8px;
+        line-height: 1.35;
+        color: #777;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      body.is-mobile .price {
+        font-size: 10px;
+        line-height: 1.2;
+        font-weight: 700;
+      }
+
+      body.is-mobile .price .sale {
+        font-size: 10px;
+        margin-right: 2px;
+      }
+
+      body.is-mobile .old {
+        font-size: 7px;
+        margin-top: 1px !important;
+      }
+
+      body.is-mobile .benefits {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 20px 0 28px;
+      }
+
+      body.is-mobile .benefit {
+        width: 100%;
+        height: 54px;
+        border-radius: 10px;
+        padding: 0 12px;
+        background: #f4f4f4;
+      }
+
+      body.is-mobile .benefit .txt1 {
+        font-size: 9px;
+        line-height: 1.2;
+        color: #666;
+        margin-bottom: 2px;
+      }
+
+      body.is-mobile .benefit .txt2 {
+        font-size: 12px;
+        line-height: 1.2;
+        letter-spacing: -0.2px;
+        color: #333;
+        font-weight: 500;
+      }
+
+      body.is-mobile .benefit .icon {
+        width: 28px;
+        height: 28px;
+        flex: 0 0 28px;
+      }
+
+      body.is-mobile .benefit .icon img {
+        width: 28px;
+        height: 28px;
+      }
+
+      body.is-mobile .md-tabs {
+        justify-content: flex-start;
+        gap: 6px;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+      }
+
+      body.is-mobile .md-tabs span {
+        font-size: 8px;
+        padding: 5px 9px;
+        border-radius: 999px;
+      }
+
+      body.is-mobile footer {
+        margin-top: 20px;
+        padding: 18px 0 24px;
+      }
+
+      body.is-mobile .footer-inner {
+        display: block;
+      }
+
+      body.is-mobile .footer-block + .footer-block {
+        margin-top: 14px;
+      }
+
+      body.is-mobile .footer-title {
+        font-size: 11px;
+        margin-bottom: 6px;
+      }
+
+      body.is-mobile .footer-block p {
+        font-size: 8px;
+        line-height: 1.6;
+        word-break: keep-all;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="inner">
+      <div class="topbar">
+        <div class="top-links">
+          <a href="#">로그인</a>
+          <a href="#">회원가입</a>
+          <a href="#">나의정보</a>
+        </div>
+      </div>
+    </div>
+
+    <header class="header-main">
+      <div class="header-row">
+        <div class="search-box">
+          <input type="text" placeholder="반찬을 입력해주세요" />
+          <button type="button">
+            <img src="./images/icons_search.png" alt="검색">
+          </button>
+        </div>
+
+        <div class="logo">
+          <a href="./main.html"><img src="./images/logo.png" alt="로고"></a>
+        </div>
+
+        <nav class="gnb">
+          <a href="#"><img src="./images/icons_call.svg" alt="전화주문 아이콘">전화주문</a>
+          <a href="#"><img src="./images/icons_brand.png" alt="브랜드 아이콘">브랜드</a>
+          <a href="#"><img src="./images/icons_banchan.png" alt="반찬보기 아이콘">반찬보기</a>
+          <a href="#"><img src="./images/icons_shop.png" alt="장바구니 아이콘">장바구니</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <img src="./images/img_hero.png" alt="메인배너">
+      </div>
+    </section>
+
+    <main class="inner">
+      <section class="section">
+        <h2 class="section-title">부담없는 알뜰 반찬</h2>
+        <p class="section-sub">착한 가격으로 챙기는 든든한 한 끼</p>
+        <div class="product-grid">
+          <a href="./sub1.html">
+            <article class="card">
+              <div class="thumb">
+                <img src="./images/img1.png" alt="상품이미지">
+                <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+              </div>
+              <div class="info">
+                <div class="label-row">
+                  <span class="label-hot">신제품</span>
+                  <span class="label-best">맵지않음</span>
+                </div>
+                <h3 class="name">쭈꾸미 풋마늘 파스타</h3>
+                <p class="desc">봄기운 가득! 쭈꾸미와 풋마늘의 찰떡 궁합</p>
+                <p class="price"><span class="sale">7%</span>12,800원</p>
+                <p class="old">13,800원</p>
+              </div>
+            </article>
+          </a>
+
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img2.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+            </div>
+            <div class="info">
+              <div class="label-row">
+                <span class="label-hot">신제품</span>
+                <span class="label-best">맵지않음</span>
+              </div>
+              <h3 class="name">쭈꾸미 미나리 파스타</h3>
+              <p class="desc">지금이 제철! 쭈꾸미와 미나리의 만남</p>
+              <p class="price"><span class="sale">7%</span>12,800원</p>
+              <p class="old">13,800원</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img3.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+            </div>
+            <div class="info">
+              <div class="label-row">
+                <span class="label-pop">인기</span>
+                <span class="label-best">맵지않음</span>
+              </div>
+              <h3 class="name">잡채</h3>
+              <p class="desc">탱글한 면발과 맛깔진 고명이 가득</p>
+              <p class="price">12,800원</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img4.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+            </div>
+            <div class="info">
+              <h3 class="name">한끼 한돈제육_완조리</h3>
+              <p class="desc">혼자 먹기 딱 좋은. 1인분 제육볶음</p>
+              <p class="price">6,800원</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top:48px;">
+        <h2 class="section-title">집 밥 한끼</h2>
+        <p class="section-sub">치솟는 물가엔 현명한 소비</p>
+        <div class="product-grid">
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img21.png" alt="상품이미지">
+              <span class="badge">11%</span>
+              <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+            </div>
+            <div class="info">
+              <h3 class="name">메추리알 간장조림</h3>
+              <p class="price"><span class="sale">11%</span>3,400원</p>
+              <p class="old">3,800원</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img22.png" alt="상품이미지">
+              <span class="badge">11%</span>
+              <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+            </div>
+            <div class="info">
+              <h3 class="name">메추리알 간장조림</h3>
+              <p class="price"><span class="sale">11%</span>3,400원</p>
+              <p class="old">3,800원</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img23.png" alt="상품이미지">
+              <span class="badge">11%</span>
+              <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+            </div>
+            <div class="info">
+              <h3 class="name">메추리알 간장조림</h3>
+              <p class="price"><span class="sale">11%</span>3,400원</p>
+              <p class="old">3,800원</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img24.png" alt="상품이미지">
+              <span class="badge">11%</span>
+              <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+            </div>
+            <div class="info">
+              <h3 class="name">메추리알 간장조림</h3>
+              <p class="price"><span class="sale">11%</span>3,400원</p>
+              <p class="old">3,800원</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top:56px;">
+        <h2 class="section-title">새로 나온 반찬</h2>
+        <p class="section-sub">따끈따끈한 신메뉴 출시</p>
+        <div class="product-grid">
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img31.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+            </div>
+            <div class="info">
+              <div class="label-row">
+                <span class="label-hot">신제품</span>
+                <span class="label-best">맵지않음</span>
+              </div>
+              <h3 class="name">[원더스푼] 두부덮밥</h3>
+              <p class="price">3,500원</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img32.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+            </div>
+            <div class="info">
+              <div class="label-row">
+                <span class="label-hot">신제품</span>
+                <span class="label-best">맵지않음</span>
+              </div>
+              <h3 class="name">[원더스푼] 두부덮밥</h3>
+              <p class="price">3,500원</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img33.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+            </div>
+            <div class="info">
+              <div class="label-row">
+                <span class="label-hot">신제품</span>
+                <span class="label-best">맵지않음</span>
+              </div>
+              <h3 class="name">[원더스푼] 두부덮밥</h3>
+              <p class="price">3,500원</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img34.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+            </div>
+            <div class="info">
+              <div class="label-row">
+                <span class="label-hot">신제품</span>
+                <span class="label-best">맵지않음</span>
+              </div>
+              <h3 class="name">[원더스푼] 두부덮밥</h3>
+              <p class="price">3,500원</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="benefits">
+          <div class="benefit">
+            <div>
+              <p class="txt1">1588-1234</p>
+              <p class="txt2">전화주문 바로가기</p>
+            </div>
+            <div class="icon"><img src="./images/call.png" alt="전화"></div>
+          </div>
+
+          <div class="benefit">
+            <div>
+              <p class="txt1">우리가족 건강하게</p>
+              <p class="txt2">우리아이 영양식단 레벨업</p>
+            </div>
+            <div class="icon"><img src="./images/baby.png" alt="아이"></div>
+          </div>
+
+          <div class="benefit">
+            <div>
+              <p class="txt1">프리미엄 온라인 반찬가게</p>
+              <p class="txt2">집반찬연구소의 이야기</p>
+            </div>
+            <div class="icon"><img src="./images/eat.png" alt="이야기"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top:0;">
+        <h2 class="section-title">MD 추천 반찬</h2>
+        <p class="section-sub">이번 주 가장 추천하는 제품만 골라드려요.</p>
+
+        <div class="md-tabs">
+          <span class="active">비빔밥</span>
+          <span>국 / 찌개 / 탕</span>
+          <span>어린이반찬</span>
+          <span>볶음</span>
+          <span>무침</span>
+          <span>메인요리</span>
+          <span>조림</span>
+        </div>
+
+        <div class="product-grid">
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img41.png" alt="상품이미지">
+              <span class="badge">11%</span>
+              <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+            </div>
+            <div class="info">
+              <h3 class="name">메추리알 간장조림</h3>
+              <p class="price"><span class="sale">11%</span>3,400원</p>
+              <p class="old">3,800원</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img42.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+            </div>
+            <div class="info">
+              <div class="label-row">
+                <span class="label-hot">신제품</span>
+                <span class="label-best">맵지않음</span>
+              </div>
+              <h3 class="name">[원더스푼] 두부덮밥</h3>
+              <p class="price">3,500원</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img43.png" alt="상품이미지">
+              <span class="badge">11%</span>
+              <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+            </div>
+            <div class="info">
+              <h3 class="name">메추리알 간장조림</h3>
+              <p class="price"><span class="sale">11%</span>3,400원</p>
+              <p class="old">3,800원</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">
+              <img src="./images/img44.png" alt="상품이미지">
+              <span class="lock"><img src="./images/icons_save.png" alt="찜"></span>
+            </div>
+            <div class="info">
+              <div class="label-row">
+                <span class="label-hot">신제품</span>
+                <span class="label-best">맵지않음</span>
+              </div>
+              <h3 class="name">[원더스푼] 두부덮밥</h3>
+              <p class="price">3,500원</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-block">
+          <p class="footer-title">고객센터</p>
+          <p>1588-3754</p>
+          <p>zipbanchan@sannamchon.co.kr</p>
+          <p>평일 08:30~17:30 / 토요일 08:30~12:00</p>
+          <p>점심시간 12:00~13:00</p>
+          <p>일요일, 공휴일은 휴무입니다.</p>
+        </div>
+
+        <div class="footer-block">
+          <p class="footer-title">집반찬연구소</p>
+          <p>인천광역시 서구 가석로 26(가좌동) 집반찬연구소 대표자 : 박종철</p>
+          <p>사업자등록번호 : 121-86-17743 통신판매업 신고번호 : 제 2023-인천서구-3834 호</p>
+          <p>개인정보보호책임자 : 정문채 / 제휴 문의 : zipbanchan@sannamchon.co.kr</p>
+          <p>집반찬연구소 소개 이용약관 개인정보처리방침</p>
+          <p>Copyright ⓒ SANNAMCHON CORP. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    $(function () {
+      function setMobileMode() {
+        if ($(window).width() <= 767) {
+          $("body").addClass("is-mobile").removeClass("is-desktop");
+        } else {
+          $("body").addClass("is-desktop").removeClass("is-mobile");
+        }
+      }
+
+      setMobileMode();
+      $(window).on("resize", setMobileMode);
+    });
+  </script>
+</body>
+</html>

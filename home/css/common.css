@@ -33,6 +33,7 @@ body {
     }
     .header-main {
       background: #fff;
+      border-bottom: 1px solid #ccc;
     }
     .header-row {
       width: 1200px;

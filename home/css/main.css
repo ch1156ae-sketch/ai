@@ -1,6 +1,6 @@
 @charset "utf-8";
  /* hero */
-    .hero {
+    /* .hero {
       background: #dbeceb;
       padding: 0;
     }
@@ -13,6 +13,77 @@
       height:480px;
       object-fit:cover;
       display:block;
+    } */
+
+    .main-visual {
+      width: 1920px;
+      height: 480px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      background: #f4f4f4;
+    }
+
+    .swiper { width: 100%; height: 100%; }
+
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* 좌하단 버튼 */
+    .visual-nav {
+      position: absolute;
+      left: 362px;
+      bottom: 20px;
+      z-index: 20;
+      display: flex;
+      gap: 12px;
+    }
+
+    .visual-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.65);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .visual-btn::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-top: 2px solid #8f8f8f;
+      border-right: 2px solid #8f8f8f;
+    }
+
+    .visual-prev::before {
+      transform: rotate(-135deg);
+      margin-left: 4px;
+    }
+
+    .visual-next::before {
+      transform: rotate(45deg);
+      margin-right: 4px;
+    }
+
+    /* 우하단 1/5 */
+    .visual-fraction {
+      position: absolute;
+      right: 360px;
+      bottom: 20px;
+      z-index: 20;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(110,110,110,0.75);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
     }
 
     /* sections */
@@ -170,6 +241,228 @@
       text-decoration: line-through;
       margin-top: 2px !important; 
     }
+/*  */
+
+.meal-section {
+      width: 1200px;
+      margin: 56px auto 0;
+      position: relative;
+      padding-top: 18px;
+    }
+
+    .meal-header {
+      position: relative;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .meal-title {
+      text-align: center;
+      font-family: "Pretendard", sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: #111111;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+      line-height: 1.2;
+    }
+
+    .meal-subtitle {
+      text-align: center;
+      font-family: "Pretendard", sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: #505050;
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+
+    .meal-slider-wrap {
+      position: relative;
+    }
+
+    .meal-swiper {
+      width: 1200px;
+      overflow: hidden;
+    }
+
+    .meal-card {
+      background: #ffffff;
+    }
+
+    .meal-thumb {
+      position: relative;
+      width: 100%;
+      height: 370px;
+      background: #f7f5f1;
+      overflow: hidden;
+    }
+
+    .meal-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .discount-badge {
+      position: absolute;
+      left: 8px;
+      top: 8px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #BD2420;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-badge {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      width: 42px;
+      height: 43px;
+      display: block;
+    }
+
+    .cart-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .meal-info {
+      padding: 8px 2px 0;
+    }
+
+    .meal-info > * + * {
+      margin-top: 8px;
+    }
+
+    .label-row {
+      font-size: 10px;
+      margin-bottom: 0;
+    }
+
+    .label-hot,
+    .label-best,
+    .label-pop {
+      font-family: "Pretendard", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-right: 4px;
+    }
+
+    .label-hot {
+      color: #BD2420;
+      background: #F5DEDE;
+    }
+
+    .label-best {
+      color: #F39F1A;
+      background: #FDF0DC;
+    }
+
+    .label-pop {
+      color: #316F35;
+      background: #DBE6DC;
+    }
+
+    .meal-name {
+      font-size: 18px;
+      color: #111;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      line-height: 1.4;
+      word-break: keep-all;
+    }
+
+    .meal-desc {
+      font-family: "Pretendard", sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: #565656;
+      line-height: 1.45;
+      min-height: 44px;
+      word-break: keep-all;
+    }
+
+    .meal-price {
+      font-family: "Pretendard", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #000;
+      line-height: 1.3;
+    }
+
+    .meal-sale {
+      font-family: "Pretendard", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #d74a34;
+      margin-right: 4px;
+    }
+
+    .meal-origin {
+      font-family: "Pretendard", sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #999;
+      text-decoration: line-through;
+      margin-top: 2px !important;
+      line-height: 1.3;
+    }
+
+    .meal-nav-btn {
+      position: absolute;
+      top: 165px;
+      z-index: 10;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .meal-nav-btn::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-top: 2px solid #9c9c9c;
+      border-right: 2px solid #9c9c9c;
+    }
+
+    .meal-prev {
+      left: -20px;
+    }
+
+    .meal-prev::before {
+      transform: rotate(-135deg);
+      margin-left: 4px;
+    }
+
+    .meal-next {
+      right: -20px;
+    }
+
+    .meal-next::before {
+      transform: rotate(45deg);
+      margin-right: 4px;
+    }
+    
+
 
     .benefits {
       display: flex;
@@ -235,3 +528,35 @@
       color: #fff;
       border-color: #0D5611;
     }
+@media (max-width: 480px) {
+  body {
+    min-width: auto;
+  }
+
+  .main-visual {
+    width: 335px;
+    height: 335px;
+  }
+
+  .visual-nav {
+    left: 16px;
+    bottom: 12px;
+  }
+
+  .visual-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .visual-btn::before {
+    width: 8px;
+    height: 8px;
+  }
+
+  .visual-fraction {
+    right: 16px;
+    bottom: 12px;
+    font-size: 14px;
+    padding: 2px 10px;
+  }
+}
