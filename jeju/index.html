@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>제주 자전거 여행 서비스</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button,
+    a,
+    .hero,
+    .guide-slider-area {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus,
+    button:focus-visible,
+    a:focus,
+    a:focus-visible {
+      outline: none;
+      box-shadow: none;
+    }
+
+    :root {
+      --bg: #F5F5F5;
+      --card: #FCFCFC;
+      --white: #ffffff;
+      --text: #262626;
+      --sub: #777777;
+      --accent: #FF9D44;
+      --accent-deep: #FF9D44;
+      --line: #dddddd;
+      --shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    body {
+      font-family: "Noto Sans KR", Arial, sans-serif;
+      background: #F5F5F5;
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 375px;
+      min-height: 100vh;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero {
+      position: relative;
+      width: 375px;
+      height: 375px;
+      overflow: hidden;
+      touch-action: pan-y;
+    }
+
+    .hero-slider {
+      width: max-content;
+      height: 100%;
+      position: relative;
+      display: flex;
+      transition: transform 0.7s ease;
+    }
+
+    .hero-slide {
+      width: 375px;
+      height: 100%;
+      flex: 0 0 375px;
+      position: relative;
+    }
+
+    .hero-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0.08) 100%);
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      margin-top: 24px;
+      z-index: 3;
+      padding: 0 24px 96px;
+    }
+
+    .info-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      align-items: flex-start;
+    }
+
+    .stat-column {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 160px;
+      flex-shrink: 0;
+    }
+
+    .weather-card,
+    .stat-card {
+      background: var(--card);
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .weather-card {
+      width: 160px;
+      height: 86px;
+      padding: 12px 12px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      overflow: hidden;
+      min-width: 0;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .weather-card:active {
+      transform: scale(0.98);
+    }
+
+    .weather-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 1;
+    }
+
+    .weather-city {
+      font-size: 13px;
+      font-weight: 500;
+      color: #262626;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .weather-temp {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--accent-deep);
+      line-height: 1;
+    }
+
+    .weather-icon {
+      width: 68px;
+      height: 68px;
+      object-fit: contain;
+      flex-shrink: 0;
+      transform: translate(4px, 4px);
+    }
+
+    .stat-card {
+      width: 160px;
+      height: 37px;
+      padding: 0 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: #262626;
+      line-height: 1;
+      font-weight: 500;
+    }
+
+    .stat-value {
+      line-height: 1;
+      color: var(--text);
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+    }
+
+    .stat-number {
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .stat-unit {
+      font-size: 16px;
+      color: #666;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 16px;
+      letter-spacing: -0.3px;
+    }
+
+    .guide-slider-wrap {
+      position: relative;
+      width: 100%;
+    }
+
+    .guide-slider-area {
+      width: 100%;
+      overflow: hidden;
+      touch-action: pan-y;
+    }
+
+    .guide-list {
+      display: flex;
+      gap: 8px;
+      width: max-content;
+      transition: transform 0.6s ease;
+      will-change: transform;
+    }
+
+    .guide-card {
+      width: 160px;
+      height: 181px;
+      flex: 0 0 160px;
+      border-radius: 0;
+      overflow: hidden;
+      background: #ddd;
+      box-shadow: var(--shadow);
+    }
+
+    .guide-card img {
+      display: block;
+      width: 100%;
+      height: 181px;
+      object-fit: cover;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+
+    .story-section {
+      margin-top: 24px;
+    }
+
+    .story-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .story-more {
+      font-size: 10px;
+      font-weight: 500;
+      color: #262626;
+      line-height: 1;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      align-self: center;
+      height: 16px;
+    }
+
+    .story-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .story-card {
+      position: relative;
+      width: 337px;
+      height: 372px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #d9d9d9;
+    }
+
+    .story-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .story-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.02) 36%, rgba(0,0,0,0.14) 100%);
+      pointer-events: none;
+    }
+
+    .story-copy {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      z-index: 1;
+      color: #ffffff;
+    }
+
+    .story-copy strong,
+    .story-copy span {
+      display: block;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+      width: 100%;
+      max-width: 375px;
+      height: 70px;
+      background: #f7f7f7;
+      border-top: 1px solid #dddddd;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 8px 24px 12px;
+      z-index: 20;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      min-width: 34px;
+      height: 34px;
+      color: #BFBFBF;
+      font-size: 11px;
+      font-weight: 600;
+      transition: color 0.2s ease;
+      cursor: pointer;
+      text-align: center;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+
+    .nav-item.active {
+      color: var(--accent);
+    }
+
+    .nav-item .nav-icon-default,
+    .nav-item .nav-icon-hover {
+      width: 24px;
+      height: 24px;
+      display: block;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .nav-item .nav-icon-hover {
+      display: none;
+    }
+
+    .nav-item:hover .nav-icon-default,
+    .nav-item.active .nav-icon-default {
+      display: none;
+    }
+
+    .nav-item:hover .nav-icon-hover,
+    .nav-item.active .nav-icon-hover {
+      display: block;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1;
+      color: currentColor;
+      white-space: nowrap;
+      transition: color 0.2s ease;
+    }
+
+    .nav-item:hover .nav-label,
+    .nav-item.active .nav-label {
+      color: var(--accent);
+    }
+
+    @media (max-width: 375px) {
+      .hero {
+        width: 100%;
+        height: 375px;
+      }
+
+      .hero-slide {
+        width: 100vw;
+        flex: 0 0 100vw;
+      }
+
+      .story-card {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <section class="hero">
+      <div class="hero-slider" id="heroSlider">
+        <div class="hero-slide">
+          <img src="./images/메인 이미지.jpg" alt="제주 해안 자전거 코스" />
+        </div>
+        <div class="hero-slide">
+          <img src="./images/메인 이미지02.jpg" alt="제주 자연 풍경" />
+        </div>
+        <div class="hero-slide">
+          <img src="./images/메인 이미지03.jpg" alt="제주 라이딩 풍경" />
+        </div>
+        <div class="hero-slide hero-slide-clone">
+          <img src="./images/메인 이미지.jpg" alt="제주 해안 자전거 코스" />
+        </div>
+      </div>
+    </section>
+
+    <main class="content">
+      <section class="info-row">
+        <article class="weather-card" id="weatherCard" role="button" tabindex="0" aria-label="현재 위치 날씨 불러오기">
+          <div class="weather-meta">
+            <div class="weather-city" id="weatherCity">날씨 불러오는 중</div>
+            <div class="weather-temp" id="weatherTemp">--°</div>
+          </div>
+          <img class="weather-icon" id="weatherIcon" alt="날씨 아이콘" src="https://openweathermap.org/img/wn/01d@2x.png" />
+        </article>
+
+        <div class="stat-column">
+          <article class="stat-card">
+            <span class="stat-label">완주코스</span>
+            <strong class="stat-value">
+              <span class="stat-number" id="courseCount">1</span>
+              <span class="stat-unit"> / 10</span>
+            </strong>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-label">이동거리</span>
+            <strong class="stat-value">
+              <span class="stat-number" id="rideDistance">15</span>
+              <span class="stat-unit"> km</span>
+            </strong>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">제주도 자전거 여행정보 가이드</h2>
+        <div class="guide-slider-wrap">
+          <div class="guide-slider-area" id="guideSliderArea">
+            <div class="guide-list" id="guideList">
+              <article class="guide-card">
+                <img src="./images/guide01.jpg" alt="오름 산책로" />
+              </article>
+              <article class="guide-card">
+                <img src="./images/guide02.jpg" alt="제주 바다 풍경" />
+              </article>
+              <article class="guide-card">
+                <img src="./images/guide03.jpg" alt="해안 자전거 코스" />
+              </article>
+              <article class="guide-card">
+                <img src="./images/guide04.jpg" alt="제주 자연 도로" />
+              </article>
+
+              <article class="guide-card" aria-hidden="true">
+                <img src="./images/guide01.jpg" alt="" />
+              </article>
+              <article class="guide-card" aria-hidden="true">
+                <img src="./images/guide02.jpg" alt="" />
+              </article>
+              <article class="guide-card" aria-hidden="true">
+                <img src="./images/guide03.jpg" alt="" />
+              </article>
+              <article class="guide-card" aria-hidden="true">
+                <img src="./images/guide04.jpg" alt="" />
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="story-section">
+        <div class="story-header">
+          <h2 class="section-title" style="margin-bottom: 0;">제주도 자전거 여행정보 가이드</h2>
+          <a href="#" class="story-more">더보기</a>
+        </div>
+
+        <div class="story-list">
+          <article class="story-card">
+            <img src="./images/story1.jpg" alt="제주 감귤 이야기" />
+            <div class="story-copy">
+              <strong>제주도 자전거 여행 패키지</strong>
+              <span>첫번째 코스 이야기</span>
+            </div>
+          </article>
+
+          <article class="story-card">
+            <img src="./images/story2.jpg" alt="제주 바다 이야기" />
+            <div class="story-copy">
+              <strong>제주도 자전거 여행 패키지</strong>
+              <span>두번째 코스 이야기</span>
+            </div>
+          </article>
+
+          <article class="story-card">
+            <img src="./images/story3.jpg" alt="제주 라이딩 이야기" />
+            <div class="story-copy">
+              <strong>제주도 자전거 여행 패키지</strong>
+              <span>세번째 코스 이야기</span>
+            </div>
+          </article>
+
+          <article class="story-card">
+            <img src="./images/story4.jpg" alt="제주 꽃밭 이야기" />
+            <div class="story-copy">
+              <strong>제주도 자전거 여행 패키지</strong>
+              <span>네번째 코스 이야기</span>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <a href="#" class="nav-item active">
+        <img class="nav-icon-default" src="./images/icon_home_ o.png" alt="홈" />
+        <img class="nav-icon-hover" src="./images/icon_home_ o.png" alt="" aria-hidden="true" />
+        <span class="nav-label">홈</span>
+      </a>
+      <a href="#" class="nav-item">
+        <img class="nav-icon-default" src="./images/icon_community_o.png" alt="커뮤니티" />
+        <img class="nav-icon-hover" src="./images/icon_community_hover.png" alt="" aria-hidden="true" />
+        <span class="nav-label">커뮤니티</span>
+      </a>
+      <a href="#" class="nav-item">
+        <img class="nav-icon-default" src="./images/icon_coss_o.png" alt="코스" />
+        <img class="nav-icon-hover" src="./images/icon_coss_hover.png" alt="" aria-hidden="true" />
+        <span class="nav-label">코스</span>
+      </a>
+      <a href="#" class="nav-item">
+        <img class="nav-icon-default" src="./images/icon_rank_o.png" alt="랭킹" />
+        <img class="nav-icon-hover" src="./images/icon_rank_hover.png" alt="" aria-hidden="true" />
+        <span class="nav-label">랭킹</span>
+      </a>
+      <a href="#" class="nav-item">
+        <img class="nav-icon-default" src="./images/icon_user_o.png" alt="마이" />
+        <img class="nav-icon-hover" src="./images/icon_user_hover.png" alt="" aria-hidden="true" />
+        <span class="nav-label">마이</span>
+      </a>
+    </nav>
+  </div>
+
+  <script>
+    const API_KEY = 'dd7cbd7960e231fa301d2cec41ee8e22';
+
+    const weatherCity = document.getElementById('weatherCity');
+    const weatherTemp = document.getElementById('weatherTemp');
+    const weatherIcon = document.getElementById('weatherIcon');
+    const courseCount = document.getElementById('courseCount');
+    const rideDistance = document.getElementById('rideDistance');
+    const weatherCard = document.getElementById('weatherCard');
+
+    let locationRequestShown = false;
+
+    function getWeatherLabel(icon) {
+      const weatherLabelMap = {
+        '01d': 'Mostly Sunny',
+        '01n': 'Clear Night',
+        '02d': 'Partly Cloudy',
+        '02n': 'Partly Cloudy',
+        '03d': 'Cloudy',
+        '03n': 'Cloudy',
+        '04d': 'Overcast',
+        '04n': 'Overcast',
+        '09d': 'Light Rain',
+        '09n': 'Light Rain',
+        '10d': 'Rainy',
+        '10n': 'Rainy',
+        '11d': 'Thunderstorm',
+        '11n': 'Thunderstorm',
+        '13d': 'Snowy',
+        '13n': 'Snowy',
+        '50d': 'Misty',
+        '50n': 'Misty'
+      };
+
+      return weatherLabelMap[icon] || 'Mostly Sunny';
+    }
+
+    function setMessage() {}
+
+    function mapRideInfo(temp, windSpeed) {
+      let course = 1;
+      let distance = 15;
+
+      if (temp >= 24 && temp <= 29 && windSpeed < 4) {
+        course = 8;
+        distance = 42;
+      } else if (temp >= 18 && temp < 24 && windSpeed < 6) {
+        course = 6;
+        distance = 32;
+      } else if (temp >= 10 && temp < 18) {
+        course = 4;
+        distance = 24;
+      } else if (temp < 10 || windSpeed >= 8) {
+        course = 2;
+        distance = 12;
+      }
+
+      courseCount.textContent = course;
+      rideDistance.textContent = distance;
+    }
+
+    function updateWeatherUI(data, customLabel = '') {
+      const temp = Math.round(data.main.temp);
+      const icon = data.weather?.[0]?.icon || '01d';
+      const iconAlt = data.weather?.[0]?.description || '날씨 아이콘';
+      const windSpeed = data.wind?.speed ?? 0;
+
+      weatherCity.textContent = getWeatherLabel(icon);
+      weatherTemp.textContent = `${temp}°`;
+      weatherIcon.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+      weatherIcon.alt = iconAlt;
+
+      mapRideInfo(temp, windSpeed);
+    }
+
+    async function fetchWeatherByCity(city) {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric&lang=kr`;
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || '도시 날씨 정보를 가져오지 못했습니다.');
+      }
+
+      updateWeatherUI(data);
+    }
+
+    async function fetchWeatherByCoords(lat, lon) {
+      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=kr`;
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || '현재 위치 날씨 정보를 가져오지 못했습니다.');
+      }
+
+      updateWeatherUI(data, '현재 위치');
+    }
+
+    async function loadDefaultCity() {
+      try {
+        await fetchWeatherByCity('Jeju');
+      } catch (error) {
+        weatherCity.textContent = 'Mostly Sunny';
+        weatherTemp.textContent = '--°';
+      }
+    }
+
+    function requestCurrentLocationWeather(skipConfirm = false) {
+      if (!skipConfirm) {
+        const isConfirmed = window.confirm('지금 위치의 날씨 정보를 반영할까요?');
+
+        if (!isConfirmed) {
+          return;
+        }
+      }
+
+      if (!navigator.geolocation) {
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          try {
+            const { latitude, longitude } = position.coords;
+            await fetchWeatherByCoords(latitude, longitude);
+          } catch (error) {
+            console.error(error);
+          }
+        },
+        (error) => {
+          console.error(error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
+    }
+
+    function askLocationOnFirstLoad() {
+      if (locationRequestShown) return;
+      locationRequestShown = true;
+      requestCurrentLocationWeather(false);
+    }
+
+    function bindWeatherCardAction() {
+      if (!weatherCard) return;
+
+      weatherCard.addEventListener('click', () => requestCurrentLocationWeather(false));
+      weatherCard.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          requestCurrentLocationWeather(false);
+        }
+      });
+    }
+
+    function startHeroSlider() {
+      const slider = document.getElementById('heroSlider');
+      const hero = document.querySelector('.hero');
+      const realSlideCount = 3;
+
+      if (!slider || !hero) return;
+
+      let currentIndex = 0;
+      let isTransitioning = false;
+      let autoSlide;
+      let startX = 0;
+      let currentX = 0;
+      let isDragging = false;
+      let hasMoved = false;
+
+      function getSlideWidth() {
+        return hero.clientWidth || 375;
+      }
+
+      function applyTransform(useTransition = true) {
+        const slideWidth = getSlideWidth();
+        slider.style.transition = useTransition ? 'transform 0.7s ease' : 'none';
+        slider.style.transform = `translate3d(-${currentIndex * slideWidth}px, 0, 0)`;
+      }
+
+      function goToNextSlide() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        currentIndex += 1;
+        applyTransform(true);
+      }
+
+      function startAutoSlide() {
+        autoSlide = setInterval(goToNextSlide, 3000);
+      }
+
+      function stopAutoSlide() {
+        clearInterval(autoSlide);
+      }
+
+      function restartAutoSlide() {
+        stopAutoSlide();
+        startAutoSlide();
+      }
+
+      slider.addEventListener('transitionend', () => {
+        if (currentIndex === realSlideCount) {
+          slider.style.transition = 'none';
+          currentIndex = 0;
+          applyTransform(false);
+          slider.offsetHeight;
+        }
+        isTransitioning = false;
+      });
+
+      function onPointerDown(event) {
+        if (isTransitioning) return;
+        isDragging = true;
+        hasMoved = false;
+        startX = event.clientX;
+        currentX = event.clientX;
+        stopAutoSlide();
+        slider.style.transition = 'none';
+      }
+
+      function onPointerMove(event) {
+        if (!isDragging) return;
+        currentX = event.clientX;
+        const deltaX = currentX - startX;
+        if (Math.abs(deltaX) > 4) hasMoved = true;
+
+        const slideWidth = getSlideWidth();
+        const baseX = -(currentIndex * slideWidth);
+        slider.style.transform = `translate3d(${baseX + deltaX}px, 0, 0)`;
+      }
+
+      function onPointerUp() {
+        if (!isDragging) return;
+
+        isDragging = false;
+        const deltaX = currentX - startX;
+        const threshold = getSlideWidth() * 0.18;
+        slider.style.transition = 'transform 0.45s ease';
+
+        if (deltaX < -threshold && !isTransitioning) {
+          isTransitioning = true;
+          currentIndex += 1;
+          applyTransform(true);
+        } else if (deltaX > threshold && !isTransitioning) {
+          if (currentIndex === 0) {
+            slider.style.transition = 'none';
+            currentIndex = realSlideCount;
+            applyTransform(false);
+            slider.offsetHeight;
+          }
+          isTransitioning = true;
+          currentIndex -= 1;
+          applyTransform(true);
+        } else {
+          applyTransform(true);
+        }
+
+        restartAutoSlide();
+      }
+
+      hero.addEventListener('pointerdown', onPointerDown);
+      hero.addEventListener('pointermove', onPointerMove);
+      hero.addEventListener('pointerup', onPointerUp);
+      hero.addEventListener('pointercancel', onPointerUp);
+      hero.addEventListener('pointerleave', () => {
+        if (isDragging && hasMoved) onPointerUp();
+      });
+
+      window.addEventListener('resize', () => {
+        applyTransform(false);
+      });
+
+      applyTransform(false);
+      startAutoSlide();
+    }
+
+    function startGuideSlider() {
+      const sliderArea = document.getElementById('guideSliderArea');
+      const guideList = document.getElementById('guideList');
+      const realCardCount = 4;
+
+      if (!sliderArea || !guideList) return;
+
+      let currentIndex = 0;
+      let isTransitioning = false;
+      let autoSlide;
+      let startX = 0;
+      let currentX = 0;
+      let isDragging = false;
+      let hasMoved = false;
+
+      function getCardStep() {
+        const firstCard = guideList.querySelector('.guide-card');
+        if (!firstCard) return 168;
+        const gap = parseFloat(getComputedStyle(guideList).gap) || 0;
+        return firstCard.getBoundingClientRect().width + gap;
+      }
+
+      function applyTransform(useTransition = true) {
+        const cardStep = getCardStep();
+        guideList.style.transition = useTransition ? 'transform 0.6s ease' : 'none';
+        guideList.style.transform = `translate3d(-${currentIndex * cardStep}px, 0, 0)`;
+      }
+
+      function goToNextSlide() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        currentIndex += 1;
+        applyTransform(true);
+      }
+
+      function startAutoSlide() {
+        autoSlide = setInterval(goToNextSlide, 3000);
+      }
+
+      function stopAutoSlide() {
+        clearInterval(autoSlide);
+      }
+
+      function restartAutoSlide() {
+        stopAutoSlide();
+        startAutoSlide();
+      }
+
+      guideList.addEventListener('transitionend', () => {
+        if (currentIndex === realCardCount) {
+          guideList.style.transition = 'none';
+          currentIndex = 0;
+          applyTransform(false);
+          guideList.offsetHeight;
+        }
+        isTransitioning = false;
+      });
+
+      function onPointerDown(event) {
+        if (isTransitioning) return;
+        isDragging = true;
+        hasMoved = false;
+        startX = event.clientX;
+        currentX = event.clientX;
+        stopAutoSlide();
+        guideList.style.transition = 'none';
+      }
+
+      function onPointerMove(event) {
+        if (!isDragging) return;
+        currentX = event.clientX;
+        const deltaX = currentX - startX;
+        if (Math.abs(deltaX) > 4) hasMoved = true;
+
+        const cardStep = getCardStep();
+        const baseX = -(currentIndex * cardStep);
+        guideList.style.transform = `translate3d(${baseX + deltaX}px, 0, 0)`;
+      }
+
+      function onPointerUp() {
+        if (!isDragging) return;
+
+        isDragging = false;
+        const deltaX = currentX - startX;
+        const threshold = getCardStep() * 0.18;
+        guideList.style.transition = 'transform 0.45s ease';
+
+        if (deltaX < -threshold && !isTransitioning) {
+          isTransitioning = true;
+          currentIndex += 1;
+          applyTransform(true);
+        } else if (deltaX > threshold && !isTransitioning) {
+          if (currentIndex === 0) {
+            guideList.style.transition = 'none';
+            currentIndex = realCardCount;
+            applyTransform(false);
+            guideList.offsetHeight;
+          }
+          isTransitioning = true;
+          currentIndex -= 1;
+          applyTransform(true);
+        } else {
+          applyTransform(true);
+        }
+
+        restartAutoSlide();
+      }
+
+      sliderArea.addEventListener('pointerdown', onPointerDown);
+      sliderArea.addEventListener('pointermove', onPointerMove);
+      sliderArea.addEventListener('pointerup', onPointerUp);
+      sliderArea.addEventListener('pointercancel', onPointerUp);
+      sliderArea.addEventListener('pointerleave', () => {
+        if (isDragging && hasMoved) onPointerUp();
+      });
+
+      window.addEventListener('resize', () => {
+        applyTransform(false);
+      });
+
+      applyTransform(false);
+      startAutoSlide();
+    }
+
+    bindWeatherCardAction();
+    startHeroSlider();
+    startGuideSlider();
+    loadDefaultCity();
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        askLocationOnFirstLoad();
+      }, 300);
+    });
+  </script>
+</body>
+</html>
