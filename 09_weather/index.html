@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>전세계 날씨 앱</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="topbar">
+      <div class="title-wrap">
+        <h1>전세계 날씨</h1>
+        <p>현재 위치 + 도시 검색으로 전세계 날씨 조회</p>
+      </div>
+      <button class="ghost-btn" id="locationBtn" type="button">내위치</button>
+    </section>
+
+    <section class="search-panel">
+      <form class="search-form" id="searchForm">
+        <div class="input-wrap">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" stroke="white" stroke-width="2"></circle>
+            <path d="M20 20L16.65 16.65" stroke="white" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+          <input
+            type="text"
+            id="cityInput"
+            class="search-input"
+            placeholder="도시명을 입력하세요(예: Seoul, Tokyo, Gimpo)"
+            autocomplete="off"
+          />
+        </div>
+        <button type="submit" class="search-btn">검색</button>
+      </form>
+      <p class="status" id="statusText"></p>
+    </section>
+
+    <section class="weather-panel">
+      <div class="weather-head">
+        <div>
+          <h2 class="city-name" id="cityName">도시명</h2>
+          <p class="weather-meta" id="weatherDesc">날씨 정보를 불러와 주세요.</p>
+        </div>
+        <div class="temperature" id="tempValue">15°</div>
+      </div>
+
+      <div class="info-grid">
+        <article class="info-card">
+          <h3>풍속</h3>
+          <p id="windValue">0 m/s</p>
+        </article>
+        <article class="info-card">
+          <h3>습도</h3>
+          <p id="humidityValue">0%</p>
+        </article>
+        <article class="info-card">
+          <h3>체감온도</h3>
+          <p id="feelsLikeValue">0°C</p>
+        </article>
+        <article class="info-card">
+          <h3>오존(O₃)</h3>
+          <p id="ozoneValue">0 μg/m³</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="./script/script.js"></script>
+</body>
+</html>
