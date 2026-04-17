@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM객체 제어</title>
+</head>
+<body>
+
+    <ul id="list" class="gnb">
+        
+    </ul>
+    <label for="">출생월:</label>
+    <select name="" id="month">
+        </select>
+    <label for="">출생일:</label>
+    <select name="" id="day">
+        </select>
+    <label for="">출생년도:</label>
+    <select name="" id="year">
+
+    </select>
+    <script>
+        // ul태그요소를 자바스크립트로 가져와서 메모리 변수에 기억
+        let list=document.getElementById("list");
+        console.log(list);
+        let output = "";
+    for(let i = 1; i <= 100; i++){
+        output = output + `<li>data${i}</li>`;
+    }
+        list.innerHTML = output;
+
+        let month=document.getElementById("month");
+        console.log(month);
+        let output2 = ""; 
+        for (let i = 1; i <= 12; i++) {
+            output2 += `<option>${i}월</option>`; 
+                }
+        month.innerHTML = output2; 
+
+        let day=document.getElementById("day");
+        console.log(day);
+        let output3 = ""; 
+        for (let i = 1; i <= 31; i++) {
+            output3 += `<option>${i}일</option>`; 
+                }
+        day.innerHTML = output3; 
+
+        let year=document.getElementById("year");
+        console.log(year);
+        let output4 = ""; 
+        for (let i = 2026; i >= 1900; i--) {
+            output4 += `<option>${i}일</option>`; 
+                }
+        year.innerHTML = output4; 
+    </script>
+</body>
+</html>
