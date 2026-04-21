@@ -712,13 +712,10 @@
       left: 0;
       right: 0;
       bottom: 70px;
+      height: 208px;
       padding: 0;
       z-index: 5;
       pointer-events: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
     }
 
     .map-gps-btn {
@@ -806,8 +803,10 @@
     }
 
     .map-route-btn {
-      position: static;
-      transform: none;
+      position: absolute;
+      left: 50%;
+      bottom: 172px;
+      transform: translateX(-50%);
       pointer-events: auto;
       min-width: 120px;
       height: 36px;
@@ -824,6 +823,10 @@
     }
 
     .map-card {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
       pointer-events: auto;
       margin: 0;
       height: 148px;
@@ -965,143 +968,46 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      color: #666;
+      color: #666666;
       font-size: 11px;
       font-weight: 600;
       padding: 0;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      transition: color 0.2s ease;
+    }
+
+    .nav-item:hover {
+      color: #5d78c8;
+      transform: none;
     }
 
     .nav-item.active {
-      color: var(--primary);
+      color: #5d78c8;
+      transform: none;
     }
 
     .nav-icon {
       width: 24px;
       height: 24px;
-      position: relative;
-      color: currentColor;
+      display: block;
+      flex-shrink: 0;
     }
 
-    .icon-home::before {
-      content: "";
-      position: absolute;
-      left: 4px;
-      right: 4px;
-      bottom: 3px;
-      height: 10px;
-      border: 2px solid currentColor;
-      border-top: 0;
-      border-radius: 0 0 3px 3px;
+    .nav-icon img {
+      width: 24px;
+      height: 24px;
+      display: block;
+      object-fit: contain;
+      filter: grayscale(1) brightness(0.45);
+      transition: filter 0.2s ease;
     }
 
-    .icon-home::after {
-      content: "";
-      position: absolute;
-      left: 5px;
-      top: 4px;
-      width: 12px;
-      height: 12px;
-      border-left: 2px solid currentColor;
-      border-top: 2px solid currentColor;
-      transform: rotate(45deg);
-    }
-
-    .icon-search::before {
-      content: "";
-      position: absolute;
-      left: 3px;
-      top: 3px;
-      width: 11px;
-      height: 11px;
-      border: 2px solid currentColor;
-      border-radius: 50%;
-    }
-
-    .icon-search::after {
-      content: "";
-      position: absolute;
-      right: 3px;
-      bottom: 4px;
-      width: 8px;
-      height: 2px;
-      background: currentColor;
-      transform: rotate(45deg);
-      border-radius: 999px;
-      transform-origin: center;
-    }
-
-    .icon-group::before,
-    .icon-group::after {
-      content: "";
-      position: absolute;
-      border: 2px solid currentColor;
-      border-radius: 50%;
-    }
-
-    .icon-group::before {
-      left: 4px;
-      top: 6px;
-      width: 5px;
-      height: 5px;
-      box-shadow: 10px 0 0 -2px currentColor;
-    }
-
-    .icon-group::after {
-      left: 2px;
-      bottom: 4px;
-      width: 16px;
-      height: 8px;
-      border-radius: 10px 10px 5px 5px;
-      border-top: 2px solid currentColor;
-      border-left: 2px solid currentColor;
-      border-right: 2px solid currentColor;
-      border-bottom: 0;
-    }
-
-    .icon-live::before {
-      content: "";
-      position: absolute;
-      left: 4px;
-      top: 5px;
-      width: 14px;
-      height: 11px;
-      border: 2px solid currentColor;
-      border-radius: 3px;
-    }
-
-    .icon-live::after {
-      content: "";
-      position: absolute;
-      right: 2px;
-      top: 8px;
-      width: 0;
-      height: 0;
-      border-left: 6px solid currentColor;
-      border-top: 4px solid transparent;
-      border-bottom: 4px solid transparent;
-    }
-
-    .icon-my::before {
-      content: "";
-      position: absolute;
-      left: 7px;
-      top: 3px;
-      width: 8px;
-      height: 8px;
-      border: 2px solid currentColor;
-      border-radius: 50%;
-    }
-
-    .icon-my::after {
-      content: "";
-      position: absolute;
-      left: 4px;
-      bottom: 3px;
-      width: 14px;
-      height: 8px;
-      border: 2px solid currentColor;
-      border-radius: 10px 10px 5px 5px;
-      border-bottom: 0;
+    .nav-item:hover .nav-icon img,
+    .nav-item.active .nav-icon img {
+      filter: brightness(0) saturate(100%) invert(49%) sepia(29%) saturate(857%) hue-rotate(186deg) brightness(92%) contrast(87%);
     }
 
     .empty-state {
@@ -1276,23 +1182,37 @@
 
     <nav class="bottom-nav">
       <button class="nav-item" id="go-home-tab" type="button">
-        <span class="nav-icon icon-home"></span>
+        <span class="nav-icon" aria-hidden="true">
+          <img src="./images/home.svg" alt="" />
+        </span>
         <span>홈</span>
       </button>
-      <button class="nav-item active" id="go-search-tab">
-        <span class="nav-icon icon-search"></span>
+
+      <button class="nav-item active" id="go-search-tab" type="button">
+        <span class="nav-icon" aria-hidden="true">
+          <img src="./images/search.svg" alt="" />
+        </span>
         <span>검색</span>
       </button>
-      <button class="nav-item">
-        <span class="nav-icon icon-group"></span>
+
+      <button class="nav-item" id="go-group-tab" type="button">
+        <span class="nav-icon" aria-hidden="true">
+          <img src="./images/community.svg" alt="" />
+        </span>
         <span>모임</span>
       </button>
-      <button class="nav-item">
-        <span class="nav-icon icon-live"></span>
+
+      <button class="nav-item" id="go-live-tab" type="button">
+        <span class="nav-icon" aria-hidden="true">
+          <img src="./images/live.svg" alt="" />
+        </span>
         <span>LIVE</span>
       </button>
-      <button class="nav-item" id="go-my-tab">
-        <span class="nav-icon icon-my"></span>
+
+      <button class="nav-item" id="go-my-tab" type="button">
+        <span class="nav-icon" aria-hidden="true">
+          <img src="./images/user.svg" alt="" />
+        </span>
         <span>MY</span>
       </button>
     </nav>
@@ -1560,11 +1480,14 @@
     }
 
     function updateBottomNav(screenName) {
-      document.querySelectorAll(".bottom-nav .nav-item").forEach(item => item.classList.remove("active"));
-      if (screenName === "saved") {
-        document.getElementById("go-my-tab").classList.add("active");
+      document.querySelectorAll('.nav-item').forEach((item) => {
+        item.classList.remove('active');
+      });
+
+      if (screenName === 'saved') {
+        document.getElementById('go-my-tab')?.classList.add('active');
       } else {
-        document.getElementById("go-search-tab").classList.add("active");
+        document.getElementById('go-search-tab')?.classList.add('active');
       }
     }
 
@@ -2261,14 +2184,41 @@
       });
     });
 
-    document.getElementById("go-home-tab").addEventListener("click", () => {
-      window.location.href = "main.html";
+    const homeTabBtn = document.getElementById('go-home-tab');
+    const searchTabBtn = document.getElementById('go-search-tab');
+    const myTabBtn = document.getElementById('go-my-tab');
+    const groupTabBtn = document.getElementById('go-group-tab');
+    const liveTabBtn = document.getElementById('go-live-tab');
+
+    function setActiveNav(targetBtn) {
+      document.querySelectorAll('.nav-item').forEach((item) => {
+        item.classList.toggle('active', item === targetBtn);
+      });
+    }
+
+    homeTabBtn.addEventListener('click', () => {
+      setActiveNav(homeTabBtn);
+      window.location.href = 'main.html';
     });
 
-    document.getElementById("go-search-tab").addEventListener("click", () => goToScreen("search"));
-    document.getElementById("go-my-tab").addEventListener("click", () => {
-      renderSavedList();
-      goToScreen("saved");
+    searchTabBtn.addEventListener('click', () => {
+      setActiveNav(searchTabBtn);
+      window.location.href = 'search.html';
+    });
+
+    myTabBtn.addEventListener('click', () => {
+      setActiveNav(myTabBtn);
+      window.location.href = 'my.html';
+    });
+
+    groupTabBtn.addEventListener('click', () => {
+      setActiveNav(searchTabBtn);
+      // 모임 화면 이동
+    });
+
+    liveTabBtn.addEventListener('click', () => {
+      setActiveNav(searchTabBtn);
+      // LIVE 화면 이동
     });
 
     mapBackBtn.addEventListener("click", () => {
