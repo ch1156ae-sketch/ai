@@ -669,18 +669,30 @@
 
     .map-screen-wrap {
       position: relative;
-      flex: 1;
+      flex: 1 1 auto;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
       overflow: hidden;
       background: #dfe8ef;
+      padding-bottom: 0;
+    }
+
+    .screen-map-active .bottom-nav {
+      display: none;
     }
 
     .full-map {
       position: absolute;
       inset: 0;
+      width: 100%;
+      height: 100%;
       background: #dfe8ef;
     }
 
     .full-map #full-kakao-map {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
     }
@@ -709,11 +721,7 @@
 
     .map-sheet {
       position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 70px;
-      height: 208px;
-      padding: 0;
+      inset: 0;
       z-index: 5;
       pointer-events: none;
     }
@@ -721,7 +729,7 @@
     .map-gps-btn {
       position: absolute;
       right: 24px;
-      bottom: calc(70px + 148px + 24px);
+      bottom: 172px;
       width: 36px;
       height: 36px;
       border-radius: 999px;
@@ -802,6 +810,10 @@
       transform: translate(-50%, -50%);
     }
 
+    .map-route-btn.hidden {
+      display: none;
+    }
+
     .map-route-btn {
       position: absolute;
       left: 50%;
@@ -822,11 +834,15 @@
       z-index: 6;
     }
 
+    .map-card.hidden {
+      display: none;
+    }
+
     .map-card {
       position: absolute;
       left: 0;
       right: 0;
-      bottom: 0;
+      bottom: 0 !important;
       pointer-events: auto;
       margin: 0;
       height: 148px;
@@ -1220,11 +1236,11 @@
   </div>
 
   <!-- 실제 서비스용 카카오맵 앱키로 교체하세요 -->
-  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_KAKAO_APP_KEY&autoload=false"></script>
+  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=de00e931f26e156287da4c152c1ad4b0&autoload=false"></script>
 
   <script>
     const STORAGE_KEY = "camp_search_recent_keywords";
-    const GOCAMPING_SERVICE_KEY = "YOUR_GOCAMPING_SERVICE_KEY";
+    const GOCAMPING_SERVICE_KEY = "9ed3a4e51e1b2c6a6fa6fd8b840ca532ed1526a5ab475c699f2cb44843129d20";
     const GOCAMPING_BASE_URL = "https://apis.data.go.kr/B551011/GoCamping";
     const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=1200&auto=format&fit=crop";
 
@@ -1356,6 +1372,7 @@
       fullMapMarker: null,
       fullMapInfo: null,
       currentLocationMarker: null,
+      allCampMarkers: [],
       currentLat: null,
       currentLng: null
     };
@@ -1479,6 +1496,27 @@
       return Array.isArray(items) ? items.map(mapApiItem) : [];
     }
 
+    async function fetchAllCampgrounds() {
+      if (!GOCAMPING_SERVICE_KEY || GOCAMPING_SERVICE_KEY === "YOUR_GOCAMPING_SERVICE_KEY") {
+        return [...placeData];
+      }
+
+      const url = new URL(`${GOCAMPING_BASE_URL}/basedList`);
+      url.searchParams.set("serviceKey", GOCAMPING_SERVICE_KEY);
+      url.searchParams.set("numOfRows", "300");
+      url.searchParams.set("pageNo", "1");
+      url.searchParams.set("MobileOS", "ETC");
+      url.searchParams.set("MobileApp", "camp-search-app");
+      url.searchParams.set("_type", "json");
+
+      const response = await fetch(url.toString());
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      const data = await response.json();
+      const items = data?.response?.body?.items?.item || [];
+      return Array.isArray(items) ? items.map(mapApiItem) : [];
+    }
+
     function updateBottomNav(screenName) {
       document.querySelectorAll('.nav-item').forEach((item) => {
         item.classList.remove('active');
@@ -1499,6 +1537,7 @@
       if (screenName === "saved") screens.saved.classList.add("active");
       if (screenName === "detail") screens.detail.classList.add("active");
       state.currentScreen = screenName;
+      document.body.classList.toggle('screen-map-active', screenName === 'map');
       updateBottomNav(screenName);
     }
 
@@ -1646,10 +1685,16 @@
 
     function renderMapCard(place) {
       if (!place) {
-        mapCardEl.innerHTML = '<div class="empty-state" style="padding:20px 0 0;">표시할 장소가 없습니다.</div>';
+        state.currentPlace = null;
+        mapRouteBtn.dataset.placeId = "";
+        mapCardEl.classList.add("hidden");
+        mapRouteBtn.classList.add("hidden");
+        mapCardEl.innerHTML = "";
         return;
       }
 
+      mapCardEl.classList.remove("hidden");
+      mapRouteBtn.classList.remove("hidden");
       state.currentPlace = place;
       mapRouteBtn.dataset.placeId = String(place.id);
       mapCardEl.innerHTML = `
@@ -1674,9 +1719,14 @@
       `;
     }
 
+    function clearAllCampMarkers() {
+      state.allCampMarkers.forEach(({ marker }) => marker.setMap(null));
+      state.allCampMarkers = [];
+    }
+
     function initFullMap(place) {
       const mapContainer = document.getElementById("full-kakao-map");
-      renderMapCard(place);
+      renderMapCard(null);
 
       if (!window.kakao || !window.kakao.maps) {
         mapContainer.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:#666;font-size:13px;line-height:1.6;background:#dce6ef;">카카오맵 앱 키가 설정되지 않아 전체 지도를 표시할 수 없습니다.<br>YOUR_KAKAO_APP_KEY를 실제 키로 교체하세요.</div>`;
@@ -1687,26 +1737,42 @@
         const center = new kakao.maps.LatLng(place.lat, place.lng);
 
         if (!state.fullMap) {
-          state.fullMap = new kakao.maps.Map(mapContainer, { center, level: 5 });
+          state.fullMap = new kakao.maps.Map(mapContainer, { center, level: 13 });
         } else {
           state.fullMap.relayout();
+          state.fullMap.setCenter(center);
+          state.fullMap.setLevel(13);
+        }
+
+        clearAllCampMarkers();
+
+        const bounds = new kakao.maps.LatLngBounds();
+        placeData.forEach((camp) => {
+          if (typeof camp.lat !== "number" || typeof camp.lng !== "number") return;
+          const position = new kakao.maps.LatLng(camp.lat, camp.lng);
+          const marker = new kakao.maps.Marker({ position });
+          marker.setMap(state.fullMap);
+          bounds.extend(position);
+
+          kakao.maps.event.addListener(marker, "click", () => {
+            renderMapCard(camp);
+            state.currentPlace = camp;
+          });
+
+          state.allCampMarkers.push({ id: camp.id, marker });
+        });
+
+        if (placeData.length > 1) {
+          state.fullMap.setBounds(bounds);
+        } else {
           state.fullMap.setCenter(center);
           state.fullMap.setLevel(5);
         }
 
-        if (state.fullMapMarker) {
-          state.fullMapMarker.setMap(null);
+        const selectedMarker = state.allCampMarkers.find(item => item.id === place.id);
+        if (selectedMarker) {
+          state.fullMap.panTo(selectedMarker.marker.getPosition());
         }
-        state.fullMapMarker = new kakao.maps.Marker({ position: center });
-        state.fullMapMarker.setMap(state.fullMap);
-
-        if (state.fullMapInfo) {
-          state.fullMapInfo.close();
-        }
-        state.fullMapInfo = new kakao.maps.InfoWindow({
-          content: `<div style="padding:7px 9px;font-size:12px;white-space:nowrap;">${place.name}</div>`
-        });
-        state.fullMapInfo.open(state.fullMap, state.fullMapMarker);
 
         if (state.currentLocationMarker) {
           state.currentLocationMarker.setMap(null);
@@ -1801,7 +1867,19 @@
       return placeData.find(item => item.id === recentSavedId) || null;
     }
 
-    function openMapScreen() {
+    async function openMapScreen() {
+      try {
+        const allCampgrounds = await fetchAllCampgrounds();
+        if (allCampgrounds.length) {
+          placeData = allCampgrounds;
+          state.currentResults = allCampgrounds;
+          renderResultList();
+          renderSavedList();
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
       const targetPlace = getMostRecentSavedPlace() || state.currentResults[0] || placeData[0];
       if (!targetPlace) {
         showToast("표시할 장소가 없습니다.");
@@ -2249,16 +2327,16 @@
       window.open(url, "_blank");
     });
 
-    mapSearchBtn.addEventListener("click", (event) => {
+    mapSearchBtn.addEventListener("click", async (event) => {
       event.preventDefault();
       event.stopPropagation();
-      openMapScreen();
+      await openMapScreen();
     });
 
     renderRecentKeywords();
     renderResultList();
     renderSavedList();
-    renderMapCard(placeData[0]);
+    renderMapCard(null);
     scrollableContents.forEach(enableDragScroll);
     requestInitialLocationPermission();
   </script>
