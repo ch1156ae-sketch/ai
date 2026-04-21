@@ -299,11 +299,14 @@
     .result-body {
       flex: 1;
       min-width: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 99px;
     }
 
     .result-top {
       display: flex;
-      gap: 24px;
+      gap: 8px;
       align-items: flex-start;
     }
 
@@ -360,7 +363,7 @@
     }
 
     .result-meta {
-      margin-top: 12px;
+      margin-top: auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -369,9 +372,10 @@
 
     .tag-list {
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+      flex-wrap: nowrap;
+      gap: 8px;
       min-width: 0;
+      overflow: hidden;
     }
 
     .tag {
@@ -383,6 +387,10 @@
       font-weight: 600;
       line-height: 1;
       white-space: nowrap;
+      flex: 0 0 auto;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .distance {
@@ -1596,6 +1604,42 @@
       `;
     }
 
+    function getCaptionTags(place) {
+      const sourceTags = (place.keywords && place.keywords.length ? place.keywords : place.tags || [])
+        .map(tag => String(tag).replace(/^#/, "").trim())
+        .filter(Boolean);
+
+      if (!sourceTags.length) return [];
+
+      const longTags = sourceTags.filter(tag => tag.length > 3);
+      if (longTags.length) {
+        return [longTags[0]];
+      }
+
+      return sourceTags.slice(0, 2);
+    }
+
+    function getDistanceKm(lat1, lng1, lat2, lng2) {
+      const toRad = (deg) => deg * Math.PI / 180;
+      const earthRadiusKm = 6371;
+      const dLat = toRad(lat2 - lat1);
+      const dLng = toRad(lng2 - lng1);
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return earthRadiusKm * c;
+    }
+
+    function getPlaceDistanceText(place) {
+      if (typeof state.currentLat === "number" && typeof state.currentLng === "number") {
+        const distanceKm = getDistanceKm(state.currentLat, state.currentLng, place.lat, place.lng);
+        return distanceKm < 1 ? `${Math.round(distanceKm * 1000)}m` : `${distanceKm.toFixed(1)}km`;
+      }
+      return place.distance || "거리 확인중";
+    }
+
     function renderSavedList() {
       const savedPlaces = placeData.filter(place => state.bookmarks.has(place.id));
       if (!savedPlaces.length) {
@@ -1618,9 +1662,9 @@
             </div>
             <div class="result-meta">
               <div class="tag-list">
-                ${place.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
+                ${getCaptionTags(place).map(tag => `<span class="tag">${tag}</span>`).join("")}
               </div>
-              <div class="distance">${place.distance}</div>
+              <div class="distance">${getPlaceDistanceText(place)}</div>
             </div>
           </div>
         </article>
@@ -1648,9 +1692,9 @@
             </div>
             <div class="result-meta">
               <div class="tag-list">
-                ${place.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
+                ${getCaptionTags(place).map(tag => `<span class="tag">${tag}</span>`).join("")}
               </div>
-              <div class="distance">${place.distance}</div>
+              <div class="distance">${getPlaceDistanceText(place)}</div>
             </div>
           </div>
         </article>
@@ -1823,8 +1867,15 @@
       );
     }
 
+    function getMostRecentSavedPlace() {
+      const bookmarkedIds = Array.from(state.bookmarks);
+      if (!bookmarkedIds.length) return null;
+      const recentSavedId = bookmarkedIds[bookmarkedIds.length - 1];
+      return placeData.find(item => item.id === recentSavedId) || null;
+    }
+
     function openMapScreen() {
-      const targetPlace = state.currentResults[0] || placeData[0];
+      const targetPlace = getMostRecentSavedPlace() || state.currentResults[0] || placeData[0];
       if (!targetPlace) {
         showToast("표시할 장소가 없습니다.");
         return;
@@ -1866,7 +1917,10 @@
 
     function updateHeroDots(totalSlides) {
       const dots = heroSliderEl.querySelectorAll(".hero-dot");
-      dots.forEach((dot, index) => dot.classList.toggle("active", index === (state.sliderIndex % totalSlides)));
+      const activeIndex = totalSlides <= 1
+        ? 0
+        : (state.sliderIndex - 1 + totalSlides) % totalSlides;
+      dots.forEach((dot, index) => dot.classList.toggle("active", index === activeIndex));
     }
 
     function moveHeroSliderToRealIndex(track, realIndex, totalSlides, animate = true) {
@@ -1885,7 +1939,10 @@
         state.sliderIndex = 1;
         updateHeroSliderPosition(track, false);
       }
-      updateHeroDots(totalSlides);
+
+      requestAnimationFrame(() => {
+        updateHeroDots(totalSlides);
+      });
     }
 
     function bindHeroSliderGesture(track, totalSlides) {
@@ -1999,6 +2056,7 @@
 
       const track = heroSliderEl.querySelector(".hero-track");
       updateHeroSliderPosition(track, false);
+      updateHeroDots(totalSlides);
       bindHeroSliderGesture(track, totalSlides);
 
       if (totalSlides <= 1) return;
