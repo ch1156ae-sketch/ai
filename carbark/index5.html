@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>온보딩 슬라이드</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #ffffff;
+      --title-dark: #6E84BD;
+      --title-point: #384B7B;
+      --title-light: #6f89c9;
+      --desc: #9AA9D1;
+      --button: #5a75bf;
+      --button-text: #ffffff;
+      --dot: #e8ebf4;
+      --dot-active: #5874c0;
+      
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: "Noto Sans KR", sans-serif;
+      background: var(--bg);
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      max-width: 375px;
+      height: 100dvh;
+      min-height: 812px;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .swiper {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .swiper-slide {
+      position: relative;
+      padding: 78px 24px 34px;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    .shared-blob {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 350px;
+      height: 299px;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .shared-blob img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 902px;
+      max-width: none;
+      transition: transform 0.6s ease;
+      opacity: 1;
+    }
+
+    .copy {
+      position: relative;
+      z-index: 3;
+      margin-top: 22px;
+    }
+
+        .title {
+      font-size: 24px;
+      line-height: 1.24;
+      font-weight: 600;
+      letter-spacing: -0.045em;
+      color: var(--title-dark);
+      word-break: keep-all;
+    }
+
+    .title .point {
+      display: inline-block;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--title-point);
+    }
+
+        .desc {
+      margin-top: 24px;
+      font-size: 18px;
+      line-height: 1.45;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      color: var(--desc);
+      word-break: keep-all;
+    }
+
+    .visual {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+      max-width: none;
+    }
+
+    .visual-1 {
+      width: 266px;
+      bottom: 162px;
+      left: 50%;
+    }
+
+    .visual-2 {
+      width: 260px;
+      bottom: 162px;
+      left: 50%;
+    }
+
+    .visual-3 {
+      width: 272px;
+      bottom: 162px;
+      left: 50%;
+    }
+
+    .bottom-ui {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 34px;
+      z-index: 6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 56px;
+    }
+
+    .swiper-pagination {
+      position: static;
+      width: auto !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .swiper-pagination-bullet {
+      width: 10px;
+      height: 10px;
+      margin: 0 !important;
+      background: var(--dot);
+      opacity: 1;
+    }
+
+    .swiper-pagination-bullet-active {
+      background: var(--dot-active);
+    }
+
+    .start-link {
+      width: 327px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--button);
+      color: var(--button-text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      box-shadow: none;
+    }
+
+    @media (max-width: 375px) {
+      .app {
+        min-height: 100dvh;
+      }
+
+      .swiper-slide {
+        padding-top: 78px;
+      }
+
+      .title {
+        font-size: 24px;
+      }
+
+      .desc {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="shared-blob" aria-hidden="true">
+      <img src="./images/Vector 5.png" alt="" />
+    </div>
+
+    <div class="swiper onboardingSwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="copy">
+            <h2 class="title"><span class="point">차박</span><br /><span class="point">어디로</span> 떠나야 할지 모르겠나요</h2>
+            <p class="desc">지도기반 위치 앱 및 키워드 검색으로 <br />내가 원하는 장소를 한번에</p>
+          </div>
+          <img class="visual visual-1" src="./images/work1.png" alt="온보딩 첫 번째 일러스트" />
+        </div>
+
+        <div class="swiper-slide">
+          <div class="copy">
+            <h2 class="title">차만 있다면<br /><span class="point">장비는</span> 부담적은 <span class="point">렌탈로</span></h2>
+            <p class="desc">차박에 필요한 물품들을 용도별로 둘러봐요</p>
+          </div>
+          <img class="visual visual-2" src="./images/work2.png" alt="온보딩 두 번째 일러스트" />
+        </div>
+
+        <div class="swiper-slide">
+          <div class="copy">
+            <h2 class="title">일상이 바쁠땐 실시간<br /><span class="point">라이브로</span> <span class="point">대리만족</span> 하세요</h2>
+            <p class="desc">라이브로 나를 뿜내고 <br />시청자들과 소통하는 즐거움!</p>
+          </div>
+          <img class="visual visual-3" src="./images/work3.png" alt="온보딩 세 번째 일러스트" />
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-ui">
+      <div class="swiper-pagination"></div>
+      <a class="start-link" href="login.html" aria-label="시작하기 페이지로 이동">시작하기</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    const blobImg = document.querySelector('.shared-blob img');
+    const startLink = document.querySelector('.start-link');
+    let redirectTimer = null;
+
+    function updateBlob(swiper) {
+      const positions = [0, -170, -340];
+      blobImg.style.transform = `translateX(${positions[swiper.realIndex]}px)`;
+    }
+
+    function scheduleLoginRedirect(swiper) {
+      clearTimeout(redirectTimer);
+
+      if (swiper.realIndex === 2) {
+        redirectTimer = setTimeout(() => {
+          window.location.href = startLink.getAttribute('href');
+        }, 1000);
+      }
+    }
+
+    const swiper = new Swiper('.onboardingSwiper', {
+      loop: true,
+      speed: 600,
+      autoplay: {
+        delay: 1000,
+        disableOnInteraction: false,
+      },
+      allowTouchMove: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      on: {
+        init(swiper) {
+          updateBlob(swiper);
+          scheduleLoginRedirect(swiper);
+        },
+        slideChangeTransitionStart(swiper) {
+          updateBlob(swiper);
+          scheduleLoginRedirect(swiper);
+        },
+        touchStart() {
+          clearTimeout(redirectTimer);
+        },
+      },
+    });
+  </script>
+</body>
+</html>
