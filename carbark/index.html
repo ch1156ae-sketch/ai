@@ -2249,7 +2249,10 @@
     document.querySelectorAll("[data-back]").forEach(button => {
       button.addEventListener("click", () => {
         const target = button.dataset.back;
-        if (target === "search") goToScreen("search");
+        if (target === "search") {
+          searchInput.value = "";
+          goToScreen("search");
+        }
         if (target === "result") goToScreen("result");
       });
     });
