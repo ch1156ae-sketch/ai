@@ -895,26 +895,26 @@
     .map-card-bottom {
       margin-top: auto;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: space-between;
       gap: 10px;
     }
 
     .map-card-tags {
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+      flex-wrap: nowrap;
+      gap: 8px;
       min-width: 0;
+      overflow: hidden;
     }
 
     .map-card-distance {
       color: var(--primary);
       font-weight: 700;
       font-size: 14px;
-      line-height: 1;
       white-space: nowrap;
       letter-spacing: -0.02em;
-      margin-bottom: 2px;
+      margin-top: 2px;
     }
 
     .saved-list {
@@ -1739,8 +1739,8 @@
               <button class="bookmark-btn ${state.bookmarks.has(place.id) ? "active" : ""}" data-map-bookmark-id="${place.id}" aria-label="북마크">${getBookmarkIcon()}</button>
             </div>
             <div class="map-card-bottom">
-              <div class="map-card-tags">${place.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
-              <div class="map-card-distance">${place.distance}</div>
+              <div class="map-card-tags">${getCaptionTags(place).map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
+              <div class="map-card-distance">${getPlaceDistanceText(place)}</div>
             </div>
           </div>
         </div>
