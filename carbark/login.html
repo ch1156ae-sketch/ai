@@ -114,6 +114,17 @@
       color: transparent;
     }
 
+    .error-message {
+      width: 327px;
+      max-width: 100%;
+      margin-top: -6px;
+      color: #d64545;
+      font-size: 13px;
+      line-height: 1.4;
+      min-height: 18px;
+      text-align: left;
+    }
+
     .actions {
       width: 327px;
       max-width: 100%;
@@ -252,6 +263,8 @@
         <input type="password" id="password" name="password" placeholder="비밀번호" autocomplete="current-password" />
       </div>
 
+      <p class="error-message" id="errorMessage" aria-live="polite"></p>
+
       <div class="actions">
         <button type="submit" class="btn btn-primary">로그인</button>
         <button type="button" class="btn btn-outline" id="signupBtn">회원가입</button>
@@ -306,25 +319,47 @@
     const loginForm = document.getElementById('loginForm');
     const signupBtn = document.getElementById('signupBtn');
     const socialButtons = document.querySelectorAll('.social-btn');
+    const userIdInput = document.getElementById('userId');
+    const passwordInput = document.getElementById('password');
+    const errorMessage = document.getElementById('errorMessage');
 
     loginForm.addEventListener('submit', function (e) {
       e.preventDefault();
-      const userId = document.getElementById('userId').value.trim();
-      const password = document.getElementById('password').value.trim();
+      const userId = userIdInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      if (!userId && !password) {
+        errorMessage.textContent = '아이디와 비밀번호를 입력해주세요.';
+        userIdInput.focus();
+        return;
+      }
 
       if (!userId) {
-        alert('아이디를 입력해주세요.');
-        document.getElementById('userId').focus();
+        errorMessage.textContent = '아이디를 입력해주세요.';
+        userIdInput.focus();
         return;
       }
 
       if (!password) {
-        alert('비밀번호를 입력해주세요.');
-        document.getElementById('password').focus();
+        errorMessage.textContent = '비밀번호를 입력해주세요.';
+        passwordInput.focus();
         return;
       }
 
-      alert('로그인 요청이 전송되었습니다.');
+      errorMessage.textContent = '';
+      window.location.href = 'main.html';
+    });
+
+    userIdInput.addEventListener('input', function () {
+      if (userIdInput.value.trim() && errorMessage.textContent) {
+        errorMessage.textContent = '';
+      }
+    });
+
+    passwordInput.addEventListener('input', function () {
+      if (passwordInput.value.trim() && errorMessage.textContent) {
+        errorMessage.textContent = '';
+      }
     });
 
     signupBtn.addEventListener('click', function () {

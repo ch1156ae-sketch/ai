@@ -1,0 +1,2316 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>캠핑 검색 앱</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --text: #111111;
+      --muted: #6f6f6f;
+      --line: #e6e6e6;
+      --primary: #5d78c8;
+      --primary-dark: #4565bf;
+      --chip-gray: #969696;
+      --shadow: none;
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      color: var(--text);
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      background: none;
+      cursor: pointer;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      max-width: 375px;
+      height: 812px;
+      margin: 0 auto;
+      background: var(--bg);
+      overflow: hidden;
+      box-shadow: none;
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      background: var(--bg);
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    .content {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding-bottom: 79px;
+      scrollbar-width: none;
+      touch-action: pan-y;
+      cursor: default;
+    }
+
+    .content.drag-scroll-active {
+      user-select: none;
+    }
+
+    .content::-webkit-scrollbar {
+      display: none;
+    }
+
+    .search-main {
+      padding: 24px 24px 0;
+    }
+
+    .search-box-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .search-input-wrap {
+      flex: 1;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 46px;
+      padding: 0 16px;
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      background: #f7f7f7;
+      outline: none;
+      font-size: 13px;
+      color: #333;
+    }
+
+    .search-input::placeholder {
+      color: #9a9a9a;
+    }
+
+    .map-icon-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .map-icon {
+      width: 22px;
+      height: 22px;
+      position: relative;
+      border: 2px solid currentColor;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .map-icon::before,
+    .map-icon::after {
+      content: "";
+      position: absolute;
+      top: -2px;
+      bottom: -2px;
+      width: 2px;
+      background: currentColor;
+      opacity: .9;
+      transform: skewY(-18deg);
+    }
+
+    .map-icon::before { left: 6px; }
+    .map-icon::after { right: 6px; }
+
+    .section {
+      margin-top: 24px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      line-height: 1.3;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-action {
+      color: #222;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      width: 100px;
+      height: 40px;
+      padding: 0;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 40px;
+      box-shadow: none;
+      flex: 0 0 100px;
+    }
+
+    .chip.gray { background: var(--chip-gray); box-shadow: none; }
+    .chip.blue { background: var(--primary); }
+
+    .banner-card {
+      margin-top: 26px;
+      border-radius: 0;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    .banner-card img {
+      width: 327px;
+      height: 86px;
+      object-fit: cover;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 48px;
+      padding: 0 16px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+
+    .top-bar .left,
+    .top-bar .right {
+      width: 36px;
+      display: flex;
+      align-items: center;
+    }
+
+    .top-bar .right {
+      justify-content: flex-end;
+    }
+
+    .top-bar .center {
+      flex: 1;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .back-btn {
+      width: 24px;
+      height: 24px;
+      position: relative;
+    }
+
+    .back-btn::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      width: 9px;
+      height: 9px;
+      border-left: 2px solid #222;
+      border-bottom: 2px solid #222;
+      transform: rotate(45deg);
+    }
+
+    .result-list {
+      padding: 0;
+    }
+
+    .result-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 24px 24px 20px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .result-thumb {
+      width: 99px;
+      height: 99px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #ddd;
+      box-shadow: var(--shadow);
+    }
+
+    .result-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .result-body {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 99px;
+    }
+
+    .result-top {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .result-title-wrap {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .result-title {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-top: 2px;
+    }
+
+    .result-address {
+      margin-top: 4px;
+      color: #222;
+      font-size: 13px;
+      line-height: 1.35;
+      word-break: keep-all;
+    }
+
+    .bookmark-btn {
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      padding: 0;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .bookmark-btn svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+
+    .bookmark-btn path {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .bookmark-btn.active path {
+      fill: var(--primary);
+      stroke: var(--primary);
+    }
+
+    .result-meta {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 8px;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .tag {
+      padding: 6px 10px 7px;
+      border-radius: 8px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1;
+      white-space: nowrap;
+      flex: 0 0 auto;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .distance {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 14px;
+      white-space: nowrap;
+      letter-spacing: -0.02em;
+      margin-top: 2px;
+    }
+
+    .hero-slider {
+      position: relative;
+      width: 100%;
+      height: 408px;
+      overflow: hidden;
+      background: #d8d8d8;
+      flex-shrink: 0;
+      touch-action: pan-y;
+    }
+
+    .hero-track {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform .35s ease;
+      will-change: transform;
+    }
+
+    .hero-track.dragging {
+      transition: none;
+    }
+
+    .hero-slide {
+      position: relative;
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .hero-dots {
+      position: absolute;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 2;
+    }
+
+    .hero-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.95);
+      opacity: .6;
+    }
+
+    .hero-dot.active {
+      background: #5d78c8;
+      opacity: 1;
+    }
+
+    .detail-content {
+      background: var(--surface);
+      padding-bottom: 92px;
+    }
+
+    .detail-body {
+      background: var(--surface);
+      min-height: auto;
+      padding: 24px 24px 32px;
+    }
+
+    .detail-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .detail-title {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .detail-address {
+      margin-top: 4px;
+      font-size: 14px;
+      color: #222;
+      line-height: 1.45;
+    }
+
+    .detail-section {
+      margin-top: 18px;
+    }
+
+    .detail-label {
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .facility-grid {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .facility-card {
+      width: 72px;
+      min-height: 72px;
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--primary);
+      background: #fff;
+    }
+
+    .facility-card.wide {
+      width: 86px;
+    }
+
+    .facility-icon {
+      position: relative;
+      width: 22px;
+      height: 22px;
+    }
+
+    .icon-restroom::before,
+    .icon-restroom::after {
+      content: "";
+      position: absolute;
+      top: 1px;
+      width: 6px;
+      height: 18px;
+      border: 2px solid currentColor;
+      border-radius: 6px 6px 4px 4px;
+    }
+
+    .icon-restroom::before { left: 2px; }
+    .icon-restroom::after { right: 2px; }
+
+    .icon-store::before,
+    .icon-store::after {
+      content: "";
+      position: absolute;
+      left: 2px;
+      right: 2px;
+      border: 2px solid currentColor;
+    }
+
+    .icon-store::before {
+      top: 8px;
+      bottom: 2px;
+      border-radius: 0 0 4px 4px;
+    }
+
+    .icon-store::after {
+      top: 2px;
+      height: 7px;
+      border-bottom: 0;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .facility-text {
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.15;
+      text-align: center;
+      word-break: keep-all;
+    }
+
+    .keyword-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+      color: #333;
+      font-size: 13px;
+    }
+
+    .vod-section {
+      margin-top: 20px;
+    }
+
+    .vod-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .vod-title {
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .vod-more {
+      font-size: 12px;
+      color: #333;
+    }
+
+    .vod-card {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: #ddd;
+    }
+
+    .vod-card img {
+      width: 100%;
+      height: 144px;
+      object-fit: cover;
+    }
+
+    .vod-card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 4px;
+      background: #ff7b20;
+    }
+
+    .map-section {
+      margin-top: 20px;
+    }
+
+    .map-box {
+      width: 100%;
+      height: 220px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #ececec;
+      box-shadow: var(--shadow);
+    }
+
+    .map-note {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .detail-route-btn {
+      width: 100%;
+      height: 44px;
+      margin-top: 12px;
+      border-radius: 12px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 44px;
+      text-align: center;
+      box-shadow: none;
+    }
+
+    .map-screen-wrap {
+      position: relative;
+      flex: 1;
+      overflow: hidden;
+      background: #dfe8ef;
+    }
+
+    .full-map {
+      position: absolute;
+      inset: 0;
+      background: #dfe8ef;
+    }
+
+    .full-map #full-kakao-map {
+      width: 100%;
+      height: 100%;
+    }
+
+    .map-floating-back {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 28px;
+      height: 28px;
+      z-index: 6;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .map-floating-back::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-left: 2px solid #222;
+      border-bottom: 2px solid #222;
+      transform: rotate(45deg);
+      margin-left: 4px;
+    }
+
+    .map-sheet {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 70px;
+      padding: 0;
+      z-index: 5;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .map-gps-btn {
+      position: absolute;
+      right: 24px;
+      bottom: calc(70px + 148px + 24px);
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 6;
+      padding: 0;
+    }
+
+    .gps-icon {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      display: block;
+      flex: 0 0 24px;
+      margin: 0 auto;
+    }
+
+    .gps-icon .gps-line {
+      position: absolute;
+      background: var(--primary);
+      display: block;
+    }
+
+    .gps-icon .gps-line.top {
+      top: 0;
+      left: 50%;
+      width: 2px;
+      height: 5px;
+      transform: translateX(-50%);
+    }
+
+    .gps-icon .gps-line.bottom {
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      height: 5px;
+      transform: translateX(-50%);
+    }
+
+    .gps-icon .gps-line.left {
+      left: 0;
+      top: 50%;
+      width: 5px;
+      height: 2px;
+      transform: translateY(-50%);
+    }
+
+    .gps-icon .gps-line.right {
+      right: 0;
+      top: 50%;
+      width: 5px;
+      height: 2px;
+      transform: translateY(-50%);
+    }
+
+    .gps-icon::before {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      box-sizing: border-box;
+    }
+
+    .gps-icon::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .map-route-btn {
+      position: static;
+      transform: none;
+      pointer-events: auto;
+      min-width: 120px;
+      height: 36px;
+      padding: 0 18px;
+      border-radius: 18px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 36px;
+      text-align: center;
+      box-shadow: none;
+      z-index: 6;
+    }
+
+    .map-card {
+      pointer-events: auto;
+      margin: 0;
+      height: 148px;
+      background: var(--bg);
+      border-top: 1px solid rgba(0,0,0,.04);
+      box-shadow: none;
+      padding: 24px;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .map-card-inner {
+      display: grid;
+      grid-template-columns: 99px 1fr;
+      column-gap: 16px;
+      align-items: start;
+      height: 100%;
+    }
+
+    .map-card-thumb {
+      width: 99px;
+      height: 99px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #ddd;
+      box-shadow: var(--shadow);
+    }
+
+    .map-card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .map-card-body {
+      min-width: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .map-card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .map-card-title-wrap {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .map-card-title {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-top: 2px;
+    }
+
+    .map-card-address {
+      margin-top: 4px;
+      color: #222;
+      font-size: 13px;
+      line-height: 1.35;
+      word-break: keep-all;
+    }
+
+    .map-card-bottom {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .map-card-tags {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 8px;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .map-card-distance {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 14px;
+      white-space: nowrap;
+      letter-spacing: -0.02em;
+      margin-top: 2px;
+    }
+
+    .saved-list {
+      padding: 8px 0 0;
+    }
+
+    .saved-header {
+      padding: 24px 24px 12px;
+      background: var(--bg);
+    }
+
+    .saved-title {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+
+    .saved-subtitle {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+      width: 100%;
+      max-width: 375px;
+      height: 70px;
+      padding-bottom: 0;
+      background: rgba(255, 255, 255, 0.98);
+      border-top: 1px solid #e8e8e8;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      z-index: 30;
+    }
+
+    .nav-item {
+      width: 62px;
+      height: 70px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: #666;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 0;
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+    }
+
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+      position: relative;
+      color: currentColor;
+    }
+
+    .icon-home::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      bottom: 3px;
+      height: 10px;
+      border: 2px solid currentColor;
+      border-top: 0;
+      border-radius: 0 0 3px 3px;
+    }
+
+    .icon-home::after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border-left: 2px solid currentColor;
+      border-top: 2px solid currentColor;
+      transform: rotate(45deg);
+    }
+
+    .icon-search::before {
+      content: "";
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      width: 11px;
+      height: 11px;
+      border: 2px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .icon-search::after {
+      content: "";
+      position: absolute;
+      right: 3px;
+      bottom: 4px;
+      width: 8px;
+      height: 2px;
+      background: currentColor;
+      transform: rotate(45deg);
+      border-radius: 999px;
+      transform-origin: center;
+    }
+
+    .icon-group::before,
+    .icon-group::after {
+      content: "";
+      position: absolute;
+      border: 2px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .icon-group::before {
+      left: 4px;
+      top: 6px;
+      width: 5px;
+      height: 5px;
+      box-shadow: 10px 0 0 -2px currentColor;
+    }
+
+    .icon-group::after {
+      left: 2px;
+      bottom: 4px;
+      width: 16px;
+      height: 8px;
+      border-radius: 10px 10px 5px 5px;
+      border-top: 2px solid currentColor;
+      border-left: 2px solid currentColor;
+      border-right: 2px solid currentColor;
+      border-bottom: 0;
+    }
+
+    .icon-live::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 5px;
+      width: 14px;
+      height: 11px;
+      border: 2px solid currentColor;
+      border-radius: 3px;
+    }
+
+    .icon-live::after {
+      content: "";
+      position: absolute;
+      right: 2px;
+      top: 8px;
+      width: 0;
+      height: 0;
+      border-left: 6px solid currentColor;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+    }
+
+    .icon-my::before {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 3px;
+      width: 8px;
+      height: 8px;
+      border: 2px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .icon-my::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      bottom: 3px;
+      width: 14px;
+      height: 8px;
+      border: 2px solid currentColor;
+      border-radius: 10px 10px 5px 5px;
+      border-bottom: 0;
+    }
+
+    .empty-state {
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .toast {
+      position: absolute;
+      left: 50%;
+      bottom: 96px;
+      transform: translateX(-50%) translateY(20px);
+      min-width: 220px;
+      max-width: calc(100% - 48px);
+      padding: 12px 16px;
+      background: rgba(17, 17, 17, 0.9);
+      color: #fff;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s ease;
+      z-index: 60;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <section class="screen active" id="search-screen">
+      <div class="content">
+        <div class="search-main">
+          <div class="search-box-row">
+            <div class="search-input-wrap">
+              <input id="search-input" class="search-input" type="text" placeholder="지역 또는 키워드를 입력하세요." />
+            </div>
+            <button class="map-icon-btn" aria-label="지도 열기" id="open-map-search-btn">
+              <span class="map-icon"></span>
+            </button>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">최근 검색어</div>
+              <button class="section-action" id="clear-history-btn">수정</button>
+            </div>
+            <div class="chip-list" id="recent-keywords"></div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">인기 키워드</div>
+            </div>
+            <div class="chip-list" id="popular-keywords">
+              <button class="chip blue" data-keyword="차박">차박</button>
+              <button class="chip blue" data-keyword="낚시">낚시</button>
+              <button class="chip blue" data-keyword="캠핑">캠핑</button>
+            </div>
+          </div>
+
+          <div class="banner-card">
+            <img src="" alt="배너 이미지" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="result-screen">
+      <div class="top-bar">
+        <div class="left"><button class="back-btn" aria-label="뒤로" data-back="search"></button></div>
+        <div class="center">검색결과</div>
+        <div class="right"></div>
+      </div>
+      <div class="content">
+        <div class="result-list" id="result-list"></div>
+      </div>
+    </section>
+
+    <section class="screen" id="map-screen">
+      <div class="map-screen-wrap">
+        <button class="map-floating-back" aria-label="뒤로" id="map-back-btn"></button>
+        <div class="full-map">
+          <div id="full-kakao-map"></div>
+        </div>
+        <button class="map-gps-btn" id="map-gps-btn" aria-label="현재 위치">
+          <span class="gps-icon" aria-hidden="true">
+            <span class="gps-line top"></span>
+            <span class="gps-line right"></span>
+            <span class="gps-line bottom"></span>
+            <span class="gps-line left"></span>
+          </span>
+        </button>
+        <div class="map-sheet">
+          <button class="map-route-btn" id="map-route-btn">길찾기</button>
+          <div class="map-card" id="map-card"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="saved-screen">
+      <div class="top-bar">
+        <div class="left"></div>
+        <div class="center">MY</div>
+        <div class="right"></div>
+      </div>
+      <div class="content">
+        <div class="saved-header">
+          <div class="saved-title">저장한 장소</div>        </div>
+        <div class="saved-list" id="saved-list"></div>
+      </div>
+    </section>
+
+    <section class="screen" id="detail-screen">
+      <div class="top-bar">
+        <div class="left"><button class="back-btn" aria-label="뒤로" data-back="result"></button></div>
+        <div class="center">검색결과</div>
+        <div class="right"></div>
+      </div>
+
+      <div class="content detail-content">
+        <div class="hero-slider" id="hero-slider"></div>
+
+        <div class="detail-body">
+        <div class="detail-header">
+          <div>
+            <div class="detail-title" id="detail-title"></div>
+            <div class="detail-address" id="detail-address"></div>
+          </div>
+          <button class="bookmark-btn" id="detail-bookmark-btn" aria-label="북마크">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 3.5H17C17.83 3.5 18.5 4.17 18.5 5V19.5L12 16L5.5 19.5V5C5.5 4.17 6.17 3.5 7 3.5Z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-label">편의시설 위치보기</div>
+          <div class="facility-grid" id="facility-grid"></div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-label">키워드</div>
+          <div class="keyword-row" id="detail-keywords"></div>
+        </div>
+
+        <div class="vod-section">
+          <div class="vod-header">
+            <div class="vod-title">관련VOD</div>
+            <button class="vod-more">더보기</button>
+          </div>
+          <div class="vod-card">
+            <img id="vod-image" src="" alt="관련 VOD" />
+          </div>
+        </div>
+
+        <div class="map-section">
+          <div class="detail-label">지도</div>
+          <div class="map-box" id="kakao-map"></div>          <button class="detail-route-btn" id="detail-route-btn">길찾기</button>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="bottom-nav">
+      <button class="nav-item" id="go-home-tab" type="button">
+        <span class="nav-icon icon-home"></span>
+        <span>홈</span>
+      </button>
+      <button class="nav-item active" id="go-search-tab">
+        <span class="nav-icon icon-search"></span>
+        <span>검색</span>
+      </button>
+      <button class="nav-item">
+        <span class="nav-icon icon-group"></span>
+        <span>모임</span>
+      </button>
+      <button class="nav-item">
+        <span class="nav-icon icon-live"></span>
+        <span>LIVE</span>
+      </button>
+      <button class="nav-item" id="go-my-tab">
+        <span class="nav-icon icon-my"></span>
+        <span>MY</span>
+      </button>
+    </nav>
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <!-- 실제 서비스용 카카오맵 앱키로 교체하세요 -->
+  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_KAKAO_APP_KEY&autoload=false"></script>
+
+  <script>
+    const STORAGE_KEY = "camp_search_recent_keywords";
+    const GOCAMPING_SERVICE_KEY = "YOUR_GOCAMPING_SERVICE_KEY";
+    const GOCAMPING_BASE_URL = "https://apis.data.go.kr/B551011/GoCamping";
+    const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=1200&auto=format&fit=crop";
+
+    let placeData = [
+      {
+        id: 1,
+        name: "망원한강공원",
+        address: "서울 마포구 망원동 205-4",
+        distance: "11.1km",
+        tags: ["차크닉", "주차장"],
+        keywords: ["#차크닉", "#도심", "#주차장"],
+        facilities: [
+          { type: "restroom", label: "화장실" },
+          { type: "store", label: "편의점 / 마트", wide: true }
+        ],
+        lat: 37.552997,
+        lng: 126.898617,
+        images: [
+          "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1493246318656-5bfd4cfb29b8?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1200&auto=format&fit=crop"
+        ],
+        thumb: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=400&auto=format&fit=crop",
+        vodImage: "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?q=80&w=1200&auto=format&fit=crop"
+      },
+      {
+        id: 2,
+        name: "광교호수공원",
+        address: "경기 수원시 영통구 광교호수로 57",
+        distance: "26km",
+        tags: ["도심", "주차장"],
+        keywords: ["#산책", "#도심", "#주차장"],
+        facilities: [
+          { type: "restroom", label: "화장실" },
+          { type: "store", label: "편의점 / 마트", wide: true }
+        ],
+        lat: 37.28625,
+        lng: 127.05586,
+        images: [
+          "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1200&auto=format&fit=crop"
+        ],
+        thumb: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=400&auto=format&fit=crop",
+        vodImage: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop"
+      },
+      {
+        id: 3,
+        name: "강릉 안반데기",
+        address: "강원 강릉시 왕산면 안반데기길 428",
+        distance: "108km",
+        tags: ["오션뷰", "주차장"],
+        keywords: ["#차박", "#별보기", "#주차장"],
+        facilities: [
+          { type: "restroom", label: "화장실" },
+          { type: "store", label: "매점", wide: true }
+        ],
+        lat: 37.71813,
+        lng: 128.75622,
+        images: [
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1470770903676-69b98201ea1c?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop"
+        ],
+        thumb: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=400&auto=format&fit=crop",
+        vodImage: "https://images.unsplash.com/photo-1470770903676-69b98201ea1c?q=80&w=1200&auto=format&fit=crop"
+      },
+      {
+        id: 4,
+        name: "화성 궁평항",
+        address: "경기 화성시 서신면 궁평항로 1049-24",
+        distance: "58km",
+        tags: ["차크닉", "주차장"],
+        keywords: ["#바다", "#차크닉", "#주차장"],
+        facilities: [
+          { type: "restroom", label: "화장실" },
+          { type: "store", label: "편의점 / 마트", wide: true }
+        ],
+        lat: 37.11638,
+        lng: 126.68477,
+        images: [
+          "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop"
+        ],
+        thumb: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=400&auto=format&fit=crop",
+        vodImage: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200&auto=format&fit=crop"
+      },
+      {
+        id: 5,
+        name: "남이섬 캠프닉",
+        address: "강원 춘천시 남산면 남이섬길 1",
+        distance: "42km",
+        tags: ["숲뷰", "주차장"],
+        keywords: ["#캠핑", "#숲", "#피크닉"],
+        facilities: [
+          { type: "restroom", label: "화장실" },
+          { type: "store", label: "편의점 / 마트", wide: true }
+        ],
+        lat: 37.79145,
+        lng: 127.52536,
+        images: [
+          "https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1521334884684-d80222895322?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop"
+        ],
+        thumb: "https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=400&auto=format&fit=crop",
+        vodImage: "https://images.unsplash.com/photo-1521334884684-d80222895322?q=80&w=1200&auto=format&fit=crop"
+      }
+    ];
+
+    const state = {
+      currentScreen: "search-screen",
+      currentResults: [...placeData],
+      currentPlace: null,
+      sliderIndex: 0,
+      sliderTimer: null,
+      sliderStartX: 0,
+      sliderStartY: 0,
+      sliderCurrentX: 0,
+      sliderCurrentY: 0,
+      sliderDragging: false,
+      sliderPointerDown: false,
+      sliderGestureLocked: "",
+      bookmarks: new Set(),
+      fullMap: null,
+      fullMapMarker: null,
+      fullMapInfo: null,
+      currentLocationMarker: null,
+      currentLat: null,
+      currentLng: null
+    };
+
+    const screens = {
+      search: document.getElementById("search-screen"),
+      result: document.getElementById("result-screen"),
+      map: document.getElementById("map-screen"),
+      saved: document.getElementById("saved-screen"),
+      detail: document.getElementById("detail-screen")
+    };
+
+    const searchInput = document.getElementById("search-input");
+    const recentKeywordsEl = document.getElementById("recent-keywords");
+    const resultListEl = document.getElementById("result-list");
+    const savedListEl = document.getElementById("saved-list");
+    const clearHistoryBtn = document.getElementById("clear-history-btn");
+    const toastEl = document.getElementById("toast");
+    const heroSliderEl = document.getElementById("hero-slider");
+    const detailTitleEl = document.getElementById("detail-title");
+    const detailAddressEl = document.getElementById("detail-address");
+    const facilityGridEl = document.getElementById("facility-grid");
+    const detailKeywordsEl = document.getElementById("detail-keywords");
+    const vodImageEl = document.getElementById("vod-image");
+    const detailBookmarkBtn = document.getElementById("detail-bookmark-btn");
+    const mapSearchBtn = document.getElementById("open-map-search-btn");
+    const mapBackBtn = document.getElementById("map-back-btn");
+    const mapRouteBtn = document.getElementById("map-route-btn");
+    const mapCardEl = document.getElementById("map-card");
+    const mapGpsBtn = document.getElementById("map-gps-btn");
+    const detailRouteBtn = document.getElementById("detail-route-btn");
+    const scrollableContents = document.querySelectorAll(".content");
+
+    function showToast(message) {
+      toastEl.textContent = message;
+      toastEl.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toastEl.classList.remove("show"), 1800);
+    }
+
+    function saveRecentKeyword(keyword) {
+      const value = keyword.trim();
+      if (!value) return;
+      const current = getRecentKeywords().filter(item => item !== value);
+      current.unshift(value);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(current.slice(0, 6)));
+      renderRecentKeywords();
+    }
+
+    function getRecentKeywords() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        return stored ? JSON.parse(stored) || [] : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function clearRecentKeywords() {
+      localStorage.removeItem(STORAGE_KEY);
+      renderRecentKeywords();
+    }
+
+    function renderRecentKeywords() {
+      const items = getRecentKeywords();
+      if (!items.length) {
+        recentKeywordsEl.innerHTML = '<div class="empty-state" style="padding:0; text-align:left; font-size:13px; line-height:1.4; color: var(--muted);">최근 검색어가 없습니다.</div>';
+        return;
+      }
+      recentKeywordsEl.innerHTML = items
+        .map(keyword => `<button class="chip gray recent-chip" data-keyword="${keyword}">${keyword}</button>`)
+        .join("");
+    }
+
+    function mapApiItem(item, index) {
+      const image = item.firstImageUrl || item.firstImageUrl2 || DEFAULT_IMAGE;
+      const rawTags = [item.lctCl, item.induty].filter(Boolean);
+      const rawKeywords = [item.themaEnvrnCl, item.sbrsCl, item.posblFcltyCl]
+        .filter(Boolean)
+        .flatMap(v => String(v).split(",").map(s => s.trim()).filter(Boolean));
+
+      return {
+        id: Number(item.contentId) || index + 1,
+        name: item.facltNm || "이름 미정",
+        address: item.addr1 || item.doNm || "주소 정보 없음",
+        distance: item.posblFcltyCl || "",
+        tags: (rawTags.length ? rawTags : ["캠핑", "야영장"]).slice(0, 2),
+        keywords: (rawKeywords.length ? rawKeywords : ["캠핑", "야영장", "자연"]).slice(0, 3).map(v => `#${v.replace(/^#/, "")}`),
+        facilities: [
+          { type: "restroom", label: "화장실" },
+          { type: "store", label: "편의시설", wide: true }
+        ],
+        lat: Number(item.mapY) || 37.5665,
+        lng: Number(item.mapX) || 126.978,
+        images: [image, image, image],
+        thumb: image,
+        vodImage: image
+      };
+    }
+
+    async function fetchSearchList(keyword) {
+      if (!GOCAMPING_SERVICE_KEY || GOCAMPING_SERVICE_KEY === "YOUR_GOCAMPING_SERVICE_KEY") {
+        showToast("고캠핑 서비스키를 먼저 넣어주세요.");
+        return [...placeData];
+      }
+
+      const url = new URL(`${GOCAMPING_BASE_URL}/searchList`);
+      url.searchParams.set("serviceKey", GOCAMPING_SERVICE_KEY);
+      url.searchParams.set("numOfRows", "30");
+      url.searchParams.set("pageNo", "1");
+      url.searchParams.set("MobileOS", "ETC");
+      url.searchParams.set("MobileApp", "camp-search-app");
+      url.searchParams.set("_type", "json");
+      url.searchParams.set("keyword", keyword);
+
+      const response = await fetch(url.toString());
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      const data = await response.json();
+      const items = data?.response?.body?.items?.item || [];
+      return Array.isArray(items) ? items.map(mapApiItem) : [];
+    }
+
+    function updateBottomNav(screenName) {
+      document.querySelectorAll(".bottom-nav .nav-item").forEach(item => item.classList.remove("active"));
+      if (screenName === "saved") {
+        document.getElementById("go-my-tab").classList.add("active");
+      } else {
+        document.getElementById("go-search-tab").classList.add("active");
+      }
+    }
+
+    function goToScreen(screenName) {
+      Object.values(screens).forEach(screen => screen.classList.remove("active"));
+      if (screenName === "search") screens.search.classList.add("active");
+      if (screenName === "result") screens.result.classList.add("active");
+      if (screenName === "map") screens.map.classList.add("active");
+      if (screenName === "saved") screens.saved.classList.add("active");
+      if (screenName === "detail") screens.detail.classList.add("active");
+      state.currentScreen = screenName;
+      updateBottomNav(screenName);
+    }
+
+    async function searchPlaces(keyword) {
+      const q = keyword.trim().toLowerCase();
+      if (!q) {
+        showToast("검색어를 입력해주세요.");
+        return;
+      }
+
+      try {
+        const apiResults = await fetchSearchList(q);
+        state.currentResults = apiResults;
+        if (apiResults.length) placeData = apiResults;
+      } catch (error) {
+        console.error(error);
+        state.currentResults = [];
+        showToast("검색 중 오류가 발생했습니다.");
+      }
+
+      renderResultList();
+      goToScreen("result");
+    }
+
+    function getBookmarkIcon() {
+      return `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 3.5H17C17.83 3.5 18.5 4.17 18.5 5V19.5L12 16L5.5 19.5V5C5.5 4.17 6.17 3.5 7 3.5Z"></path>
+        </svg>
+      `;
+    }
+
+    function getCaptionTags(place) {
+      const sourceTags = (place.keywords && place.keywords.length ? place.keywords : place.tags || [])
+        .map(tag => String(tag).replace(/^#/, "").trim())
+        .filter(Boolean);
+
+      if (!sourceTags.length) return [];
+
+      const longTags = sourceTags.filter(tag => tag.length > 3);
+      if (longTags.length) {
+        return [longTags[0]];
+      }
+
+      return sourceTags.slice(0, 2);
+    }
+
+    function getDistanceKm(lat1, lng1, lat2, lng2) {
+      const toRad = (deg) => deg * Math.PI / 180;
+      const earthRadiusKm = 6371;
+      const dLat = toRad(lat2 - lat1);
+      const dLng = toRad(lng2 - lng1);
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return earthRadiusKm * c;
+    }
+
+    function getPlaceDistanceText(place) {
+      if (typeof state.currentLat === "number" && typeof state.currentLng === "number") {
+        const distanceKm = getDistanceKm(state.currentLat, state.currentLng, place.lat, place.lng);
+        return distanceKm < 1 ? `${Math.round(distanceKm * 1000)}m` : `${distanceKm.toFixed(1)}km`;
+      }
+      return place.distance || "거리 확인중";
+    }
+
+    function renderSavedList() {
+      const savedPlaces = placeData.filter(place => state.bookmarks.has(place.id));
+      if (!savedPlaces.length) {
+        savedListEl.innerHTML = '<div class="empty-state">저장한 장소가 없습니다.<br />검색 결과에서 북마크를 눌러 저장해보세요.</div>';
+        return;
+      }
+
+      savedListEl.innerHTML = savedPlaces.map(place => `
+        <article class="result-item" data-saved-id="${place.id}">
+          <div class="result-thumb">
+            <img src="${place.thumb}" alt="${place.name}" />
+          </div>
+          <div class="result-body">
+            <div class="result-top">
+              <div class="result-title-wrap">
+                <div class="result-title">${place.name}</div>
+                <div class="result-address">${place.address}</div>
+              </div>
+              <button class="bookmark-btn active" data-saved-bookmark-id="${place.id}" aria-label="북마크">${getBookmarkIcon()}</button>
+            </div>
+            <div class="result-meta">
+              <div class="tag-list">
+                ${getCaptionTags(place).map(tag => `<span class="tag">${tag}</span>`).join("")}
+              </div>
+              <div class="distance">${getPlaceDistanceText(place)}</div>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderResultList() {
+      if (!state.currentResults.length) {
+        resultListEl.innerHTML = '<div class="empty-state">검색 결과가 없습니다.<br />다른 지역명이나 키워드로 다시 검색해보세요.</div>';
+        return;
+      }
+
+      resultListEl.innerHTML = state.currentResults.map(place => `
+        <article class="result-item" data-id="${place.id}">
+          <div class="result-thumb">
+            <img src="${place.thumb}" alt="${place.name}" />
+          </div>
+          <div class="result-body">
+            <div class="result-top">
+              <div class="result-title-wrap">
+                <div class="result-title">${place.name}</div>
+                <div class="result-address">${place.address}</div>
+              </div>
+              <button class="bookmark-btn ${state.bookmarks.has(place.id) ? "active" : ""}" data-bookmark-id="${place.id}" aria-label="북마크">${getBookmarkIcon()}</button>
+            </div>
+            <div class="result-meta">
+              <div class="tag-list">
+                ${getCaptionTags(place).map(tag => `<span class="tag">${tag}</span>`).join("")}
+              </div>
+              <div class="distance">${getPlaceDistanceText(place)}</div>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function toggleBookmark(placeId) {
+      if (state.bookmarks.has(placeId)) {
+        state.bookmarks.delete(placeId);
+        showToast("북마크가 해제되었습니다.");
+      } else {
+        state.bookmarks.add(placeId);
+        showToast("북마크에 저장되었습니다.");
+      }
+      renderResultList();
+      renderSavedList();
+      if (state.currentPlace) renderMapCard(state.currentPlace);
+      if (state.currentPlace && state.currentPlace.id === placeId) {
+        detailBookmarkBtn.classList.toggle("active", state.bookmarks.has(placeId));
+      }
+    }
+
+    function renderMapCard(place) {
+      if (!place) {
+        mapCardEl.innerHTML = '<div class="empty-state" style="padding:20px 0 0;">표시할 장소가 없습니다.</div>';
+        return;
+      }
+
+      state.currentPlace = place;
+      mapRouteBtn.dataset.placeId = String(place.id);
+      mapCardEl.innerHTML = `
+        <div class="map-card-inner" data-map-card-id="${place.id}">
+          <div class="map-card-thumb">
+            <img src="${place.thumb}" alt="${place.name}" />
+          </div>
+          <div class="map-card-body">
+            <div class="map-card-top">
+              <div class="map-card-title-wrap">
+                <div class="map-card-title">${place.name}</div>
+                <div class="map-card-address">${place.address}</div>
+              </div>
+              <button class="bookmark-btn ${state.bookmarks.has(place.id) ? "active" : ""}" data-map-bookmark-id="${place.id}" aria-label="북마크">${getBookmarkIcon()}</button>
+            </div>
+            <div class="map-card-bottom">
+              <div class="map-card-tags">${getCaptionTags(place).map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
+              <div class="map-card-distance">${getPlaceDistanceText(place)}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function initFullMap(place) {
+      const mapContainer = document.getElementById("full-kakao-map");
+      renderMapCard(place);
+
+      if (!window.kakao || !window.kakao.maps) {
+        mapContainer.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:#666;font-size:13px;line-height:1.6;background:#dce6ef;">카카오맵 앱 키가 설정되지 않아 전체 지도를 표시할 수 없습니다.<br>YOUR_KAKAO_APP_KEY를 실제 키로 교체하세요.</div>`;
+        return;
+      }
+
+      window.kakao.maps.load(() => {
+        const center = new kakao.maps.LatLng(place.lat, place.lng);
+
+        if (!state.fullMap) {
+          state.fullMap = new kakao.maps.Map(mapContainer, { center, level: 5 });
+        } else {
+          state.fullMap.relayout();
+          state.fullMap.setCenter(center);
+          state.fullMap.setLevel(5);
+        }
+
+        if (state.fullMapMarker) {
+          state.fullMapMarker.setMap(null);
+        }
+        state.fullMapMarker = new kakao.maps.Marker({ position: center });
+        state.fullMapMarker.setMap(state.fullMap);
+
+        if (state.fullMapInfo) {
+          state.fullMapInfo.close();
+        }
+        state.fullMapInfo = new kakao.maps.InfoWindow({
+          content: `<div style="padding:7px 9px;font-size:12px;white-space:nowrap;">${place.name}</div>`
+        });
+        state.fullMapInfo.open(state.fullMap, state.fullMapMarker);
+
+        if (state.currentLocationMarker) {
+          state.currentLocationMarker.setMap(null);
+          state.currentLocationMarker = null;
+        }
+      });
+    }
+
+    function requestInitialLocationPermission() {
+      if (!navigator.geolocation) return;
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          state.currentLat = lat;
+          state.currentLng = lng;
+        },
+        () => {
+          showToast("위치 권한을 허용하면 현재 위치 기반으로 지도를 볼 수 있습니다.");
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
+    }
+
+    function moveFullMapToCurrentLocation() {
+      if (!navigator.geolocation) {
+        showToast("이 기기에서는 현재 위치를 사용할 수 없습니다.");
+        return;
+      }
+
+      if (!window.kakao || !window.kakao.maps) {
+        showToast("카카오맵 앱 키를 먼저 설정해주세요.");
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          window.kakao.maps.load(() => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            state.currentLat = lat;
+            state.currentLng = lng;
+            const currentLatLng = new kakao.maps.LatLng(lat, lng);
+            const mapContainer = document.getElementById("full-kakao-map");
+
+            if (!state.fullMap) {
+              state.fullMap = new kakao.maps.Map(mapContainer, {
+                center: currentLatLng,
+                level: 4
+              });
+            } else {
+              state.fullMap.relayout();
+              state.fullMap.setCenter(currentLatLng);
+              state.fullMap.setLevel(4);
+            }
+
+            if (state.fullMapInfo) {
+              state.fullMapInfo.close();
+            }
+
+            if (state.currentLocationMarker) {
+              state.currentLocationMarker.setMap(null);
+            }
+            state.currentLocationMarker = new kakao.maps.Marker({
+              position: currentLatLng
+            });
+            state.currentLocationMarker.setMap(state.fullMap);
+
+            showToast("현재 위치로 이동했습니다.");
+          });
+        },
+        () => {
+          showToast("현재 위치를 가져오지 못했습니다.");
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
+    }
+
+    function getMostRecentSavedPlace() {
+      const bookmarkedIds = Array.from(state.bookmarks);
+      if (!bookmarkedIds.length) return null;
+      const recentSavedId = bookmarkedIds[bookmarkedIds.length - 1];
+      return placeData.find(item => item.id === recentSavedId) || null;
+    }
+
+    function openMapScreen() {
+      const targetPlace = getMostRecentSavedPlace() || state.currentResults[0] || placeData[0];
+      if (!targetPlace) {
+        showToast("표시할 장소가 없습니다.");
+        return;
+      }
+      goToScreen("map");
+      initFullMap(targetPlace);
+    }
+
+    function openDetail(placeId) {
+      const place = placeData.find(item => item.id === placeId);
+      if (!place) return;
+      state.currentPlace = place;
+      detailTitleEl.textContent = place.name;
+      detailAddressEl.textContent = place.address;
+      detailBookmarkBtn.classList.toggle("active", state.bookmarks.has(place.id));
+      detailBookmarkBtn.dataset.placeId = String(place.id);
+
+      facilityGridEl.innerHTML = place.facilities.map(item => `
+        <div class="facility-card ${item.wide ? "wide" : ""}">
+          <div class="facility-icon ${item.type === "restroom" ? "icon-restroom" : "icon-store"}"></div>
+          <div class="facility-text">${item.label}</div>
+        </div>
+      `).join("");
+
+      detailKeywordsEl.innerHTML = place.keywords.map(item => `<span>${item}</span>`).join("");
+      vodImageEl.src = place.vodImage;
+      vodImageEl.alt = `${place.name} 관련 영상`;
+
+      renderHeroSlider(place.images);
+      goToScreen("detail");
+      initKakaoMap(place);
+    }
+
+    function updateHeroSliderPosition(track, animate = true) {
+      if (!track) return;
+      track.classList.toggle("dragging", !animate);
+      track.style.transform = `translateX(${-state.sliderIndex * 100}%)`;
+    }
+
+    function updateHeroDots(totalSlides) {
+      const dots = heroSliderEl.querySelectorAll(".hero-dot");
+      const activeIndex = totalSlides <= 1
+        ? 0
+        : (state.sliderIndex - 1 + totalSlides) % totalSlides;
+      dots.forEach((dot, index) => dot.classList.toggle("active", index === activeIndex));
+    }
+
+    function moveHeroSliderToRealIndex(track, realIndex, totalSlides, animate = true) {
+      state.sliderIndex = realIndex + 1;
+      updateHeroDots(totalSlides);
+      updateHeroSliderPosition(track, animate);
+    }
+
+    function normalizeHeroLoop(track, totalSlides) {
+      if (!track || totalSlides <= 1) return;
+
+      if (state.sliderIndex === 0) {
+        state.sliderIndex = totalSlides;
+        updateHeroSliderPosition(track, false);
+      } else if (state.sliderIndex === totalSlides + 1) {
+        state.sliderIndex = 1;
+        updateHeroSliderPosition(track, false);
+      }
+
+      requestAnimationFrame(() => {
+        updateHeroDots(totalSlides);
+      });
+    }
+
+    function bindHeroSliderGesture(track, totalSlides) {
+      if (!track || totalSlides <= 1) return;
+
+      const onPointerDown = (event) => {
+        state.sliderPointerDown = true;
+        state.sliderDragging = false;
+        state.sliderGestureLocked = "";
+        state.sliderStartX = event.clientX;
+        state.sliderStartY = event.clientY;
+        state.sliderCurrentX = event.clientX;
+        state.sliderCurrentY = event.clientY;
+        track.classList.add("dragging");
+      };
+
+      const onPointerMove = (event) => {
+        if (!state.sliderPointerDown) return;
+
+        state.sliderCurrentX = event.clientX;
+        state.sliderCurrentY = event.clientY;
+
+        const diffX = state.sliderCurrentX - state.sliderStartX;
+        const diffY = state.sliderCurrentY - state.sliderStartY;
+
+        if (!state.sliderGestureLocked) {
+          if (Math.abs(diffX) < 8 && Math.abs(diffY) < 8) return;
+
+          if (Math.abs(diffY) > Math.abs(diffX)) {
+            state.sliderGestureLocked = "vertical";
+            track.classList.remove("dragging");
+            return;
+          }
+
+          state.sliderGestureLocked = "horizontal";
+          state.sliderDragging = true;
+        }
+
+        if (state.sliderGestureLocked !== "horizontal") return;
+
+        const sliderWidth = heroSliderEl.clientWidth || 1;
+        const baseOffset = -state.sliderIndex * sliderWidth;
+        track.style.transform = `translateX(${baseOffset + diffX}px)`;
+      };
+
+      const onPointerUp = () => {
+        if (!state.sliderPointerDown) return;
+
+        const wasHorizontalDrag = state.sliderGestureLocked === "horizontal";
+        const diff = state.sliderCurrentX - state.sliderStartX;
+        const threshold = (heroSliderEl.clientWidth || 1) * 0.18;
+
+        state.sliderPointerDown = false;
+
+        if (wasHorizontalDrag) {
+          state.sliderDragging = false;
+
+          if (Math.abs(diff) > threshold) {
+            if (diff < 0) {
+              state.sliderIndex += 1;
+            } else if (diff > 0) {
+              state.sliderIndex -= 1;
+            }
+          }
+
+          updateHeroDots(totalSlides);
+          updateHeroSliderPosition(track, true);
+        } else {
+          track.classList.remove("dragging");
+        }
+
+        state.sliderGestureLocked = "";
+      };
+
+      const onTransitionEnd = () => {
+        normalizeHeroLoop(track, totalSlides);
+      };
+
+      track.addEventListener("pointerdown", onPointerDown);
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+      window.addEventListener("pointerup", onPointerUp);
+      window.addEventListener("pointercancel", onPointerUp);
+      track.addEventListener("transitionend", onTransitionEnd);
+    }
+
+    function renderHeroSlider(images) {
+      clearInterval(state.sliderTimer);
+      state.sliderDragging = false;
+      state.sliderPointerDown = false;
+      state.sliderGestureLocked = "";
+
+      const totalSlides = images.length;
+      const loopImages = totalSlides > 1
+        ? [images[totalSlides - 1], ...images, images[0]]
+        : [...images];
+
+      state.sliderIndex = totalSlides > 1 ? 1 : 0;
+
+      heroSliderEl.innerHTML = `
+        <div class="hero-track">
+          ${loopImages.map((src, index) => `
+            <div class="hero-slide">
+              <img src="${src}" alt="상세 이미지 ${totalSlides > 1 ? ((index - 1 + totalSlides) % totalSlides) + 1 : index + 1}" />
+            </div>
+          `).join("")}
+        </div>
+        <div class="hero-dots">
+          ${images.map((_, index) => `<span class="hero-dot ${index === 0 ? "active" : ""}"></span>`).join("")}
+        </div>
+      `;
+
+      const track = heroSliderEl.querySelector(".hero-track");
+      updateHeroSliderPosition(track, false);
+      updateHeroDots(totalSlides);
+      bindHeroSliderGesture(track, totalSlides);
+
+      if (totalSlides <= 1) return;
+
+      state.sliderTimer = setInterval(() => {
+        if (state.sliderDragging || state.sliderPointerDown) return;
+        state.sliderIndex += 1;
+        updateHeroDots(totalSlides);
+        updateHeroSliderPosition(track, true);
+      }, 2600);
+    }
+
+    function enableDragScroll(container) {
+      if (!container) return;
+
+      let isPointerDown = false;
+      let isDragging = false;
+      let startY = 0;
+      let startX = 0;
+      let startScrollTop = 0;
+      let ignorePointer = false;
+
+      const shouldIgnoreTarget = (target) => {
+        return !!target.closest("input, button, a, .hero-slider, #kakao-map, label, textarea, select");
+      };
+
+      container.addEventListener("pointerdown", (event) => {
+        if (event.pointerType === "mouse" && event.button !== 0) return;
+
+        ignorePointer = shouldIgnoreTarget(event.target);
+        if (ignorePointer) return;
+
+        isPointerDown = true;
+        isDragging = false;
+        startY = event.clientY;
+        startX = event.clientX;
+        startScrollTop = container.scrollTop;
+      });
+
+      container.addEventListener("pointermove", (event) => {
+        if (!isPointerDown || ignorePointer) return;
+
+        const deltaY = event.clientY - startY;
+        const deltaX = event.clientX - startX;
+
+        if (!isDragging) {
+          if (Math.abs(deltaY) < 8) return;
+          if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            isPointerDown = false;
+            return;
+          }
+          isDragging = true;
+          container.classList.add("drag-scroll-active");
+        }
+
+        event.preventDefault();
+        container.scrollTop = startScrollTop - deltaY;
+      }, { passive: false });
+
+      container.addEventListener("click", (event) => {
+        if (isDragging) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      }, true);
+
+      const endDrag = () => {
+        isPointerDown = false;
+        ignorePointer = false;
+        requestAnimationFrame(() => {
+          isDragging = false;
+          container.classList.remove("drag-scroll-active");
+        });
+      };
+
+      container.addEventListener("pointerup", endDrag);
+      container.addEventListener("pointercancel", endDrag);
+      container.addEventListener("pointerleave", endDrag);
+    }
+
+    function initKakaoMap(place) {
+      const mapContainer = document.getElementById("kakao-map");
+      if (!window.kakao || !window.kakao.maps) {
+        mapContainer.innerHTML = `
+          <div style="height:100%;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:#666;font-size:13px;line-height:1.6;background:#efefef;">
+            카카오맵 앱 키가 설정되지 않아 지도를 표시할 수 없습니다.<br>YOUR_KAKAO_APP_KEY를 실제 키로 교체하세요.
+          </div>
+        `;
+        return;
+      }
+
+      window.kakao.maps.load(() => {
+        mapContainer.innerHTML = "";
+        const center = new kakao.maps.LatLng(place.lat, place.lng);
+        const map = new kakao.maps.Map(mapContainer, {
+          center,
+          level: 4
+        });
+
+        const marker = new kakao.maps.Marker({ position: center });
+        marker.setMap(map);
+
+        const info = new kakao.maps.InfoWindow({
+          content: `<div style="padding:8px 10px;font-size:12px;white-space:nowrap;">${place.name}</div>`
+        });
+        info.open(map, marker);
+      });
+    }
+
+    async function handleSearch(keyword) {
+      const value = keyword.trim();
+      if (!value) {
+        showToast("검색어를 입력해주세요.");
+        return;
+      }
+      saveRecentKeyword(value);
+      await searchPlaces(value);
+    }
+
+    searchInput.addEventListener("keydown", async (event) => {
+      if (event.key === "Enter") {
+        await handleSearch(searchInput.value);
+      }
+    });
+
+    clearHistoryBtn.addEventListener("click", () => {
+      clearRecentKeywords();
+      showToast("최근 검색어를 초기화했습니다.");
+    });
+
+    document.getElementById("popular-keywords").addEventListener("click", async (event) => {
+      const button = event.target.closest("[data-keyword]");
+      if (!button) return;
+      const keyword = button.dataset.keyword;
+      searchInput.value = keyword;
+      await handleSearch(keyword);
+    });
+
+    recentKeywordsEl.addEventListener("click", async (event) => {
+      const button = event.target.closest("[data-keyword]");
+      if (!button) return;
+      const keyword = button.dataset.keyword;
+      searchInput.value = keyword;
+      await handleSearch(keyword);
+    });
+
+    resultListEl.addEventListener("click", (event) => {
+      const bookmarkButton = event.target.closest("[data-bookmark-id]");
+      if (bookmarkButton) {
+        event.stopPropagation();
+        toggleBookmark(Number(bookmarkButton.dataset.bookmarkId));
+        return;
+      }
+
+      const item = event.target.closest(".result-item");
+      if (!item) return;
+      openDetail(Number(item.dataset.id));
+    });
+
+    mapCardEl.addEventListener("click", (event) => {
+      const bookmarkButton = event.target.closest("[data-map-bookmark-id]");
+      if (bookmarkButton) {
+        event.stopPropagation();
+        toggleBookmark(Number(bookmarkButton.dataset.mapBookmarkId));
+        return;
+      }
+      const card = event.target.closest("[data-map-card-id]");
+      if (!card) return;
+      openDetail(Number(card.dataset.mapCardId));
+    });
+
+    savedListEl.addEventListener("click", (event) => {
+      const bookmarkButton = event.target.closest("[data-saved-bookmark-id]");
+      if (bookmarkButton) {
+        event.stopPropagation();
+        toggleBookmark(Number(bookmarkButton.dataset.savedBookmarkId));
+        return;
+      }
+      const item = event.target.closest("[data-saved-id]");
+      if (!item) return;
+      openDetail(Number(item.dataset.savedId));
+    });
+
+    detailBookmarkBtn.addEventListener("click", () => {
+      if (!state.currentPlace) return;
+      toggleBookmark(state.currentPlace.id);
+      detailBookmarkBtn.classList.toggle("active", state.bookmarks.has(state.currentPlace.id));
+    });
+
+    document.querySelectorAll("[data-back]").forEach(button => {
+      button.addEventListener("click", () => {
+        const target = button.dataset.back;
+        if (target === "search") {
+          searchInput.value = "";
+          goToScreen("search");
+        }
+        if (target === "result") goToScreen("result");
+      });
+    });
+
+    document.getElementById("go-home-tab").addEventListener("click", () => {
+      window.location.href = "main.html";
+    });
+
+    document.getElementById("go-search-tab").addEventListener("click", () => goToScreen("search"));
+    document.getElementById("go-my-tab").addEventListener("click", () => {
+      renderSavedList();
+      goToScreen("saved");
+    });
+
+    mapBackBtn.addEventListener("click", () => {
+      goToScreen("search");
+    });
+
+    mapRouteBtn.addEventListener("click", () => {
+      const placeId = Number(mapRouteBtn.dataset.placeId);
+      const targetPlace = placeData.find(item => item.id === placeId) || state.currentPlace;
+      if (!targetPlace) {
+        showToast("길찾기 장소가 없습니다.");
+        return;
+      }
+      const url = `https://map.kakao.com/link/to/${encodeURIComponent(targetPlace.name)},${targetPlace.lat},${targetPlace.lng}`;
+      window.open(url, "_blank");
+    });
+
+    mapGpsBtn.addEventListener("click", () => {
+      moveFullMapToCurrentLocation();
+    });
+
+    detailRouteBtn.addEventListener("click", () => {
+      if (!state.currentPlace) {
+        showToast("길찾기 장소가 없습니다.");
+        return;
+      }
+      const url = `https://map.kakao.com/link/to/${encodeURIComponent(state.currentPlace.name)},${state.currentPlace.lat},${state.currentPlace.lng}`;
+      window.open(url, "_blank");
+    });
+
+    mapSearchBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      openMapScreen();
+    });
+
+    renderRecentKeywords();
+    renderResultList();
+    renderSavedList();
+    renderMapCard(placeData[0]);
+    scrollableContents.forEach(enableDragScroll);
+    requestInitialLocationPermission();
+  </script>
+</body>
+</html>
