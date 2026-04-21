@@ -804,61 +804,62 @@
 
     const destinationName = '치악산 1번지';
     const destinationAddress = '강원도 원주시 치악면 치악산 1번지';
+    const destinationLat = 'DESTINATION_LAT';
+    const destinationLng = 'DESTINATION_LNG';
+
+    function hasValidDestinationCoords() {
+      return destinationLat !== 'DESTINATION_LAT' && destinationLng !== 'DESTINATION_LNG';
+    }
 
     function openKakaoDirections() {
-      if (!window.kakao || !window.kakao.maps || !window.kakao.maps.services) {
-        alert('카카오맵 SDK 키를 먼저 넣어주세요.');
+      const toName = encodeURIComponent(destinationName);
+
+      const openDirectionUrl = (fromLat, fromLng) => {
+        window.open(
+          `https://map.kakao.com/link/from/${encodeURIComponent('내 위치')},${fromLat},${fromLng}/to/${toName},${destinationLat},${destinationLng}`,
+          '_blank'
+        );
+      };
+
+      const openDestinationUrl = () => {
+        window.open(
+          `https://map.kakao.com/link/to/${toName},${destinationLat},${destinationLng}`,
+          '_blank'
+        );
+      };
+
+      const openSearchFallback = () => {
+        window.open(
+          `https://map.kakao.com/?q=${encodeURIComponent(destinationAddress)}`,
+          '_blank'
+        );
+      };
+
+      if (!hasValidDestinationCoords()) {
+        openSearchFallback();
+        alert('목적지 좌표를 먼저 넣어주세요. 좌표를 넣기 전에는 카카오맵 검색 화면으로 연결됩니다.');
         return;
       }
 
-      const geocoder = new kakao.maps.services.Geocoder();
+      if (!navigator.geolocation) {
+        openDestinationUrl();
+        return;
+      }
 
-      geocoder.addressSearch(destinationAddress, (result, status) => {
-        if (status !== kakao.maps.services.Status.OK || !result.length) {
-          alert('목적지 좌표를 찾을 수 없습니다. 주소를 확인해주세요.');
-          return;
-        }
-
-        const destLng = result[0].x;
-        const destLat = result[0].y;
-
-        const openDirectionUrl = (fromLat, fromLng) => {
-          const fromName = encodeURIComponent('내 위치');
-          const toName = encodeURIComponent(destinationName);
-          window.open(
-            `https://map.kakao.com/link/from/${fromName},${fromLat},${fromLng}/to/${toName},${destLat},${destLng}`,
-            '_blank'
-          );
-        };
-
-        const openDestinationUrl = () => {
-          const toName = encodeURIComponent(destinationName);
-          window.open(
-            `https://map.kakao.com/link/to/${toName},${destLat},${destLng}`,
-            '_blank'
-          );
-        };
-
-        if (!navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          openDirectionUrl(latitude, longitude);
+        },
+        () => {
           openDestinationUrl();
-          return;
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0,
         }
-
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords;
-            openDirectionUrl(latitude, longitude);
-          },
-          () => {
-            openDestinationUrl();
-          },
-          {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 0,
-          }
-        );
-      });
+      );
     }
 
     routeBtn.addEventListener('click', () => {
