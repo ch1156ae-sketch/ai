@@ -22,6 +22,7 @@ body {
 .box3 div {
     width: 200px;
     height: 200px;
+    transition: all 0.5s ease-in-out;
 }
 
 .box1 div:first-child {
@@ -32,9 +33,12 @@ body {
     background: green;
 }
 
-.box2 div:first-child {
+/* .box2 div:first-child {
     background: orange;
-}
+    width: 200px;
+    height: 200px;
+    transition: all 0.5s ease-in-out;
+} */
 
 .box2 div:nth-child(2) {
     background: #cf0;
@@ -66,10 +70,21 @@ body {
     opacity: 0;
 }
 
-.slide-hidden {
+.box2 .box {
+    background: orange;
+    width: 200px;
+    height: 200px;
+    transition: all 0.5s ease-in-out;
+}
+
+.box2 .slide-hidden {
     height: 0;
     opacity: 0;
     padding-top: 0;
     padding-bottom: 0;
     transition: all 1s ease-in-out;
+}
+
+.box2 .ani-move {
+    left: 900px;
 }
