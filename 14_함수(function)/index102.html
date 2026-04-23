@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>함수3응용</title>
+    </head>
+    <body>
+        <script>
+            let amount = 365000;
+            let term = 1;
+            let rate = 4;
+
+            function inter(amount, term, rate) {
+                let sum = (amount * term * rate) / 100;
+                return sum;
+            }
+
+            // 함수를 호출하여 이자 계산 결과를 변수에 담아두면 사용하기 편합니다.
+            let resultInter = inter(amount, term, rate);
+
+            document.write(`맡긴 금액은 ${amount}원입니다.<br>`);
+            document.write(`이자는 ${resultInter}원입니다.<br>`);
+            document.write(
+                `최종 받을 금액은 ${amount + resultInter}원입니다.<br>`,
+            );
+        </script>
+    </body>
+</html>
