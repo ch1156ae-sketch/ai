@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>애니메이션 관련 메서드 예제</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                font-family: "Malgun Gothic", "맑은 고딕", Arial, sans-serif;
+                background: #e9e9e9;
+                color: #111;
+            }
+
+            .wrap {
+                width: 100%;
+                padding: 10px 8px 0;
+            }
+
+            h1 {
+                margin: 0 0 20px;
+                font-size: 26px;
+                font-weight: 700;
+            }
+
+            .method-list {
+                margin: 0 0 18px 24px;
+                padding-left: 20px;
+                font-size: 18px;
+                line-height: 1.55;
+            }
+
+            .button-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-bottom: 16px;
+            }
+
+            button {
+                padding: 4px 10px;
+                font-size: 14px;
+                border: 1px solid #9d9d9d;
+                background: #f3f3f3;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background: #e0e0e0;
+            }
+
+            .divider {
+                width: 100%;
+                height: 1px;
+                background: #9f9f9f;
+                margin: 8px 0 10px;
+            }
+
+            .stage-box {
+                width: 648px;
+                height: 208px;
+                border: 4px solid #bfbfbf;
+                background: #f4f4f4;
+                display: flex;
+                gap: 20px;
+                align-items: flex-start;
+                position: relative;
+                overflow: hidden;
+                margin-bottom: 48px;
+            }
+
+            .lower-row {
+                width: 648px;
+                height: 208px;
+                border: 4px solid #bfbfbf;
+                background: #f4f4f4;
+                display: flex;
+                gap: 20px;
+                align-items: flex-start;
+                position: relative;
+                overflow: visible;
+            }
+
+            .box {
+                width: 200px;
+                height: 200px;
+                font-size: 16px;
+                padding: 0;
+                color: #000;
+                position: relative;
+                flex-shrink: 0;
+            }
+
+            .box-red {
+                background: #ff1008;
+            }
+
+            .box-green {
+                background: #008f00;
+            }
+
+            .box-yellow {
+                background: #f6ca00;
+            }
+
+            .box-lime {
+                background: #caff00;
+            }
+
+            .box-sky {
+                background: #1bb8e1;
+            }
+
+            .floating-ani {
+                position: absolute;
+                right: 0;
+                top: 0;
+                z-index: 2;
+                transform: translateX(0);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrap">
+            <h1>[ jQuery 애니메이션 관련 메서드 ]</h1>
+
+            <ol class="method-list">
+                <li>$("대상").fadeIn();</li>
+                <li>$("대상").fadeOut();</li>
+                <li>$("대상").fadeToggle();</li>
+                <li>$("대상").slideUp();</li>
+                <li>$("대상").slideDown();</li>
+                <li>$("대상").slideToggle();</li>
+                <li>$("대상").animate();</li>
+            </ol>
+
+            <div class="button-row">
+                <button
+                    id="fadeInBtn"
+                    type="button"
+                >
+                    fadeIn
+                </button>
+                <button
+                    id="fadeOutBtn"
+                    type="button"
+                >
+                    fadeOut
+                </button>
+                <button
+                    id="fadeToggleBtn"
+                    type="button"
+                >
+                    fadeToggle
+                </button>
+                <button
+                    id="slideUpBtn"
+                    type="button"
+                >
+                    slideUp
+                </button>
+                <button
+                    id="slideDownBtn"
+                    type="button"
+                >
+                    slideDown
+                </button>
+                <button
+                    id="slideToggleBtn"
+                    type="button"
+                >
+                    slideToggle
+                </button>
+                <button
+                    id="ani1Btn"
+                    type="button"
+                >
+                    ani1
+                </button>
+                <button
+                    id="ani2Btn"
+                    type="button"
+                >
+                    ani2
+                </button>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="stage-box">
+                <div
+                    id="fadeBox"
+                    class="box box-red"
+                >
+                    fadeIn / fadeOut
+                </div>
+                <div
+                    id="fadeToggleBox"
+                    class="box box-green"
+                >
+                    fadeToggle
+                </div>
+            </div>
+
+            <div class="lower-row">
+                <div
+                    id="slideBox"
+                    class="box box-yellow"
+                >
+                    slideUp / slideDown
+                </div>
+                <div
+                    id="slideToggleBox"
+                    class="box box-lime"
+                >
+                    slideToggle
+                </div>
+                <div
+                    id="aniBox"
+                    class="box box-sky floating-ani"
+                >
+                    Animation
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const fadeBox = document.getElementById("fadeBox");
+            const fadeToggleBox = document.getElementById("fadeToggleBox");
+            const slideBox = document.getElementById("slideBox");
+            const slideToggleBox = document.getElementById("slideToggleBox");
+            const aniBox = document.getElementById("aniBox");
+
+            const fadeInBtn = document.getElementById("fadeInBtn");
+            const fadeOutBtn = document.getElementById("fadeOutBtn");
+            const fadeToggleBtn = document.getElementById("fadeToggleBtn");
+            const slideUpBtn = document.getElementById("slideUpBtn");
+            const slideDownBtn = document.getElementById("slideDownBtn");
+            const slideToggleBtn = document.getElementById("slideToggleBtn");
+            const ani1Btn = document.getElementById("ani1Btn");
+            const ani2Btn = document.getElementById("ani2Btn");
+
+            let fadeAnimating = false;
+            let fadeToggleAnimating = false;
+            let slideAnimating = false;
+            let slideToggleAnimating = false;
+            let aniAnimating = false;
+
+            fadeInBtn.addEventListener("click", function () {
+                if (fadeAnimating) return;
+                fadeAnimating = true;
+                fadeBox.style.display = "block";
+                fadeBox.style.opacity = "0";
+
+                const duration = 500;
+                let start = null;
+
+                requestAnimationFrame(function step(timestamp) {
+                    if (!start) start = timestamp;
+                    const progress = Math.min(
+                        (timestamp - start) / duration,
+                        1,
+                    );
+                    fadeBox.style.opacity = String(progress);
+
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        fadeAnimating = false;
+                    }
+                });
+            });
+
+            fadeOutBtn.addEventListener("click", function () {
+                if (fadeAnimating) return;
+                fadeAnimating = true;
+                fadeBox.style.opacity = "1";
+
+                const duration = 500;
+                let start = null;
+
+                requestAnimationFrame(function step(timestamp) {
+                    if (!start) start = timestamp;
+                    const progress = Math.min(
+                        (timestamp - start) / duration,
+                        1,
+                    );
+                    fadeBox.style.opacity = String(1 - progress);
+
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        fadeBox.style.display = "none";
+                        fadeAnimating = false;
+                    }
+                });
+            });
+
+            fadeToggleBtn.addEventListener("click", function () {
+                if (fadeToggleAnimating) return;
+                fadeToggleAnimating = true;
+
+                const hidden =
+                    getComputedStyle(fadeToggleBox).display === "none";
+                if (hidden) {
+                    fadeToggleBox.style.display = "block";
+                    fadeToggleBox.style.opacity = "0";
+                }
+
+                const startOpacity = hidden ? 0 : 1;
+                const endOpacity = hidden ? 1 : 0;
+                const duration = 500;
+                let start = null;
+
+                requestAnimationFrame(function step(timestamp) {
+                    if (!start) start = timestamp;
+                    const progress = Math.min(
+                        (timestamp - start) / duration,
+                        1,
+                    );
+                    const current =
+                        startOpacity + (endOpacity - startOpacity) * progress;
+                    fadeToggleBox.style.opacity = String(current);
+
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        if (!hidden) {
+                            fadeToggleBox.style.display = "none";
+                        }
+                        fadeToggleAnimating = false;
+                    }
+                });
+            });
+
+            slideUpBtn.addEventListener("click", function () {
+                if (slideAnimating) return;
+                if (getComputedStyle(slideBox).display === "none") return;
+                slideAnimating = true;
+
+                const fullHeight = slideBox.scrollHeight;
+                const duration = 500;
+                slideBox.style.height = fullHeight + "px";
+                slideBox.style.overflow = "hidden";
+                let start = null;
+
+                requestAnimationFrame(function step(timestamp) {
+                    if (!start) start = timestamp;
+                    const progress = Math.min(
+                        (timestamp - start) / duration,
+                        1,
+                    );
+                    slideBox.style.height = fullHeight * (1 - progress) + "px";
+
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        slideBox.style.display = "none";
+                        slideBox.style.height = "";
+                        slideBox.style.overflow = "";
+
+                        if (
+                            getComputedStyle(slideBox).display === "none" &&
+                            getComputedStyle(slideToggleBox).display === "none"
+                        ) {
+                            aniBox.style.right = "440px";
+                        } else if (
+                            getComputedStyle(slideBox).display === "none"
+                        ) {
+                            aniBox.style.right = "220px";
+                        } else if (
+                            getComputedStyle(slideToggleBox).display === "none"
+                        ) {
+                            aniBox.style.right = "220px";
+                        } else {
+                            aniBox.style.right = "0px";
+                        }
+
+                        slideAnimating = false;
+                    }
+                });
+            });
+
+            slideDownBtn.addEventListener("click", function () {
+                if (slideAnimating) return;
+                if (getComputedStyle(slideBox).display !== "none") return;
+                slideAnimating = true;
+
+                slideBox.style.display = "block";
+                const fullHeight = slideBox.scrollHeight;
+                const duration = 500;
+                slideBox.style.height = "0px";
+                slideBox.style.overflow = "hidden";
+                let start = null;
+
+                requestAnimationFrame(function step(timestamp) {
+                    if (!start) start = timestamp;
+                    const progress = Math.min(
+                        (timestamp - start) / duration,
+                        1,
+                    );
+                    slideBox.style.height = fullHeight * progress + "px";
+
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        slideBox.style.height = "";
+                        slideBox.style.overflow = "";
+
+                        if (
+                            getComputedStyle(slideBox).display === "none" &&
+                            getComputedStyle(slideToggleBox).display === "none"
+                        ) {
+                            aniBox.style.right = "440px";
+                        } else if (
+                            getComputedStyle(slideBox).display === "none"
+                        ) {
+                            aniBox.style.right = "220px";
+                        } else if (
+                            getComputedStyle(slideToggleBox).display === "none"
+                        ) {
+                            aniBox.style.right = "220px";
+                        } else {
+                            aniBox.style.right = "0px";
+                        }
+
+                        slideAnimating = false;
+                    }
+                });
+            });
+
+            slideToggleBtn.addEventListener("click", function () {
+                if (slideToggleAnimating) return;
+                slideToggleAnimating = true;
+
+                const hidden =
+                    getComputedStyle(slideToggleBox).display === "none";
+                let fullHeight;
+                const duration = 500;
+
+                if (hidden) {
+                    slideToggleBox.style.display = "block";
+                    fullHeight = slideToggleBox.scrollHeight;
+                    slideToggleBox.style.height = "0px";
+                } else {
+                    fullHeight = slideToggleBox.scrollHeight;
+                    slideToggleBox.style.height = fullHeight + "px";
+                }
+
+                slideToggleBox.style.overflow = "hidden";
+                let start = null;
+
+                requestAnimationFrame(function step(timestamp) {
+                    if (!start) start = timestamp;
+                    const progress = Math.min(
+                        (timestamp - start) / duration,
+                        1,
+                    );
+
+                    if (hidden) {
+                        slideToggleBox.style.height =
+                            fullHeight * progress + "px";
+                    } else {
+                        slideToggleBox.style.height =
+                            fullHeight * (1 - progress) + "px";
+                    }
+
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        if (hidden) {
+                            slideToggleBox.style.height = "";
+                        } else {
+                            slideToggleBox.style.display = "none";
+                            slideToggleBox.style.height = "";
+                        }
+                        slideToggleBox.style.overflow = "";
+
+                        if (
+                            getComputedStyle(slideBox).display === "none" &&
+                            getComputedStyle(slideToggleBox).display === "none"
+                        ) {
+                            aniBox.style.right = "440px";
+                        } else if (
+                            getComputedStyle(slideBox).display === "none"
+                        ) {
+                            aniBox.style.right = "220px";
+                        } else if (
+                            getComputedStyle(slideToggleBox).display === "none"
+                        ) {
+                            aniBox.style.right = "220px";
+                        } else {
+                            aniBox.style.right = "0px";
+                        }
+
+                        slideToggleAnimating = false;
+                    }
+                });
+            });
+
+            ani1Btn.addEventListener("click", function () {
+                if (aniAnimating) return;
+                aniAnimating = true;
+
+                const currentTransform = getComputedStyle(aniBox).transform;
+                let startX = 0;
+
+                if (currentTransform !== "none") {
+                    const matrix = new DOMMatrix(currentTransform);
+                    startX = matrix.m41;
+                }
+
+                const duration = 700;
+                const endX = 800;
+                let start = null;
+
+                requestAnimationFrame(function step(timestamp) {
+                    if (!start) start = timestamp;
+                    const progress = Math.min(
+                        (timestamp - start) / duration,
+                        1,
+                    );
+                    const currentX = startX + (endX - startX) * progress;
+                    aniBox.style.transform = "translateX(" + currentX + "px)";
+
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        aniAnimating = false;
+                    }
+                });
+            });
+
+            ani2Btn.addEventListener("click", function () {
+                if (aniAnimating) return;
+                aniAnimating = true;
+
+                const currentTransform = getComputedStyle(aniBox).transform;
+                let startX = 500;
+
+                if (currentTransform !== "none") {
+                    const matrix = new DOMMatrix(currentTransform);
+                    startX = matrix.m41;
+                }
+
+                const duration = 700;
+                const endX = 0;
+                let start = null;
+
+                requestAnimationFrame(function step(timestamp) {
+                    if (!start) start = timestamp;
+                    const progress = Math.min(
+                        (timestamp - start) / duration,
+                        1,
+                    );
+                    const currentX = startX + (endX - startX) * progress;
+                    aniBox.style.transform = "translateX(" + currentX + "px)";
+
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        aniAnimating = false;
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
