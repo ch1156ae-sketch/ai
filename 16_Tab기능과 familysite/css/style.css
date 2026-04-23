@@ -52,6 +52,17 @@ footer .inner .family .list {
     width: 141px;
     border: 1px solid #bec9ca;
     background: #fff;
+    display: none;
+}
+
+footer .inner .family .list.on {
+    position: absolute;
+    left: 0;
+    bottom: 60px;
+    width: 141px;
+    border: 1px solid #bec9ca;
+    background: #fff;
+    display: block;
 }
 
 footer .inner .family .list li {
