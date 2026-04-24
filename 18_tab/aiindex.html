@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>BRAND Tab</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Pretendard", sans-serif;
+                color: #222222;
+                background: #ffffff;
+            }
+
+            button {
+                border: 0;
+                background: transparent;
+                font-family: "Pretendard", sans-serif;
+                cursor: pointer;
+            }
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            ul,
+            li {
+                list-style: none;
+            }
+
+            img {
+                display: block;
+                max-width: 100%;
+            }
+
+            .brand-section {
+                width: 100%;
+                padding: 150px 0 100px;
+                background: #ffffff;
+            }
+
+            .inner {
+                width: 1140px;
+                margin: 0 auto;
+            }
+
+            .brand-title {
+                text-align: center;
+                font-family: "Pretendard", sans-serif;
+                font-size: 50px;
+                font-weight: 700;
+                line-height: 1.2;
+                letter-spacing: -1px;
+                color: #323232;
+                margin-bottom: 20px;
+            }
+
+            .brand-desc {
+                text-align: center;
+                font-family: "Pretendard", sans-serif;
+                font-size: 23px;
+                font-weight: 400;
+                line-height: 1.5;
+                letter-spacing: -0.5px;
+                color: #323232;
+                margin-bottom: 40px;
+            }
+
+            .tab-list {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 18px;
+                margin-bottom: 50px;
+            }
+
+            .tab-btn {
+                min-width: 126px;
+                height: 42px;
+                padding: 0 24px;
+                border: 1px solid #777777;
+                border-radius: 999px;
+                font-size: 16px;
+                font-weight: 600;
+                color: #3a3a3a;
+                background: #ffffff;
+                transition: 0.2s ease;
+            }
+
+            .tab-btn:hover {
+                border-color: #ff5a00;
+                color: #ff5a00;
+            }
+
+            .tab-item.active .tab-btn {
+                border-color: #ff5a00;
+                background: #ff5a00;
+                color: #ffffff;
+            }
+
+            .panel-item {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .panel-item.active {
+                display: flex;
+            }
+
+            .brand-product-list {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                gap: 46px;
+                width: 100%;
+                min-height: 230px;
+                margin-bottom: 44px;
+            }
+
+            .brand-product-item {
+                width: 160px;
+                text-align: center;
+            }
+
+            .brand-img-box {
+                width: 160px;
+                height: 150px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+
+            .brand-img-box img {
+                width: 120px;
+                height: 130px;
+                object-fit: contain;
+            }
+
+            .brand-name {
+                font-size: 15px;
+                font-weight: 500;
+                color: #333333;
+                line-height: 1.4;
+            }
+
+            .more-btn {
+                width: 146px;
+                height: 44px;
+                border: 1px solid #ff5a00;
+                color: #ff5a00;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 14px;
+                font-size: 20px;
+                font-weight: 700;
+                background: #ffffff;
+                transition: 0.2s ease;
+            }
+
+            .more-btn .arrow {
+                font-size: 24px;
+                font-weight: 400;
+                line-height: 1;
+                transform: translateY(-1px);
+            }
+
+            .more-btn:hover {
+                background: #ff5a00;
+                color: #ffffff;
+            }
+
+            @media (max-width: 1200px) {
+                .inner {
+                    width: calc(100% - 48px);
+                }
+
+                .tab-list {
+                    flex-wrap: wrap;
+                }
+
+                .brand-product-list {
+                    flex-wrap: wrap;
+                    gap: 36px 28px;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .brand-section {
+                    padding: 90px 0 70px;
+                }
+
+                .brand-title {
+                    font-size: 36px;
+                }
+
+                .brand-desc {
+                    font-size: 15px;
+                    word-break: keep-all;
+                }
+
+                .tab-list {
+                    gap: 10px;
+                    margin-bottom: 50px;
+                }
+
+                .tab-btn {
+                    min-width: auto;
+                    height: 38px;
+                    padding: 0 18px;
+                    font-size: 16px;
+                }
+
+                .brand-product-list {
+                    min-height: auto;
+                }
+
+                .brand-product-item {
+                    width: 140px;
+                }
+
+                .brand-img-box {
+                    width: 140px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <section class="brand-section">
+            <div class="inner">
+                <h2 class="brand-title">BRAND</h2>
+                <p class="brand-desc">
+                    건강하고 창의적인 미래를 만들기 위한 삼양식품의 다양한
+                    브랜드를 소개합니다.
+                </p>
+
+                <ul
+                    class="tab-list"
+                    role="tablist"
+                    aria-label="브랜드 탭 메뉴"
+                >
+                    <li class="tab-item active">
+                        <button
+                            class="tab-btn"
+                            type="button"
+                            role="tab"
+                            aria-selected="true"
+                            aria-controls="panel-0"
+                            id="tab-0"
+                            data-tab="0"
+                        >
+                            삼양1963
+                        </button>
+                    </li>
+                    <li class="tab-item">
+                        <button
+                            class="tab-btn"
+                            type="button"
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="panel-1"
+                            id="tab-1"
+                            data-tab="1"
+                        >
+                            삼양라면
+                        </button>
+                    </li>
+                    <li class="tab-item">
+                        <button
+                            class="tab-btn"
+                            type="button"
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="panel-2"
+                            id="tab-2"
+                            data-tab="2"
+                        >
+                            불닭볶음면
+                        </button>
+                    </li>
+                    <li class="tab-item">
+                        <button
+                            class="tab-btn"
+                            type="button"
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="panel-3"
+                            id="tab-3"
+                            data-tab="3"
+                        >
+                            맵탱
+                        </button>
+                    </li>
+                    <li class="tab-item">
+                        <button
+                            class="tab-btn"
+                            type="button"
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="panel-4"
+                            id="tab-4"
+                            data-tab="4"
+                        >
+                            펄스랩
+                        </button>
+                    </li>
+                    <li class="tab-item">
+                        <button
+                            class="tab-btn"
+                            type="button"
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="panel-5"
+                            id="tab-5"
+                            data-tab="5"
+                        >
+                            짜짜로니
+                        </button>
+                    </li>
+                    <li class="tab-item">
+                        <button
+                            class="tab-btn"
+                            type="button"
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="panel-6"
+                            id="tab-6"
+                            data-tab="6"
+                        >
+                            탱글
+                        </button>
+                    </li>
+                </ul>
+
+                <ul class="panel-list">
+                    <li
+                        class="panel-item active"
+                        role="tabpanel"
+                        id="panel-0"
+                        aria-labelledby="tab-0"
+                    >
+                        <ul class="brand-product-list">
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/삼양라면1963.png"
+                                        alt="삼양1963 "
+                                    />
+                                </figure>
+                                <p class="brand-name">삼양1963</p>
+                            </li>
+                        </ul>
+                        <a
+                            href="#"
+                            class="more-btn"
+                            >more <span class="arrow">→</span></a
+                        >
+                    </li>
+
+                    <li
+                        class="panel-item"
+                        role="tabpanel"
+                        id="panel-1"
+                        aria-labelledby="tab-1"
+                    >
+                        <ul class="brand-product-list">
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/삼양라면.png"
+                                        alt="삼양라면"
+                                    />
+                                </figure>
+                                <p class="brand-name">삼양라면</p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/큰컵 삼양라면.png"
+                                        alt="큰컵 삼양라면"
+                                    />
+                                </figure>
+                                <p class="brand-name">큰컵 삼양라면</p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/삼양라면 매운맛.png"
+                                        alt="삼양라면 매운맛"
+                                    />
+                                </figure>
+                                <p class="brand-name">삼양라면 매운맛</p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/큰컵 삼양라면 매운맛.png"
+                                        alt="큰컵 삼양라면 매운맛"
+                                    />
+                                </figure>
+                                <p class="brand-name">큰컵 삼양라면 매운맛</p>
+                            </li>
+                        </ul>
+                        <a
+                            href="#"
+                            class="more-btn"
+                            >more <span class="arrow">→</span></a
+                        >
+                    </li>
+
+                    <li
+                        class="panel-item"
+                        role="tabpanel"
+                        id="panel-2"
+                        aria-labelledby="tab-2"
+                    >
+                        <ul class="brand-product-list">
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/불닭볶음면.png"
+                                        alt="불닭볶음면"
+                                    />
+                                </figure>
+                                <p class="brand-name">불닭볶음면</p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/까르보불닭볶음면.png"
+                                        alt="까르보불닭볶음면"
+                                    />
+                                </figure>
+                                <p class="brand-name">까르보불닭볶음면</p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/로제불닭볶음면.png"
+                                        alt="로제불닭볶음면"
+                                    />
+                                </figure>
+                                <p class="brand-name">로제불닭볶음면</p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/불닭볶음탕면.png"
+                                        alt="불닭볶음탕면"
+                                    />
+                                </figure>
+                                <p class="brand-name">불닭볶음탕면</p>
+                            </li>
+                        </ul>
+                        <a
+                            href="#"
+                            class="more-btn"
+                            >more <span class="arrow">→</span></a
+                        >
+                    </li>
+
+                    <li
+                        class="panel-item"
+                        role="tabpanel"
+                        id="panel-3"
+                        aria-labelledby="tab-3"
+                    >
+                        <ul class="brand-product-list">
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/맵탱 쿨스파이시 비빔면 김치맛.png"
+                                        alt="맵탱 쿨스파이시 비빔면 김치맛"
+                                    />
+                                </figure>
+                                <p class="brand-name">
+                                    맵탱 쿨스파이시 비빔면 김치맛
+                                </p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/맵탱 흑후추소고기라면.png"
+                                        alt="맵탱 흑후추소고기라면"
+                                    />
+                                </figure>
+                                <p class="brand-name">맵탱 흑후추소고기라면</p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/맵탱 마늘조개라면.png"
+                                        alt="맵탱 마늘조개라면"
+                                    />
+                                </figure>
+                                <p class="brand-name">맵탱 마늘조개라면</p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/맵탱 청양고추대파라면.png"
+                                        alt="맵탱 청양고추대파라면"
+                                    />
+                                </figure>
+                                <p class="brand-name">맵탱 청양고추대파라면</p>
+                            </li>
+                        </ul>
+                        <a
+                            href="#"
+                            class="more-btn"
+                            >more <span class="arrow">→</span></a
+                        >
+                    </li>
+
+                    <li
+                        class="panel-item"
+                        role="tabpanel"
+                        id="panel-4"
+                        aria-labelledby="tab-4"
+                    >
+                        <ul class="brand-product-list">
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/한입 쏙! 후무스 핫스파이시.png"
+                                        alt="후무스 핫스파이시"
+                                    />
+                                </figure>
+                                <p class="brand-name">후무스 핫스파이시</p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/한입 쏙! 후무스 캐슈넛.png"
+                                        alt="후무스 캐슈넛"
+                                    />
+                                </figure>
+                                <p class="brand-name">후무스 캐슈넛</p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/한입 쏙! 식물성 너겟 스위트갈릭.png"
+                                        alt="식물성 너겟 스위트갈릭"
+                                    />
+                                </figure>
+                                <p class="brand-name">식물성 너겟 스위트갈릭</p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/한입 쏙! 식물성 너겟 크러쉬드페퍼.png"
+                                        alt="식물성 너겟 크러쉬드페퍼"
+                                    />
+                                </figure>
+                                <p class="brand-name">
+                                    식물성 너겟 크러쉬드페퍼
+                                </p>
+                            </li>
+                        </ul>
+                        <a
+                            href="#"
+                            class="more-btn"
+                            >more <span class="arrow">→</span></a
+                        >
+                    </li>
+
+                    <li
+                        class="panel-item"
+                        role="tabpanel"
+                        id="panel-5"
+                        aria-labelledby="tab-5"
+                    >
+                        <ul class="brand-product-list">
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/짜짜로니.png"
+                                        alt="짜짜로니"
+                                    />
+                                </figure>
+                                <p class="brand-name">짜짜로니</p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/큰컵 짜짜로니.png"
+                                        alt="큰컵 짜짜로니"
+                                    />
+                                </figure>
+                                <p class="brand-name">큰컵 짜짜로니</p>
+                            </li>
+                        </ul>
+                        <a
+                            href="#"
+                            class="more-btn"
+                            >more <span class="arrow">→</span></a
+                        >
+                    </li>
+
+                    <li
+                        class="panel-item"
+                        role="tabpanel"
+                        id="panel-6"
+                        aria-labelledby="tab-6"
+                    >
+                        <ul class="brand-product-list">
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/탱글 머쉬룸크림파스타.png"
+                                        alt="탱글 머쉬룸크림파스타"
+                                    />
+                                </figure>
+                                <p class="brand-name">탱글 머쉬룸크림파스타</p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/큰컵 탱글 머쉬룸크림파스타.png"
+                                        alt="큰컵 탱글 머쉬룸크림파스타"
+                                    />
+                                </figure>
+                                <p class="brand-name">
+                                    큰컵 탱글 머쉬룸크림파스타
+                                </p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/탱글 갈릭오일파스타.png"
+                                        alt="탱글 갈릭오일파스타"
+                                    />
+                                </figure>
+                                <p class="brand-name">탱글 갈릭오일파스타</p>
+                            </li>
+                            <li class="brand-product-item">
+                                <figure class="brand-img-box">
+                                    <img
+                                        src="./images/큰컵 탱글 갈릭오일파스타.png"
+                                        alt="큰컵 탱글 갈릭오일파스타"
+                                    />
+                                </figure>
+                                <p class="brand-name">
+                                    큰컵 탱글 갈릭오일파스타
+                                </p>
+                            </li>
+                        </ul>
+                        <a
+                            href="#"
+                            class="more-btn"
+                            >more <span class="arrow">→</span></a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <script>
+            const tabItems = document.querySelectorAll(".tab-item");
+            const tabButtons = document.querySelectorAll(".tab-btn");
+            const panelItems = document.querySelectorAll(".panel-item");
+
+            function activeTab(index) {
+                tabItems.forEach((item, itemIndex) => {
+                    const button = item.querySelector(".tab-btn");
+                    const isActive = itemIndex === index;
+
+                    item.classList.toggle("active", isActive);
+                    button.setAttribute("aria-selected", isActive);
+                });
+
+                panelItems.forEach((panel, panelIndex) => {
+                    panel.classList.toggle("active", panelIndex === index);
+                });
+            }
+
+            activeTab(0);
+
+            tabButtons.forEach((button, index) => {
+                button.addEventListener("click", () => {
+                    activeTab(index);
+                });
+            });
+        </script>
+    </body>
+</html>
