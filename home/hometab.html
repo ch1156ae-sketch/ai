@@ -201,8 +201,8 @@
             .meal-card {
                 cursor: pointer;
                 transition:
-                    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-                    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+                    opacity 0.3s ease,
+                    box-shadow 0.3s ease;
             }
 
             .product-grid .card .thumb,
@@ -212,18 +212,18 @@
 
             .product-grid .card .thumb img,
             .meal-card .meal-thumb img {
-                transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+                transition: opacity 0.3s ease;
             }
 
             .product-grid .card:hover,
             .meal-card:hover {
-                transform: translateY(-8px);
-                box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+                opacity: 0.78;
+                box-shadow: none;
             }
 
             .product-grid .card:hover .thumb > img,
             .meal-card:hover .meal-thumb > img {
-                transform: scale(1.06);
+                opacity: 0.9;
             }
 
             .product-grid .card .save {
@@ -242,15 +242,12 @@
 
             .product-grid .card .save,
             .meal-card .cart-badge {
-                transition:
-                    transform 0.3s ease,
-                    opacity 0.3s ease;
+                transition: opacity 0.3s ease;
             }
 
             .product-grid .card:hover .save,
             .meal-card:hover .cart-badge {
-                transform: scale(1.08);
-                opacity: 0.9;
+                opacity: 1;
             }
 
             .product-grid .card .name,
@@ -400,8 +397,10 @@
             /* 스크롤 등장 효과보다 상품 호버 효과가 우선 적용되도록 보정 */
             .product-grid .card.scroll-reveal.is-visible:hover,
             .meal-card.scroll-reveal.is-visible:hover {
-                transform: translateY(-8px);
-                box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+                opacity: 0.78;
+                transform: translateY(0);
+                box-shadow: none;
+                transition: opacity 0.3s ease;
             }
         </style>
     </head>
