@@ -1,0 +1,2134 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>집반찬연구소 스타일 시안</title>
+        <link
+            rel="stylesheet"
+            href="./css/reset.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./css/common.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./css/main.css"
+        />
+
+        <style>
+            /* 상단 로그인 영역 + 헤더 고정 */
+            :root {
+                --topbar-height: 36px;
+            }
+
+            .wrap > .inner:first-child {
+                position: sticky;
+                top: 0;
+                left: 0;
+                z-index: 1001;
+                width: 100%;
+                margin-bottom: 0;
+                background: #ffffff;
+            }
+
+            .wrap > .inner:first-child::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: -2px;
+                width: 100%;
+                height: 2px;
+                background: #ffffff;
+                pointer-events: none;
+            }
+
+            .wrap > .inner:first-child .topbar {
+                width: 1200px;
+                margin: 0 auto;
+                padding-bottom: 0;
+            }
+
+            .wrap > .inner:first-child .top-links {
+                margin-bottom: 0;
+            }
+
+            @media (max-width: 1200px) {
+                .wrap > .inner:first-child .topbar {
+                    width: 100%;
+                    padding: 0 20px;
+                }
+            }
+
+            .header-main {
+                position: sticky;
+                top: calc(var(--topbar-height) - 1px);
+                left: 0;
+                z-index: 1000;
+                margin-top: 0;
+                background: #ffffff;
+            }
+
+            /* 상품 카드 호버 상호작용 */
+            .product-grid .card,
+            .meal-card {
+                cursor: pointer;
+                transition:
+                    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            .product-grid .card .thumb,
+            .meal-card .meal-thumb {
+                overflow: hidden;
+            }
+
+            .product-grid .card .thumb img,
+            .meal-card .meal-thumb img {
+                transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            .product-grid .card:hover,
+            .meal-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+            }
+
+            .product-grid .card:hover .thumb > img,
+            .meal-card:hover .meal-thumb > img {
+                transform: scale(1.06);
+            }
+
+            .product-grid .card .save {
+                position: absolute;
+                right: 12px;
+                bottom: 12px;
+                z-index: 5;
+                display: block;
+            }
+
+            .product-grid .card .save img {
+                display: block;
+                width: 36px;
+                height: 36px;
+            }
+
+            .product-grid .card .save,
+            .meal-card .cart-badge {
+                transition:
+                    transform 0.3s ease,
+                    opacity 0.3s ease;
+            }
+
+            .product-grid .card:hover .save,
+            .meal-card:hover .cart-badge {
+                transform: scale(1.08);
+                opacity: 0.9;
+            }
+
+            .product-grid .card .name,
+            .meal-card .meal-name {
+                transition: color 0.3s ease;
+            }
+
+            .product-grid .card:hover .name,
+            .meal-card:hover .meal-name {
+                color: #2f7d32;
+            }
+
+            /* MD 추천 반찬 탭 기능 */
+            .md-tabs span {
+                cursor: pointer;
+                user-select: none;
+                transition:
+                    color 0.25s ease,
+                    background 0.25s ease,
+                    border-color 0.25s ease;
+            }
+
+            .md-tabs span:focus-visible {
+                outline: 2px solid #2f7d32;
+                outline-offset: 4px;
+            }
+
+            .md-product-grid .md-card {
+                display: none;
+            }
+
+            .md-product-grid .md-card.is-active {
+                display: block;
+                animation: tabCardFade 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            @keyframes tabCardFade {
+                from {
+                    opacity: 0;
+                    transform: translateY(14px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* 맨 위로 이동 버튼 */
+            .top-btn {
+                position: fixed;
+                right: 40px;
+                bottom: 40px;
+                z-index: 1200;
+                width: 52px;
+                height: 52px;
+                border: 0;
+                border-radius: 50%;
+                background: #2f7d32;
+                color: #ffffff;
+                font-size: 22px;
+                font-weight: 700;
+                line-height: 1;
+                cursor: pointer;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(16px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+                transition:
+                    opacity 0.35s ease,
+                    visibility 0.35s ease,
+                    transform 0.35s ease,
+                    background 0.3s ease;
+            }
+
+            .top-btn.is-show {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            .top-btn:hover {
+                background: #256628;
+                transform: translateY(-4px);
+            }
+
+            @media (max-width: 768px) {
+                .top-btn {
+                    right: 20px;
+                    bottom: 24px;
+                    width: 46px;
+                    height: 46px;
+                    font-size: 20px;
+                }
+            }
+
+            /* 스크롤 시 부드럽게 나타나는 효과만 추가 */
+            @media (prefers-reduced-motion: no-preference) {
+                html {
+                    scroll-behavior: smooth;
+                }
+
+                .scroll-reveal {
+                    opacity: 0;
+                    transition:
+                        opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+                    will-change: opacity, transform;
+                }
+
+                /* 아래로 스크롤할 때: 아래에서 위로 자연스럽게 등장 */
+                .scroll-reveal.reveal-from-bottom {
+                    transform: translateY(24px);
+                }
+
+                /* 위로 스크롤할 때: 위에서 아래로 자연스럽게 등장 */
+                .scroll-reveal.reveal-from-top {
+                    transform: translateY(-24px);
+                }
+
+                .scroll-reveal.is-visible {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+
+                .scroll-reveal.delay-1 {
+                    transition-delay: 0.03s;
+                }
+                .scroll-reveal.delay-2 {
+                    transition-delay: 0.07s;
+                }
+                .scroll-reveal.delay-3 {
+                    transition-delay: 0.11s;
+                }
+                .scroll-reveal.delay-4 {
+                    transition-delay: 0.15s;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .scroll-reveal {
+                    opacity: 1 !important;
+                    transform: none !important;
+                    transition: none !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="inner">
+                <div class="topbar">
+                    <div class="top-links">
+                        <a href="#">로그인</a>
+                        <a href="#">회원가입</a>
+                        <a href="#">나의정보</a>
+                    </div>
+                </div>
+            </div>
+
+            <header class="header-main">
+                <div class="header-row">
+                    <div class="search-box">
+                        <input
+                            type="text"
+                            placeholder="반찬을 입력해주세요"
+                        />
+                        <button>
+                            <img
+                                src="./images/icons_search.png"
+                                alt="검색"
+                            />
+                        </button>
+                    </div>
+
+                    <div class="logo">
+                        <a href="./main.html"
+                            ><img
+                                src="./images/logo.png"
+                                alt="로고"
+                        /></a>
+                    </div>
+
+                    <nav class="gnb">
+                        <a href="#"
+                            ><img
+                                src="./images/icons_call.svg"
+                                alt="전화주문 아이콘"
+                            />전화주문</a
+                        >
+                        <a href="#"
+                            ><img
+                                src="./images/icons_brand.png"
+                                alt="브랜드 아이콘"
+                            />브랜드</a
+                        >
+                        <a href="#"
+                            ><img
+                                src="./images/icons_banchan.png"
+                                alt="반찬보기 아이콘"
+                            />반찬보기</a
+                        >
+                        <a href="#"
+                            ><img
+                                src="./images/icons_shop.png"
+                                alt="장바구니 아이콘"
+                            />장바구니</a
+                        >
+                    </nav>
+                </div>
+            </header>
+
+            <!-- <section class="hero">
+      <div class="hero-inner">
+        <img src="./images/img_hero.png" alt="메인배너">
+      </div>
+    </section> -->
+
+            <section class="main-visual">
+                <div class="swiper mainSwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="./images/banner01.png" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="./images/banner02.png" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="./images/banner03.png" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="./images/banner04.png" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="./images/banner05.png" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visual-nav">
+                    <button class="visual-btn visual-prev"></button>
+                    <button class="visual-btn visual-next"></button>
+                </div>
+
+                <!-- 1/5 -->
+                <div
+                    class="visual-fraction"
+                    id="fraction"
+                >
+                    1/5
+                </div>
+            </section>
+
+            <main class="inner">
+                <section class="section">
+                    <h2 class="section-title">부담없는 알뜰 반찬</h2>
+                    <p class="section-sub">착한 가격으로 챙기는 든든한 한 끼</p>
+                    <div class="product-grid">
+                        <a href="./sub1.html">
+                            <article class="card">
+                                <div class="thumb">
+                                    <img
+                                        src="./images/img1.png"
+                                        alt="상품이미지"
+                                    />
+                                    <span class="save"
+                                        ><img
+                                            src="./images/icons_save.png"
+                                            alt="save"
+                                    /></span>
+                                </div>
+                                <div class="info">
+                                    <div class="label-row">
+                                        <span class="label-hot">신제품</span>
+                                        <span class="label-best">맵지않음</span>
+                                    </div>
+                                    <h3 class="name">쭈꾸미 풋마늘 파스타</h3>
+                                    <p class="desc">
+                                        봄기운 가득! 쭈꾸미와 풋마늘의 찰떡 궁합
+                                    </p>
+                                    <p class="price">
+                                        <span class="sale">7%</span>12,800원
+                                    </p>
+                                    <p class="old">13,800원</p>
+                                </div>
+                            </article>
+                        </a>
+
+                        <article class="card">
+                            <div class="thumb">
+                                <img
+                                    src="./images/img2.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">쭈꾸미 미나리 파스타</h3>
+                                <p class="desc">
+                                    지금이 제철! 쭈꾸미와 미나리의 만남
+                                </p>
+                                <p class="price">
+                                    <span class="sale">7%</span>12,800원
+                                </p>
+                                <p class="old">13,800원</p>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="thumb">
+                                <img
+                                    src="./images/img3.png"
+                                    alt="상품이미지"
+                                /><span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-pop">인기</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">잡채</h3>
+                                <p class="desc">
+                                    탱글한 면발과 맛깔진 고명이 가득
+                                </p>
+                                <p class="price">12,800원</p>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="thumb">
+                                <img
+                                    src="./images/img4.png"
+                                    alt="상품이미지"
+                                /><span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <h3 class="name">한끼 한돈제육_완조리</h3>
+                                <p class="desc">
+                                    혼자 먹기 딱 좋은. 1인분 제육볶음
+                                </p>
+                                <p class="price">6,800원</p>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="thumb">
+                                <img
+                                    src="./images/img5.png"
+                                    alt="상품이미지"
+                                /><span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">[원더스푼] 된장국</h3>
+                                <p class="desc">
+                                    매일 먹어도 좋은 담백한 된장국
+                                </p>
+                                <p class="price">3,300원</p>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="thumb">
+                                <img
+                                    src="./images/img6.png"
+                                    alt="상품이미지"
+                                /><span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">[원더스푼] 맑은 순두부찌개</h3>
+                                <p class="desc">
+                                    맵지 않은 순두부찌개. 아이도 OK
+                                </p>
+                                <p class="price">4,300원</p>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="thumb">
+                                <img
+                                    src="./images/img7.png"
+                                    alt="상품이미지"
+                                /><span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">[원더스푼] 맛살 계란 덮밥</h3>
+                                <p class="desc">
+                                    고소한 맛살과 폭신한 계란의 부드러운 조합
+                                </p>
+                                <p class="price">4,300원</p>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="thumb">
+                                <img
+                                    src="./images/img8.png"
+                                    alt="상품이미지"
+                                /><span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">
+                                    [원더스푼] 한우 스테이크소스 덮밥
+                                </h3>
+                                <p class="desc">
+                                    한우의 풍미를 그대로 담은 스테이크소스
+                                </p>
+                                <p class="price">4,500원</p>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="meal-section">
+                    <div class="meal-header">
+                        <h2 class="meal-title">집 밥 한끼</h2>
+                        <p class="meal-subtitle">치솟는 물가엔 현명한 소비</p>
+                    </div>
+
+                    <div class="meal-slider-wrap">
+                        <button
+                            type="button"
+                            class="meal-nav-btn meal-prev"
+                            aria-label="이전 카드"
+                        ></button>
+
+                        <div class="swiper mealSwiper">
+                            <div class="swiper-wrapper">
+                                <article class="swiper-slide meal-card">
+                                    <div class="meal-thumb">
+                                        <img
+                                            src="./images/img21.png"
+                                            alt="상품이미지"
+                                        />
+                                        <span class="discount-badge">11%</span>
+                                        <span class="cart-badge"
+                                            ><img
+                                                src="./images/icons_save.png"
+                                                alt="save"
+                                        /></span>
+                                    </div>
+                                    <div class="meal-info">
+                                        <h3 class="meal-name">
+                                            메추리알 간장조림
+                                        </h3>
+                                        <p class="meal-price">
+                                            <span class="meal-sale">11%</span
+                                            >3,400원
+                                        </p>
+                                        <p class="meal-origin">3,800원</p>
+                                    </div>
+                                </article>
+
+                                <article class="swiper-slide meal-card">
+                                    <div class="meal-thumb">
+                                        <span class="discount-badge">12%</span>
+                                        <img
+                                            src="./images/img22.png"
+                                            alt="상품이미지"
+                                        />
+                                        <span class="cart-badge"
+                                            ><img
+                                                src="./images/icons_save.png"
+                                                alt="save"
+                                        /></span>
+                                    </div>
+                                    <div class="meal-info">
+                                        <div class="label-row">
+                                            <span class="label-hot">신제품</span
+                                            ><span class="label-best"
+                                                >맵지않음</span
+                                            >
+                                        </div>
+                                        <h3 class="meal-name">한우야채카레</h3>
+                                        <p class="meal-desc">
+                                            부드러운 한우와 채소를 담아낸 진한
+                                            카레 한그릇
+                                        </p>
+                                        <p class="meal-price">
+                                            <span class="meal-sale">12%</span
+                                            >3,800원
+                                        </p>
+                                        <p class="meal-origin">4,300원</p>
+                                    </div>
+                                </article>
+
+                                <article class="swiper-slide meal-card">
+                                    <div class="meal-thumb">
+                                        <span class="discount-badge">11%</span>
+                                        <img
+                                            src="./images/img23.png"
+                                            alt="상품이미지"
+                                        />
+                                        <span class="cart-badge"
+                                            ><img
+                                                src="./images/icons_save.png"
+                                                alt="save"
+                                        /></span>
+                                    </div>
+                                    <div class="meal-info">
+                                        <div class="label-row">
+                                            <span class="label-hot">신제품</span
+                                            ><span class="label-best"
+                                                >맵지않음</span
+                                            >
+                                        </div>
+                                        <h3 class="meal-name">
+                                            [원더스푼] 한우 소고기 미역국
+                                        </h3>
+                                        <p class="meal-desc">
+                                            깊고 부드러운 국물 맛이 살아있는
+                                            든든한 미역국
+                                        </p>
+                                        <p class="meal-price">
+                                            <span class="meal-sale">11%</span
+                                            >4,700원
+                                        </p>
+                                        <p class="meal-origin">5,300원</p>
+                                    </div>
+                                </article>
+
+                                <article class="swiper-slide meal-card">
+                                    <div class="meal-thumb">
+                                        <img
+                                            src="./images/img24.png"
+                                            alt="상품이미지"
+                                        />
+                                        <span class="discount-badge">12%</span>
+                                        <span class="cart-badge"
+                                            ><img
+                                                src="./images/icons_save.png"
+                                                alt="save"
+                                        /></span>
+                                    </div>
+                                    <div class="meal-info">
+                                        <h3 class="meal-name">
+                                            한끼 한돈 김치두루치기_완조리
+                                        </h3>
+                                        <p class="meal-desc">
+                                            한돈과 김치를 매콤하게 볶아낸 집밥
+                                            스타일 메인반찬
+                                        </p>
+                                        <p class="meal-price">
+                                            <span class="meal-sale">12%</span
+                                            >6,400원
+                                        </p>
+                                        <p class="meal-origin">7,300원</p>
+                                    </div>
+                                </article>
+                                <article class="swiper-slide meal-card">
+                                    <div class="meal-thumb">
+                                        <img
+                                            src="./images/img25.jpg"
+                                            alt="상품이미지"
+                                        />
+                                        <span class="discount-badge">10%</span>
+                                        <span class="cart-badge"
+                                            ><img
+                                                src="./images/icons_save.png"
+                                                alt="save"
+                                        /></span>
+                                    </div>
+                                    <div class="meal-info">
+                                        <h3 class="meal-name">
+                                            한끼 한돈 김치두루치기_완조리
+                                        </h3>
+                                        <p class="meal-desc">
+                                            국내산 한돈으로 만든 든든한 한끼
+                                            두루치기
+                                        </p>
+                                        <p class="meal-price">
+                                            <span class="meal-sale">12%</span>
+                                            6,700원
+                                        </p>
+                                        <p class="meal-origin">7,600원</p>
+                                    </div>
+                                </article>
+
+                                <article class="swiper-slide meal-card">
+                                    <div class="meal-thumb">
+                                        <img
+                                            src="./images/img26.png"
+                                            alt="상품이미지"
+                                        />
+                                        <span class="discount-badge">12%</span>
+                                        <span class="cart-badge"
+                                            ><img
+                                                src="./images/icons_save.png"
+                                                alt="save"
+                                        /></span>
+                                    </div>
+                                    <div class="meal-info">
+                                        <div class="label-row">
+                                            <span class="label-pop">인기</span>
+                                        </div>
+                                        <h3 class="meal-name">소고기 무국</h3>
+                                        <p class="meal-desc">
+                                            깔끔한 국물로 매일 먹기 좋은 집밥
+                                            국요리
+                                        </p>
+                                        <p class="meal-price">
+                                            <span class="meal-sale">12%</span
+                                            >9,900원
+                                        </p>
+                                        <p class="meal-origin">11,300원</p>
+                                    </div>
+                                </article>
+
+                                <article class="swiper-slide meal-card">
+                                    <div class="meal-thumb">
+                                        <img
+                                            src="./images/img27.jpg"
+                                            alt="상품이미지"
+                                        />
+                                        <span class="discount-badge">13%</span>
+                                        <span class="cart-badge"
+                                            ><img
+                                                src="./images/icons_save.png"
+                                                alt="save"
+                                        /></span>
+                                    </div>
+                                    <div class="meal-info">
+                                        <h3 class="meal-name">
+                                            아이들 한우 비빔밥
+                                        </h3>
+                                        <p class="meal-desc">
+                                            아이들도 맛있게 먹는 비빔밥 출시!
+                                        </p>
+                                        <p class="meal-price">
+                                            <span class="meal-sale">13%</span
+                                            >9,400원
+                                        </p>
+                                        <p class="meal-origin">10,800원</p>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="meal-nav-btn meal-next"
+                            aria-label="다음 카드"
+                        ></button>
+                    </div>
+                </section>
+
+                <section
+                    class="section"
+                    style="padding-top: 56px"
+                >
+                    <h2 class="section-title">새로 나온 반찬</h2>
+                    <p class="section-sub">따끈따끈한 신메뉴 출시</p>
+                    <div class="product-grid">
+                        <article class="card">
+                            <div class="thumb">
+                                <img
+                                    src="./images/img31.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">[원더스푼] 두부덮밥</h3>
+                                <p class="desc">
+                                    매콤하고 구수한 된장 베이스의 한그릇
+                                </p>
+                                <p class="price">3,500원</p>
+                            </div>
+                        </article>
+                        <article class="card">
+                            <div class="thumb">
+                                <img
+                                    src="./images/img32.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">
+                                    [원더스푼] 한돈 순두부 덮밥
+                                </h3>
+                                <p class="desc">
+                                    몽글몽글 부드러운 한돈 순두부 소스
+                                </p>
+                                <p class="price">3,800원</p>
+                            </div>
+                        </article>
+                        <article class="card">
+                            <div class="thumb">
+                                <img
+                                    src="./images/img33.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">
+                                    [원더스푼] 한우 하이라이스 덮밥
+                                </h3>
+                                <p class="desc">
+                                    부드럽게 끓여낸 한우 하이라이스 소스
+                                </p>
+                                <p class="price">4,300원</p>
+                            </div>
+                        </article>
+                        <article class="card">
+                            <div class="thumb">
+                                <img
+                                    src="./images/img34.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">
+                                    [원더스푼] 한우 삼색 소보로 덮밥
+                                </h3>
+                                <p class="desc">
+                                    알록달록 색감까지 맛있는 삼색 덮밥
+                                </p>
+                                <p class="price">4,800원</p>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="thumb">
+                                <img
+                                    src="./images/img35.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">맑은 한우 배추국_냉동</h3>
+                                <p class="desc">
+                                    담백하고 시원한 국물, 한우와 배추의 깊은 맛
+                                </p>
+                                <p class="price">9,800원</p>
+                            </div>
+                        </article>
+                        <article class="card">
+                            <div class="thumb">
+                                <img
+                                    src="./images/img36.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">소고기 무국(냉동)</h3>
+                                <p class="desc">소고기와 무를 푹 끓여 시원한</p>
+                                <p class="price">9,300원</p>
+                            </div>
+                        </article>
+                        <article class="card">
+                            <div class="thumb">
+                                <img
+                                    src="./images/img37.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">한우사골곰탕(냉동)</h3>
+                                <p class="desc">국물이 진하고 담백해요</p>
+                                <p class="price">6,800원</p>
+                            </div>
+                        </article>
+                        <article class="card">
+                            <div class="thumb">
+                                <img
+                                    src="./images/img38.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">배추 된장국(냉동)</h3>
+                                <p class="desc">국산콩 된장과 배추로 구수한</p>
+                                <p class="price">7,800원</p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="benefits">
+                        <div class="benefit">
+                            <div>
+                                <p class="txt1">1588-1234</p>
+                                <p class="txt2">전화주문 바로가기</p>
+                            </div>
+                            <div class="icon">
+                                <img
+                                    src="./images/call.png"
+                                    alt="아이콘"
+                                />
+                            </div>
+                        </div>
+                        <div class="benefit">
+                            <div>
+                                <p class="txt1">우리가족 건강하게</p>
+                                <p class="txt2">우리아이 영양식단 레벨업</p>
+                            </div>
+                            <div class="icon">
+                                <img
+                                    src="./images/baby.png"
+                                    alt="아이콘"
+                                />
+                            </div>
+                        </div>
+                        <div class="benefit">
+                            <div>
+                                <p class="txt1">프리미엄 온라인 반찬가게</p>
+                                <p class="txt2">집반찬연구소의 이야기</p>
+                            </div>
+                            <div class="icon">
+                                <img
+                                    src="./images/eat.png"
+                                    alt="아이콘"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section
+                    class="section"
+                    style="padding-top: 0"
+                >
+                    <h2 class="section-title">MD 추천 반찬</h2>
+                    <p class="section-sub">
+                        이번 주 가장 추천하는 제품만 골라드려요.
+                    </p>
+                    <div
+                        class="md-tabs"
+                        role="tablist"
+                        aria-label="MD 추천 반찬 카테고리"
+                    >
+                        <span
+                            class="active"
+                            role="tab"
+                            tabindex="0"
+                            data-tab="bibimbap"
+                            >비빔밥</span
+                        >
+                        <span
+                            role="tab"
+                            tabindex="0"
+                            data-tab="soup"
+                            >국 / 찌개 / 탕</span
+                        >
+                        <span
+                            role="tab"
+                            tabindex="0"
+                            data-tab="kids"
+                            >어린이반찬</span
+                        >
+                        <span
+                            role="tab"
+                            tabindex="0"
+                            data-tab="stir"
+                            >볶음</span
+                        >
+                        <span
+                            role="tab"
+                            tabindex="0"
+                            data-tab="seasoned"
+                            >무침</span
+                        >
+                        <span
+                            role="tab"
+                            tabindex="0"
+                            data-tab="main"
+                            >메인요리</span
+                        >
+                        <span
+                            role="tab"
+                            tabindex="0"
+                            data-tab="jorim"
+                            >조림</span
+                        >
+                    </div>
+
+                    <div
+                        class="product-grid md-product-grid"
+                        id="mdProductGrid"
+                    >
+                        <article
+                            class="card md-card"
+                            data-category="bibimbap"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img41.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="badge">13%</span>
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">아이들 한우 비빔밥</h3>
+                                <p class="desc">
+                                    아이들도 맛있게 먹는 비빔밥 출시!
+                                </p>
+                                <p class="price">
+                                    <span class="sale">13%</span>9,400원
+                                </p>
+                                <p class="old">10,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="bibimbap"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img42.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-pop">인기</span>
+                                </div>
+                                <h3 class="name">나물 비빔밥</h3>
+                                <p class="desc">
+                                    가심비 가득, 정성 가득 비빔밥
+                                </p>
+                                <p class="price">10,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="bibimbap"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img43.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-pop">인기</span>
+                                </div>
+                                <h3 class="name">한우 비빔밥</h3>
+                                <p class="desc">고기를 더해 더 맛깔스러워진</p>
+                                <p class="price">12,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="bibimbap"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img44.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-pop">인기</span>
+                                </div>
+                                <h3 class="name">양념꼬막 비빔밥</h3>
+                                <p class="desc">꼬막이 왔꼬막</p>
+                                <p class="price">13,800원</p>
+                            </div>
+                        </article>
+
+                        <article
+                            class="card md-card"
+                            data-category="soup"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img35.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">맑은 한우 배추국_냉동</h3>
+                                <p class="desc">
+                                    담백하고 시원한 국물, 한우와 배추의 깊은 맛
+                                </p>
+                                <p class="price">9,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="soup"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img36.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">소고기 무국(냉동)</h3>
+                                <p class="desc">소고기와 무를 푹 끓여 시원한</p>
+                                <p class="price">9,300원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="soup"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img37.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">한우사골곰탕(냉동)</h3>
+                                <p class="desc">국물이 진하고 담백해요</p>
+                                <p class="price">6,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="soup"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img38.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">배추 된장국(냉동)</h3>
+                                <p class="desc">국산콩 된장과 배추로 구수한</p>
+                                <p class="price">7,800원</p>
+                            </div>
+                        </article>
+
+                        <article
+                            class="card md-card"
+                            data-category="kids"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img27.jpg"
+                                    alt="상품이미지"
+                                />
+                                <span class="badge">13%</span>
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">아이들 한우 비빔밥</h3>
+                                <p class="desc">
+                                    아이들도 맛있게 먹는 비빔밥 출시!
+                                </p>
+                                <p class="price">
+                                    <span class="sale">13%</span>9,400원
+                                </p>
+                                <p class="old">10,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="kids"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img7.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">[원더스푼] 맛살 계란 덮밥</h3>
+                                <p class="desc">
+                                    고소한 맛살과 폭신한 계란의 부드러운 조합
+                                </p>
+                                <p class="price">4,300원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="kids"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img6.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">[원더스푼] 맑은 순두부찌개</h3>
+                                <p class="desc">
+                                    맵지 않은 순두부찌개. 아이도 OK
+                                </p>
+                                <p class="price">4,300원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="kids"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img22.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="badge">12%</span>
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">한우야채카레</h3>
+                                <p class="desc">
+                                    부드러운 한우와 채소를 담아낸 진한 카레
+                                    한그릇
+                                </p>
+                                <p class="price">
+                                    <span class="sale">12%</span>3,800원
+                                </p>
+                                <p class="old">4,300원</p>
+                            </div>
+                        </article>
+
+                        <article
+                            class="card md-card"
+                            data-category="stir"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img45.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-pop">인기</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">감자채볶음</h3>
+                                <p class="desc">고소하면서 담백한 감자채볶음</p>
+                                <p class="price">2,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="stir"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img46.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-pop">인기</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">미역줄기볶음</h3>
+                                <p class="desc">바다의 채소 미역줄기</p>
+                                <p class="price">2,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="stir"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img47.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">느타리버섯볶음</h3>
+                                <p class="desc">
+                                    담백한 버섯 특유의 향미가 일품
+                                </p>
+                                <p class="price">3,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="stir"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img48.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-pop">인기</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">호두 멸치볶음</h3>
+                                <p class="desc">
+                                    고소하게 볶아낸 든든한 밑반찬
+                                </p>
+                                <p class="price">4,800원</p>
+                            </div>
+                        </article>
+
+                        <article
+                            class="card md-card"
+                            data-category="seasoned"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img42.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-pop">인기</span>
+                                </div>
+                                <h3 class="name">나물 비빔밥</h3>
+                                <p class="desc">
+                                    정갈한 나물의 맛을 담은 추천 메뉴
+                                </p>
+                                <p class="price">10,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="seasoned"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img3.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-pop">인기</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">잡채</h3>
+                                <p class="desc">
+                                    탱글한 면발과 맛깔진 고명이 가득
+                                </p>
+                                <p class="price">12,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="seasoned"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img44.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-pop">인기</span>
+                                </div>
+                                <h3 class="name">양념꼬막 비빔밥</h3>
+                                <p class="desc">
+                                    입맛을 살려주는 매콤한 양념 꼬막
+                                </p>
+                                <p class="price">13,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="seasoned"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img45.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">감자채볶음</h3>
+                                <p class="desc">
+                                    담백한 맛으로 곁들이기 좋은 반찬
+                                </p>
+                                <p class="price">2,800원</p>
+                            </div>
+                        </article>
+
+                        <article
+                            class="card md-card"
+                            data-category="main"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img4.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <h3 class="name">한끼 한돈제육_완조리</h3>
+                                <p class="desc">
+                                    혼자 먹기 딱 좋은. 1인분 제육볶음
+                                </p>
+                                <p class="price">6,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="main"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img24.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="badge">12%</span>
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <h3 class="name">
+                                    한끼 한돈 김치두루치기_완조리
+                                </h3>
+                                <p class="desc">
+                                    한돈과 김치를 매콤하게 볶아낸 메인반찬
+                                </p>
+                                <p class="price">
+                                    <span class="sale">12%</span>6,400원
+                                </p>
+                                <p class="old">7,300원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="main"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img8.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-hot">신제품</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">
+                                    [원더스푼] 한우 스테이크소스 덮밥
+                                </h3>
+                                <p class="desc">
+                                    한우의 풍미를 그대로 담은 스테이크소스
+                                </p>
+                                <p class="price">4,500원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="main"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img25.jpg"
+                                    alt="상품이미지"
+                                />
+                                <span class="badge">10%</span>
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <h3 class="name">
+                                    한끼 한돈 김치두루치기_완조리
+                                </h3>
+                                <p class="desc">
+                                    국내산 한돈으로 만든 든든한 한끼 두루치기
+                                </p>
+                                <p class="price">
+                                    <span class="sale">12%</span>6,700원
+                                </p>
+                                <p class="old">7,600원</p>
+                            </div>
+                        </article>
+
+                        <article
+                            class="card md-card"
+                            data-category="jorim"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img21.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="badge">11%</span>
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <h3 class="name">메추리알 간장조림</h3>
+                                <p class="desc">
+                                    짭조름하게 입맛 돋우는 밥반찬
+                                </p>
+                                <p class="price">
+                                    <span class="sale">11%</span>3,400원
+                                </p>
+                                <p class="old">3,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="jorim"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img48.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-pop">인기</span>
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">호두 멸치볶음</h3>
+                                <p class="desc">고소하고 짭조름한 밑반찬</p>
+                                <p class="price">4,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="jorim"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img47.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">느타리버섯볶음</h3>
+                                <p class="desc">
+                                    담백한 버섯 특유의 향미가 일품
+                                </p>
+                                <p class="price">3,800원</p>
+                            </div>
+                        </article>
+                        <article
+                            class="card md-card"
+                            data-category="jorim"
+                        >
+                            <div class="thumb">
+                                <img
+                                    src="./images/img45.png"
+                                    alt="상품이미지"
+                                />
+                                <span class="save"
+                                    ><img
+                                        src="./images/icons_save.png"
+                                        alt="save"
+                                /></span>
+                            </div>
+                            <div class="info">
+                                <div class="label-row">
+                                    <span class="label-best">맵지않음</span>
+                                </div>
+                                <h3 class="name">감자채볶음</h3>
+                                <p class="desc">매일 먹기 좋은 담백한 밑반찬</p>
+                                <p class="price">2,800원</p>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </main>
+
+            <footer>
+                <div class="footer-inner">
+                    <div class="footer-block">
+                        <p class="footer-title">고객센터</p>
+                        <p>1588-3754</p>
+                        <p>zipbanchan@sannamchon.co.kr</p>
+                        <p>평일 08:30~17:30 / 토요일 08:30~12:00</p>
+                        <p>점심시간 12:00~13:00</p>
+                        <p>일요일, 공휴일은 휴무입니다.</p>
+                    </div>
+                    <div class="footer-block">
+                        <p class="footer-title">집반찬연구소</p>
+                        <p>
+                            인천광역시 서구 가석로 26(가좌동)
+                            집반찬연구소&nbsp;&nbsp;&nbsp;&nbsp;대표자 :
+                            박종철<br />사업자등록번호 :
+                            121-86-17743&nbsp;&nbsp;&nbsp;&nbsp;통신판매업
+                            신고번호 : 제 2023-인천서구-3834
+                            호&nbsp;&nbsp;&nbsp;&nbsp;개인정보보호책임자 :
+                            정문채<br />제휴 문의 : zipbanchan@sannamchon.co.kr
+                        </p>
+                        <p
+                            style="
+                                border-bottom: 1px solid #e5e5e5;
+                                display: inline-block;
+                                padding-bottom: 0;
+                                line-height: 1.2;
+                            "
+                        >
+                            집반찬연구소
+                            소개&nbsp;&nbsp;이용약관&nbsp;&nbsp;개인정보처리방침
+                        </p>
+                        <p>Copyright ⓒ SANNAMCHON CORP. All Rights Reserved.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <button
+            type="button"
+            class="top-btn"
+            id="topBtn"
+            aria-label="맨 위로 이동"
+        >
+            ↑
+        </button>
+
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script>
+            const fractionEl = document.getElementById("fraction");
+
+            const swiper = new Swiper(".mainSwiper", {
+                loop: true,
+                autoplay: {
+                    delay: 4000,
+                    disableOnInteraction: false,
+                },
+                navigation: {
+                    nextEl: ".visual-next",
+                    prevEl: ".visual-prev",
+                },
+                on: {
+                    init: function () {
+                        const total = 5;
+                        fractionEl.textContent = `1/${total}`;
+                    },
+                    slideChange: function () {
+                        const total = 5;
+                        fractionEl.textContent = `${this.realIndex + 1}/${total}`;
+                    },
+                },
+            });
+
+            const mealSwiper = new Swiper(".mealSwiper", {
+                slidesPerView: 4,
+                slidesPerGroup: 1,
+                spaceBetween: 16,
+                speed: 700,
+                loop: true,
+                autoplay: {
+                    delay: 2000,
+                    disableOnInteraction: false,
+                },
+                navigation: {
+                    nextEl: ".meal-next",
+                    prevEl: ".meal-prev",
+                },
+                breakpoints: {
+                    0: {
+                        slidesPerView: 1.2,
+                        slidesPerGroup: 1,
+                        spaceBetween: 12,
+                    },
+                    481: {
+                        slidesPerView: 4,
+                        slidesPerGroup: 1,
+                        spaceBetween: 16,
+                    },
+                },
+            });
+
+            /* 상단 로그인 영역 높이에 맞춰 헤더 위치 자동 조정 */
+            const topbarWrap = document.querySelector(
+                ".wrap > .inner:first-child",
+            );
+
+            function setStickyHeaderGap() {
+                if (!topbarWrap) return;
+                document.documentElement.style.setProperty(
+                    "--topbar-height",
+                    `${topbarWrap.offsetHeight}px`,
+                );
+            }
+
+            setStickyHeaderGap();
+            window.addEventListener("load", setStickyHeaderGap);
+            window.addEventListener("resize", setStickyHeaderGap);
+
+            /* MD 추천 반찬 탭 기능 */
+            const mdTabs = document.querySelectorAll(".md-tabs [data-tab]");
+            const mdCards = document.querySelectorAll(
+                ".md-product-grid .md-card",
+            );
+
+            function changeMdTab(category) {
+                mdTabs.forEach((tab) => {
+                    const isActive = tab.dataset.tab === category;
+                    tab.classList.toggle("active", isActive);
+                    tab.setAttribute(
+                        "aria-selected",
+                        isActive ? "true" : "false",
+                    );
+                });
+
+                mdCards.forEach((card) => {
+                    card.classList.toggle(
+                        "is-active",
+                        card.dataset.category === category,
+                    );
+                });
+            }
+
+            mdTabs.forEach((tab) => {
+                tab.setAttribute(
+                    "aria-selected",
+                    tab.classList.contains("active") ? "true" : "false",
+                );
+
+                tab.addEventListener("click", () => {
+                    changeMdTab(tab.dataset.tab);
+                });
+
+                tab.addEventListener("keydown", (event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        changeMdTab(tab.dataset.tab);
+                    }
+                });
+            });
+
+            changeMdTab("bibimbap");
+
+            /* 스크롤바 위치에 따라 요소가 부드럽게 보이도록 추가 */
+            const revealTargets = document.querySelectorAll(
+                ".main-visual, .section-title, .section-sub, .meal-header, .md-tabs, .product-grid .card, .meal-card, .benefit, footer",
+            );
+
+            revealTargets.forEach((target, index) => {
+                target.classList.add("scroll-reveal");
+                target.classList.add(`delay-${(index % 4) + 1}`);
+            });
+
+            let lastScrollY = window.scrollY;
+            let scrollDirection = "down";
+
+            window.addEventListener("scroll", () => {
+                const currentScrollY = window.scrollY;
+                scrollDirection = currentScrollY > lastScrollY ? "down" : "up";
+                lastScrollY = currentScrollY;
+            });
+
+            revealTargets.forEach((target) => {
+                target.classList.add("reveal-from-bottom");
+            });
+
+            const topBtn = document.getElementById("topBtn");
+
+            function toggleTopButton() {
+                if (!topBtn) return;
+
+                if (window.scrollY > 500) {
+                    topBtn.classList.add("is-show");
+                } else {
+                    topBtn.classList.remove("is-show");
+                }
+            }
+
+            window.addEventListener("scroll", toggleTopButton);
+            window.addEventListener("load", toggleTopButton);
+
+            if (topBtn) {
+                topBtn.addEventListener("click", () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth",
+                    });
+                });
+            }
+
+            if ("IntersectionObserver" in window) {
+                const revealObserver = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            const target = entry.target;
+
+                            if (entry.isIntersecting) {
+                                target.classList.remove(
+                                    "reveal-from-bottom",
+                                    "reveal-from-top",
+                                );
+
+                                if (scrollDirection === "down") {
+                                    target.classList.add("reveal-from-bottom");
+                                } else {
+                                    target.classList.add("reveal-from-top");
+                                }
+
+                                requestAnimationFrame(() => {
+                                    target.classList.add("is-visible");
+                                });
+                            } else {
+                                target.classList.remove("is-visible");
+                            }
+                        });
+                    },
+                    {
+                        threshold: 0.08,
+                        rootMargin: "0px 0px -40px 0px",
+                    },
+                );
+
+                revealTargets.forEach((target) =>
+                    revealObserver.observe(target),
+                );
+            } else {
+                revealTargets.forEach((target) =>
+                    target.classList.add("is-visible"),
+                );
+            }
+        </script>
+    </body>
+</html>
