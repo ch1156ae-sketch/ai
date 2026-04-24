@@ -77,6 +77,125 @@
                 background: #ffffff;
             }
 
+            /* 집 밥 한끼 카드 크기 균일화 */
+            .mealSwiper .swiper-wrapper {
+                align-items: stretch;
+            }
+
+            .mealSwiper .swiper-slide {
+                height: auto;
+                box-sizing: border-box;
+            }
+
+            .meal-card {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                box-sizing: border-box;
+            }
+
+            .meal-card .meal-thumb {
+                position: relative;
+                flex-shrink: 0;
+            }
+
+            .meal-card .discount-badge {
+                position: absolute;
+                z-index: 10;
+            }
+
+            .meal-card .cart-badge {
+                position: absolute;
+                z-index: 11;
+            }
+
+            .meal-card .meal-info {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+            }
+
+            .meal-card .label-row {
+                min-height: 24px;
+            }
+
+            .meal-card .label-empty {
+                display: block;
+                visibility: visible;
+                font-size: 0;
+                line-height: 0;
+                overflow: hidden;
+            }
+
+            .meal-card .label-empty::before {
+                content: "";
+                display: block;
+                height: 24px;
+            }
+
+            .meal-card .label-empty span {
+                display: none;
+            }
+
+            .meal-card .meal-name {
+                min-height: 44px;
+            }
+
+            .meal-card .meal-desc {
+                min-height: 44px;
+            }
+
+            .meal-card .meal-price {
+                margin-top: auto;
+                margin-bottom: 0;
+            }
+
+            .meal-card .meal-origin {
+                display: none;
+            }
+
+            /* 집 밥 한끼 카드 넘침 방지 + 화살표를 meal-slider-wrap 기준 가운데 배치 */
+            .meal-section {
+                overflow: visible;
+            }
+
+            .meal-slider-wrap {
+                position: relative;
+                display: block;
+                overflow: visible;
+                padding: 0;
+            }
+
+            .mealSwiper {
+                width: 100%;
+                overflow: hidden;
+                padding-top: 14px;
+                padding-bottom: 28px;
+                margin-top: -14px;
+                margin-bottom: -28px;
+            }
+
+            .mealSwiper .swiper-wrapper,
+            .mealSwiper .swiper-slide {
+                overflow: visible;
+            }
+
+            .meal-nav-btn {
+                position: absolute;
+                top: 50%;
+                z-index: 30;
+                margin: 0;
+                transform: translateY(-50%);
+            }
+
+            .meal-prev {
+                left: -20px;
+            }
+
+            .meal-next {
+                right: -20px;
+            }
+
             /* 상품 카드 호버 상호작용 */
             .product-grid .card,
             .meal-card {
@@ -276,6 +395,13 @@
                     transform: none !important;
                     transition: none !important;
                 }
+            }
+
+            /* 스크롤 등장 효과보다 상품 호버 효과가 우선 적용되도록 보정 */
+            .product-grid .card.scroll-reveal.is-visible:hover,
+            .meal-card.scroll-reveal.is-visible:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
             }
         </style>
     </head>
@@ -620,9 +746,17 @@
                                         /></span>
                                     </div>
                                     <div class="meal-info">
+                                        <div
+                                            class="label-row label-empty"
+                                            aria-hidden="true"
+                                        ></div>
                                         <h3 class="meal-name">
                                             메추리알 간장조림
                                         </h3>
+                                        <p class="meal-desc">
+                                            짭조름한 간장 양념으로 맛있게 조린
+                                            든든한 밑반찬
+                                        </p>
                                         <p class="meal-price">
                                             <span class="meal-sale">11%</span
                                             >3,400원
@@ -713,6 +847,10 @@
                                         /></span>
                                     </div>
                                     <div class="meal-info">
+                                        <div
+                                            class="label-row label-empty"
+                                            aria-hidden="true"
+                                        ></div>
                                         <h3 class="meal-name">
                                             한끼 한돈 김치두루치기_완조리
                                         </h3>
@@ -741,6 +879,10 @@
                                         /></span>
                                     </div>
                                     <div class="meal-info">
+                                        <div
+                                            class="label-row label-empty"
+                                            aria-hidden="true"
+                                        ></div>
                                         <h3 class="meal-name">
                                             한끼 한돈 김치두루치기_완조리
                                         </h3>
@@ -800,11 +942,16 @@
                                         /></span>
                                     </div>
                                     <div class="meal-info">
+                                        <div
+                                            class="label-row label-empty"
+                                            aria-hidden="true"
+                                        ></div>
                                         <h3 class="meal-name">
                                             아이들 한우 비빔밥
                                         </h3>
                                         <p class="meal-desc">
-                                            아이들도 맛있게 먹는 비빔밥 출시!
+                                            아이들도 맛있게 먹는 든든한 한우
+                                            비빔밥 한그릇
                                         </p>
                                         <p class="meal-price">
                                             <span class="meal-sale">13%</span
@@ -2000,11 +2147,60 @@
 
             /* MD 추천 반찬 탭 기능 */
             const mdTabs = document.querySelectorAll(".md-tabs [data-tab]");
-            const mdCards = document.querySelectorAll(
-                ".md-product-grid .md-card",
-            );
+
+            function ensureMdCardsCount() {
+                const categories = [
+                    "bibimbap",
+                    "soup",
+                    "kids",
+                    "stir",
+                    "seasoned",
+                    "main",
+                    "jorim",
+                ];
+
+                categories.forEach((category) => {
+                    const cards = Array.from(
+                        document.querySelectorAll(
+                            `.md-product-grid .md-card[data-category="${category}"]`,
+                        ),
+                    );
+                    const baseCards = cards.slice();
+
+                    if (baseCards.length === 0) return;
+
+                    let index = 0;
+
+                    while (
+                        document.querySelectorAll(
+                            `.md-product-grid .md-card[data-category="${category}"]`,
+                        ).length < 8
+                    ) {
+                        const clone =
+                            baseCards[index % baseCards.length].cloneNode(true);
+                        clone.classList.remove(
+                            "is-active",
+                            "scroll-reveal",
+                            "reveal-from-bottom",
+                            "reveal-from-top",
+                            "delay-1",
+                            "delay-2",
+                            "delay-3",
+                            "delay-4",
+                        );
+                        document
+                            .getElementById("mdProductGrid")
+                            .appendChild(clone);
+                        index += 1;
+                    }
+                });
+            }
 
             function changeMdTab(category) {
+                const currentMdCards = document.querySelectorAll(
+                    ".md-product-grid .md-card",
+                );
+
                 mdTabs.forEach((tab) => {
                     const isActive = tab.dataset.tab === category;
                     tab.classList.toggle("active", isActive);
@@ -2014,7 +2210,7 @@
                     );
                 });
 
-                mdCards.forEach((card) => {
+                currentMdCards.forEach((card) => {
                     card.classList.toggle(
                         "is-active",
                         card.dataset.category === category,
@@ -2040,6 +2236,7 @@
                 });
             });
 
+            ensureMdCardsCount();
             changeMdTab("bibimbap");
 
             /* 스크롤바 위치에 따라 요소가 부드럽게 보이도록 추가 */
