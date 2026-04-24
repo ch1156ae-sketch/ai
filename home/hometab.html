@@ -182,7 +182,7 @@
 
             .meal-nav-btn {
                 position: absolute;
-                top: 50%;
+                top: var(--meal-thumb-center, 50%);
                 z-index: 30;
                 margin: 0;
                 transform: translateY(-50%);
@@ -2126,6 +2126,35 @@
                     },
                 },
             });
+
+            /* 집 밥 한끼 화살표를 이미지 영역 기준 위아래 가운데로 정렬 */
+            const mealSliderWrap = document.querySelector(".meal-slider-wrap");
+
+            function setMealArrowCenter() {
+                if (!mealSliderWrap) return;
+
+                const visibleMealThumb =
+                    mealSliderWrap.querySelector(
+                        ".swiper-slide-active .meal-thumb",
+                    ) || mealSliderWrap.querySelector(".meal-thumb");
+                if (!visibleMealThumb) return;
+
+                const wrapRect = mealSliderWrap.getBoundingClientRect();
+                const thumbRect = visibleMealThumb.getBoundingClientRect();
+                const thumbCenter =
+                    thumbRect.top - wrapRect.top + thumbRect.height / 2;
+
+                mealSliderWrap.style.setProperty(
+                    "--meal-thumb-center",
+                    `${thumbCenter}px`,
+                );
+            }
+
+            setMealArrowCenter();
+            window.addEventListener("load", setMealArrowCenter);
+            window.addEventListener("resize", setMealArrowCenter);
+            mealSwiper.on("slideChangeTransitionEnd", setMealArrowCenter);
+            mealSwiper.on("breakpoint", setMealArrowCenter);
 
             /* 상단 로그인 영역 높이에 맞춰 헤더 위치 자동 조정 */
             const topbarWrap = document.querySelector(
