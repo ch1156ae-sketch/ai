@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>못난이 스플래쉬</title>
+
+        <!-- CSS 연결 -->
+        <link
+            rel="stylesheet"
+            href="./css/style2.css"
+        />
+
+        <!-- JS 연결 -->
+        <script
+            src="./script/script2.js"
+            defer
+        ></script>
+    </head>
+    <body>
+        <!-- 모바일 스플래쉬 전체 영역 -->
+        <main class="splash-wrap">
+            <!-- 첫 번째 스플래쉬 화면 -->
+            <section class="splash-slide active">
+                <div class="text-box">
+                    <h1>
+                        못생겼다고<br />
+                        버려질 이유는 없어요
+                    </h1>
+                    <p>모양은 조금 달라도 맛과 영양은 그대로예요</p>
+                </div>
+
+                <div class="image-box">
+                    <img
+                        src="./images/splach_image1.png"
+                        alt="못난이 농산물 캐릭터1"
+                    />
+                </div>
+            </section>
+
+            <!-- 두 번째 스플래쉬 화면 -->
+            <section class="splash-slide">
+                <div class="text-box">
+                    <h1>
+                        못난이 농산물의<br />
+                        진짜 가치를 발견하세요
+                    </h1>
+                    <p>버려질 농산물을 합리적인 가격으로 만나보세요</p>
+                </div>
+
+                <div class="image-box slide-2">
+                    <img
+                        src="./images/splach_image2.png"
+                        alt="농산물을 들고 있는 못난이 캐릭터2"
+                    />
+                </div>
+            </section>
+
+            <!-- 세 번째 스플래쉬 화면 -->
+            <section class="splash-slide">
+                <div class="text-box">
+                    <h1>못난이 농산물 마켓 울퉁불퉁</h1>
+                    <p>신선한 농산물을 더 착한 가격으로 구입해 보세요</p>
+                </div>
+
+                <div class="image-box slide-3">
+                    <img
+                        src="./images/splach_image3.png"
+                        alt="농산물 박스 캐릭터3"
+                    />
+                </div>
+            </section>
+
+            <!-- 하단 페이지바와 Skip 버튼 -->
+            <div class="bottom-area">
+                <div class="indicator">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+                <button
+                    class="skip-btn"
+                    type="button"
+                >
+                    Skip
+                </button>
+            </div>
+
+            <!-- 로그인 버튼: 기본 이미지와 hover 이미지를 분리해서 사용 -->
+            <button
+                class="login-btn"
+                type="button"
+                data-link="login.html"
+            >
+                <img
+                    class="login-img-default"
+                    src="./images/login_btn_off.png"
+                    alt="로그인 버튼"
+                />
+                <img
+                    class="login-img-hover"
+                    src="./images/login_btn_on.png"
+                    alt="로그인 버튼 호버"
+                />
+            </button>
+        </main>
+    </body>
+</html>

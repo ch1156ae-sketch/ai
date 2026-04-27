@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>모바일 로그인</title>
+        <link
+            rel="stylesheet"
+            href="./css/style3.css"
+        />
+    </head>
+
+    <body>
+        <main class="login-app">
+            <section class="login-screen">
+                <div
+                    class="logo-box"
+                    aria-label="로고"
+                >
+                    <img
+                        src="./images/login_logo.png"
+                        alt="로고"
+                        class="logo-img"
+                    />
+                </div>
+
+                <form
+                    class="login-form"
+                    id="loginForm"
+                >
+                    <div class="input-wrap">
+                        <input
+                            type="text"
+                            id="userId"
+                            placeholder="아이디 또는 이메일을 입력해주세요."
+                        />
+                    </div>
+
+                    <div class="input-wrap">
+                        <input
+                            type="password"
+                            id="userPw"
+                            placeholder="비밀번호를 입력해주세요."
+                        />
+                    </div>
+
+                    <div class="option-row">
+                        <label class="check-label">
+                            <input
+                                type="checkbox"
+                                id="autoLogin"
+                            />
+                            <span class="custom-check"></span>
+                            자동 로그인
+                        </label>
+
+                        <label class="check-label">
+                            <input
+                                type="checkbox"
+                                id="saveId"
+                            />
+                            <span class="custom-check"></span>
+                            아이디저장
+                        </label>
+                    </div>
+
+                    <p
+                        class="error-message"
+                        id="errorMessage"
+                    ></p>
+
+                    <button
+                        type="submit"
+                        class="login-btn"
+                        aria-label="로그인"
+                    >
+                        <img
+                            src="./images/login_btn_off.png"
+                            alt="로그인"
+                            class="login-btn-img login-btn-img-default"
+                        />
+
+                        <img
+                            src="./images/login_btn_on.png"
+                            alt="로그인"
+                            class="login-btn-img login-btn-img-hover"
+                        />
+                    </button>
+                </form>
+
+                <div class="divider">
+                    <span></span>
+                    <em>Or</em>
+                    <span></span>
+                </div>
+
+                <div class="social-row">
+                    <button
+                        type="button"
+                        class="social-btn kakao"
+                        aria-label="카카오톡으로 이동"
+                        data-url="https://www.kakaocorp.com/page/service/service/KakaoTalk"
+                    >
+                        <img
+                            src="./images/login_kakao.png"
+                            alt="카카오톡"
+                            class="social-icon"
+                        />
+                    </button>
+
+                    <button
+                        type="button"
+                        class="social-btn naver"
+                        aria-label="네이버로 이동"
+                        data-url="https://www.naver.com"
+                    >
+                        <img
+                            src="./images/login_naver.png"
+                            alt="네이버"
+                            class="social-icon"
+                        />
+                    </button>
+
+                    <button
+                        type="button"
+                        class="social-btn insta"
+                        aria-label="인스타그램으로 이동"
+                        data-url="https://www.instagram.com"
+                    >
+                        <img
+                            src="./images/login_insta.png"
+                            alt="인스타그램"
+                            class="social-icon"
+                        />
+                    </button>
+
+                    <button
+                        type="button"
+                        class="social-btn facebook"
+                        aria-label="페이스북으로 이동"
+                        data-url="https://www.facebook.com"
+                    >
+                        <img
+                            src="./images/login_facebook.png"
+                            alt="페이스북"
+                            class="social-icon"
+                        />
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <script src="./script/script3.js"></script>
+    </body>
+</html>

@@ -1,0 +1,3685 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>UTBT 식품 커머스</title>
+        <!-- 카카오 지도 API 키는 YOUR_KAKAO_APP_KEY 부분만 실제 키로 교체하면 됩니다. -->
+        <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_KAKAO_APP_KEY&libraries=services"></script>
+
+        <style>
+            @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            html,
+            body {
+                width: 100%;
+                min-height: 100%;
+                font-family: "Pretendard", sans-serif;
+                background: #ffffff;
+                color: #111827;
+            }
+
+            body {
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                overflow: hidden;
+            }
+
+            button {
+                border: 0;
+                background: none;
+                font-family: inherit;
+                cursor: pointer;
+            }
+
+            img {
+                display: block;
+                max-width: 100%;
+            }
+
+            ul,
+            li {
+                list-style: none;
+            }
+
+            .mobile-app {
+                --screen-padding: 24px;
+                position: relative;
+                width: 100%;
+                max-width: 375px;
+                height: 100vh;
+                background: #f1f2f4;
+                overflow-x: hidden;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                touch-action: pan-y;
+                overscroll-behavior-y: contain;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                cursor: grab;
+            }
+
+            .mobile-app.is-vertical-dragging {
+                cursor: grabbing;
+                user-select: none;
+            }
+
+            .mobile-app.alarm-open,
+            .mobile-app.cart-page-open {
+                overflow: hidden;
+                cursor: default;
+            }
+
+            .mobile-app::-webkit-scrollbar {
+                display: none;
+            }
+
+            .header {
+                position: sticky;
+                top: 0;
+                left: 0;
+                z-index: 200;
+                width: 100%;
+                height: 68px;
+                padding: 0 var(--screen-padding);
+                background: #ffffff;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .logo a {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                color: #111827;
+                text-decoration: none;
+                font-size: 19px;
+                font-weight: 900;
+                letter-spacing: 1px;
+            }
+
+            .logo-mark {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #ff5a20, #ff7a3d);
+                position: relative;
+                box-shadow: 0 6px 14px rgba(255, 90, 32, 0.3);
+            }
+
+            .logo-mark::after {
+                content: "";
+                position: absolute;
+                top: 5px;
+                left: 5px;
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.75);
+            }
+
+            .header-icons {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .icon-btn {
+                width: 24px;
+                height: 24px;
+                flex: 0 0 24px;
+                color: #6b7280;
+            }
+
+            .icon-btn svg {
+                display: block;
+                width: 24px;
+                height: 24px;
+                stroke: currentColor;
+                stroke-width: 1.5px;
+            }
+
+            .icon-btn:hover {
+                color: #ff5a20;
+            }
+
+            .cart-icon-btn {
+                position: relative;
+            }
+
+            .cart-count-badge {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                min-width: 18px;
+                height: 18px;
+                padding: 0 5px;
+                border-radius: 999px;
+                background: #ff5a20;
+                color: #ffffff;
+                border: 1px solid #ffffff;
+                font-size: 10px;
+                font-weight: 500;
+                line-height: 16px;
+                text-align: center;
+                display: none;
+            }
+
+            .cart-count-badge.show {
+                display: block;
+            }
+
+            .main {
+                width: 100%;
+                padding-bottom: 86px;
+            }
+
+            .hero-section {
+                position: relative;
+                width: 100%;
+                height: 375px;
+                background: #ffffff;
+                overflow: hidden;
+            }
+
+            .hero-slider {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                cursor: grab;
+                touch-action: pan-y;
+            }
+
+            .hero-slider.is-dragging {
+                cursor: grabbing;
+            }
+
+            .hero-track {
+                display: flex;
+                width: 100%;
+                height: 100%;
+                transition: transform 0.45s ease;
+            }
+
+            .hero-track.no-transition {
+                transition: none;
+            }
+
+            .hero-slide {
+                flex: 0 0 100%;
+                width: 100%;
+                height: 100%;
+            }
+
+            .hero-banner-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .hero-control {
+                position: absolute;
+                right: 24px;
+                bottom: 24px;
+                z-index: 10;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .hero-page {
+                min-width: 48px;
+                height: 24px;
+                padding: 0 10px;
+                border-radius: 999px;
+                background: rgba(17, 24, 39, 0.65);
+                color: #ffffff;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 24px;
+                text-align: center;
+            }
+
+            .hero-pause-btn {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                background: rgba(17, 24, 39, 0.65);
+                color: #ffffff;
+                font-size: 11px;
+                font-weight: 500;
+                line-height: 24px;
+                text-align: center;
+            }
+
+            .category-section {
+                width: 100%;
+                padding: 24px var(--screen-padding) 18px;
+                background: #f1f2f4;
+            }
+
+            .category-list {
+                display: grid;
+                grid-template-columns: repeat(4, 48px);
+                column-gap: 29px;
+                row-gap: 24px;
+                justify-content: space-between;
+            }
+
+            .category-list button {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+            }
+
+            .category-img {
+                width: 48px;
+                height: 48px;
+                flex: 0 0 48px;
+                border-radius: 8px;
+                overflow: hidden;
+                display: block;
+                background: #ffffff;
+            }
+
+            .category-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .category-list span:last-child {
+                font-size: 11px;
+                font-weight: 700;
+                color: #111827;
+                letter-spacing: -0.4px;
+            }
+
+            .product-section {
+                width: 100%;
+                padding: 0 var(--screen-padding) 24px;
+                background: #f1f2f4;
+            }
+
+            .section-title {
+                margin-bottom: 8px;
+                font-size: 18px;
+                font-weight: 500;
+                line-height: 1.3;
+                color: #111827;
+                letter-spacing: -0.8px;
+            }
+
+            .product-scroll {
+                width: calc(100% + var(--screen-padding));
+                margin-right: calc(var(--screen-padding) * -1);
+                display: flex;
+                gap: 16px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                padding-right: 0;
+                scroll-snap-type: none;
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+                touch-action: pan-y;
+                overscroll-behavior-x: contain;
+                cursor: grab;
+            }
+
+            .product-scroll.is-dragging {
+                cursor: grabbing;
+                user-select: none;
+            }
+
+            .product-scroll::-webkit-scrollbar {
+                display: none;
+            }
+
+            .product-card {
+                flex: 0 0 155px;
+                width: 155px;
+                scroll-snap-align: start;
+            }
+
+            .product-img {
+                width: 155px;
+                height: 155px;
+                border-radius: 10px;
+                overflow: hidden;
+                background: #e5e7eb;
+            }
+
+            .product-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .cart-btn {
+                width: 155px;
+                height: 32px;
+                margin-top: 16px;
+                border: 1px solid #969ba5;
+                border-radius: 8px;
+                background: transparent;
+                color: #969ba5;
+                font-size: 13px;
+                font-weight: 400;
+            }
+
+            .cart-btn.active {
+                border-color: #969ba5;
+                background: transparent;
+                color: #969ba5;
+            }
+
+            .cart-btn:hover {
+                border-color: #ff5a20;
+                color: #ff5a20;
+            }
+
+            .product-card h3 {
+                margin-top: 16px;
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 1.25;
+                color: #111827;
+                letter-spacing: -0.7px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .product-card p {
+                margin-top: 4px;
+                font-size: 13px;
+                font-weight: 400;
+                color: #6b7280;
+            }
+
+            .last-section {
+                padding-bottom: 32px;
+            }
+
+            .cart-modal {
+                position: fixed;
+                inset: 0;
+                z-index: 300;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                background: rgba(17, 24, 39, 0.45);
+                padding: 0 24px;
+            }
+
+            .cart-modal.show {
+                display: flex;
+            }
+
+            .cart-popup {
+                width: 100%;
+                max-width: 327px;
+                border-radius: 16px;
+                background: #ffffff;
+                padding: 24px;
+                box-shadow: 0 16px 40px rgba(17, 24, 39, 0.18);
+            }
+
+            .cart-popup-title {
+                font-size: 18px;
+                font-weight: 500;
+                color: #111827;
+                line-height: 1.3;
+            }
+
+            .cart-popup-product {
+                margin-top: 8px;
+                font-size: 13px;
+                font-weight: 400;
+                color: #6b7280;
+                line-height: 1.4;
+            }
+
+            .cart-form {
+                margin-top: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .cart-field label {
+                display: block;
+                margin-bottom: 8px;
+                font-size: 13px;
+                font-weight: 400;
+                color: #111827;
+            }
+
+            .cart-field input {
+                width: 100%;
+                height: 44px;
+                border: 1px solid #d1d5db;
+                border-radius: 8px;
+                padding: 0 12px;
+                font-size: 14px;
+                font-weight: 400;
+                color: #111827;
+                font-family: inherit;
+                outline: none;
+            }
+
+            .cart-field input:focus {
+                border-color: #ff5a20;
+            }
+
+            .cart-field input[readonly] {
+                background: #f9fafb;
+                color: #6b7280;
+            }
+
+            .cart-count-control {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 44px;
+                border: 1px solid #d1d5db;
+                border-radius: 8px;
+                overflow: hidden;
+                background: #ffffff;
+            }
+
+            .cart-count-control:focus-within {
+                border-color: #ff5a20;
+            }
+
+            .cart-count-control input {
+                flex: 1;
+                height: 100%;
+                border: 0;
+                border-radius: 0;
+            }
+
+            .cart-count-control input::-webkit-outer-spin-button,
+            .cart-count-control input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            .cart-count-control input[type="number"] {
+                -moz-appearance: textfield;
+            }
+
+            .cart-stepper {
+                width: 36px;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .cart-stepper button {
+                width: 100%;
+                height: 50%;
+                color: #969ba5;
+                font-size: 10px;
+                line-height: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .cart-stepper button:hover {
+                color: #ff5a20;
+            }
+
+            .cart-popup-actions {
+                margin-top: 24px;
+                display: flex;
+                gap: 8px;
+            }
+
+            .cart-popup-actions button {
+                flex: 1;
+                height: 44px;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 400;
+            }
+
+            .cart-add-btn {
+                border: 1px solid #ff5a20;
+                color: #ff5a20;
+                background: #ffffff;
+            }
+
+            .cart-buy-btn {
+                color: #ffffff;
+                background: #ff5a20;
+            }
+
+            .cart-page {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 650;
+                width: 100%;
+                max-width: none;
+                height: 100vh;
+                min-height: 100vh;
+                background: #f1f2f4;
+                display: none;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                touch-action: pan-y;
+                overscroll-behavior: contain;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                cursor: grab;
+            }
+
+            .cart-page.is-vertical-dragging {
+                cursor: grabbing;
+                user-select: none;
+            }
+
+            .cart-page.show {
+                display: block;
+            }
+
+            .cart-page::-webkit-scrollbar {
+                display: none;
+            }
+
+            .cart-page-header {
+                position: sticky;
+                top: 0;
+                z-index: 30;
+                width: 100%;
+                height: 64px;
+                padding: 0 24px;
+                background: #ffffff;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .cart-page-back-btn {
+                width: 24px;
+                height: 24px;
+                color: #111827;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .cart-page-back-btn svg {
+                width: 24px;
+                height: 24px;
+                stroke: currentColor;
+                stroke-width: 1.5px;
+            }
+
+            .cart-page-back-btn:hover {
+                color: #ff5a20;
+            }
+
+            .cart-page-title {
+                font-size: 22px;
+                font-weight: 500;
+                color: #111827;
+                line-height: 1;
+            }
+
+            .cart-page-content {
+                width: 100%;
+                padding: 16px 24px 86px;
+            }
+
+            .cart-shipping-card {
+                width: 100%;
+                min-height: 119px;
+                padding: 24px 12px 24px;
+                border-radius: 8px 8px 0 0;
+                background: #ffffff;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .cart-shipping-top {
+                display: flex;
+                align-items: center;
+            }
+
+            .shipping-badge {
+                width: 65px;
+                height: 24px;
+                padding: 0;
+                border-radius: 99px;
+                background: #ffefe9;
+                color: #ff5a20;
+                font-size: 13px;
+                font-weight: 500;
+                line-height: 24px;
+                text-align: center;
+                display: inline-block;
+            }
+
+            .shipping-address-row {
+                margin-top: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+            }
+
+            .shipping-change-btn {
+                height: 31px;
+                padding: 0 12px;
+                border-radius: 999px;
+                background: #e6eeec;
+                color: #111827;
+                font-size: 13px;
+                font-weight: 400;
+                transition:
+                    background 0.2s ease,
+                    color 0.2s ease;
+            }
+
+            .shipping-change-btn:hover {
+                background: #ffefe9;
+                color: #ff5a20;
+            }
+
+            .shipping-address {
+                margin-top: 0;
+                flex: 1;
+                font-size: 13px;
+                font-weight: 400;
+                color: #111827;
+                line-height: 126%;
+            }
+
+            .address-modal {
+                position: fixed;
+                inset: 0;
+                z-index: 820;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                padding: 0 24px;
+                background: rgba(17, 24, 39, 0.45);
+            }
+
+            .address-modal.show {
+                display: flex;
+            }
+
+            .address-popup {
+                width: 100%;
+                max-width: 327px;
+                padding: 24px;
+                border-radius: 16px;
+                background: #ffffff;
+                box-shadow: 0 16px 40px rgba(17, 24, 39, 0.18);
+            }
+
+            .address-popup-title {
+                font-size: 18px;
+                font-weight: 500;
+                color: #111827;
+                line-height: 1.3;
+            }
+
+            .address-current-card {
+                margin-top: 16px;
+                padding: 16px 12px;
+                border-radius: 8px;
+                background: #f9fafb;
+            }
+
+            .address-current-top {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+            }
+
+            .address-current-label {
+                height: 24px;
+                padding: 0 10px;
+                border-radius: 99px;
+                background: #ffefe9;
+                color: #ff5a20;
+                font-size: 13px;
+                font-weight: 500;
+                line-height: 24px;
+            }
+
+            .address-current-text {
+                margin-top: 12px;
+                font-size: 13px;
+                font-weight: 400;
+                color: #111827;
+                line-height: 126%;
+            }
+
+            .address-location-btn {
+                width: 100%;
+                height: 44px;
+                margin-top: 16px;
+                border: 1px solid #ff5a20;
+                border-radius: 8px;
+                background: #ffffff;
+                color: #ff5a20;
+                font-size: 14px;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                transition:
+                    background 0.2s ease,
+                    color 0.2s ease;
+            }
+
+            .address-location-btn svg {
+                width: 18px;
+                height: 18px;
+                stroke: currentColor;
+                stroke-width: 1.5px;
+            }
+
+            .address-location-btn:hover {
+                background: #ffefe9;
+            }
+
+            .address-map-panel {
+                display: none;
+                margin-top: 16px;
+                padding: 12px;
+                border-radius: 12px;
+                background: #f9fafb;
+            }
+
+            .address-map-panel.show {
+                display: block;
+            }
+
+            .address-map {
+                width: 100%;
+                height: 180px;
+                border-radius: 8px;
+                overflow: hidden;
+                background: #e5e7eb;
+            }
+
+            .address-map-guide {
+                margin-top: 10px;
+                font-size: 12px;
+                font-weight: 400;
+                color: #6b7280;
+                line-height: 126%;
+            }
+
+            .address-selected-text {
+                margin-top: 8px;
+                font-size: 13px;
+                font-weight: 400;
+                color: #111827;
+                line-height: 126%;
+            }
+
+            .address-map-actions {
+                margin-top: 12px;
+                display: flex;
+                gap: 8px;
+            }
+
+            .address-map-actions button {
+                flex: 1;
+                height: 36px;
+                border-radius: 8px;
+                font-size: 13px;
+                font-weight: 400;
+            }
+
+            .address-map-close-btn {
+                border: 1px solid #d1d5db;
+                background: #ffffff;
+                color: #6b7280;
+            }
+
+            .address-map-apply-btn {
+                background: #ff5a20;
+                color: #ffffff;
+            }
+
+            .address-map-apply-btn:hover {
+                background: #f04f17;
+            }
+
+            .address-form {
+                margin-top: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .address-field label {
+                display: block;
+                margin-bottom: 8px;
+                font-size: 13px;
+                font-weight: 400;
+                color: #111827;
+            }
+
+            .address-field input {
+                width: 100%;
+                height: 44px;
+                padding: 0 12px;
+                border: 1px solid #d1d5db;
+                border-radius: 8px;
+                color: #111827;
+                font-family: inherit;
+                font-size: 14px;
+                font-weight: 400;
+                outline: none;
+            }
+
+            .address-field input:focus {
+                border-color: #ff5a20;
+            }
+
+            .address-actions {
+                margin-top: 24px;
+                display: flex;
+                gap: 8px;
+            }
+
+            .address-actions button {
+                flex: 1;
+                height: 44px;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 400;
+            }
+
+            .address-cancel-btn {
+                border: 1px solid #d1d5db;
+                background: #ffffff;
+                color: #6b7280;
+            }
+
+            .address-save-btn {
+                background: #ff5a20;
+                color: #ffffff;
+            }
+
+            .address-save-btn:hover {
+                background: #f04f17;
+            }
+
+            .cart-list-card {
+                width: 100%;
+                background: #ffffff;
+                padding: 24px 12px 24px;
+            }
+
+            .cart-select-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .cart-check-label {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                color: #111827;
+                font-size: 13px;
+                font-weight: 400;
+            }
+
+            .cart-check {
+                position: relative;
+                width: 24px;
+                height: 24px;
+                flex: 0 0 24px;
+                border-radius: 58% 42% 55% 45% / 45% 55% 42% 58%;
+                border: 1.5px solid #d1d5db;
+                background: #ffffff;
+                overflow: hidden;
+            }
+
+            .cart-check.is-checked {
+                border-color: #ff5a20;
+                background: #ff5a20;
+            }
+
+            .cart-check.is-checked::after {
+                content: "";
+                position: absolute;
+                top: 5px;
+                left: 8px;
+                width: 6px;
+                height: 10px;
+                border-right: 2px solid #ffffff;
+                border-bottom: 2px solid #ffffff;
+                transform: rotate(45deg);
+            }
+
+            .cart-delivery-filter {
+                width: 65px;
+                height: 24px;
+                padding: 0;
+                border: 1px solid #6b7280;
+                border-radius: 999px;
+                color: #111827;
+                background: #ffffff;
+                font-size: 13px;
+                font-weight: 500;
+                line-height: 22px;
+                text-align: center;
+            }
+
+            .cart-delivery-title {
+                margin-top: 25px;
+                font-size: 18px;
+                font-weight: 500;
+                color: #111827;
+            }
+
+            .cart-items {
+                margin-top: 24px;
+                border-top: 1px solid #e5e7eb;
+            }
+
+            .cart-item {
+                position: relative;
+                display: grid;
+                grid-template-columns: 24px 96px 1fr 24px;
+                column-gap: 10px;
+                align-items: start;
+                padding: 24px 0;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .cart-item-img {
+                width: 96px;
+                height: 96px;
+                border-radius: 8px;
+                overflow: hidden;
+                background: #e5e7eb;
+            }
+
+            .cart-item-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .cart-item-info {
+                position: relative;
+                min-width: 0;
+                height: 96px;
+            }
+
+            .cart-item-name {
+                font-size: 16px;
+                font-weight: 400;
+                color: #111827;
+                line-height: 126%;
+            }
+
+            .cart-item-price {
+                margin-top: 4px;
+                font-size: 16px;
+                font-weight: 600;
+                color: #111827;
+            }
+
+            .cart-qty-control {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                margin-top: 0;
+                width: 78px;
+                height: 26px;
+                border-radius: 999px;
+                background: #fff0eb;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 8px;
+            }
+
+            .cart-qty-control button {
+                width: 18px;
+                height: 18px;
+                color: #ff5a20;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .cart-qty-control svg {
+                width: 18px;
+                height: 18px;
+                stroke: currentColor;
+                stroke-width: 1.5px;
+            }
+
+            .cart-qty-count {
+                min-width: 18px;
+                text-align: center;
+                font-size: 16px;
+                font-weight: 600;
+                color: #111827;
+            }
+
+            .cart-remove-btn {
+                width: 16px;
+                height: 16px;
+                color: #111827;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .cart-remove-btn:hover {
+                color: #ff5a20;
+            }
+
+            .cart-remove-btn svg {
+                width: 16px;
+                height: 16px;
+                stroke: currentColor;
+                stroke-width: 1.5px;
+            }
+
+            .cart-empty-text {
+                padding: 24px 0;
+                text-align: center;
+                color: #6b7280;
+                font-size: 14px;
+                font-weight: 400;
+                border-top: 1px solid #e5e7eb;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .cart-buy-fixed {
+                width: 100%;
+                height: 47px;
+                margin-top: 24px;
+                border-radius: 8px;
+                background: #ff5a20;
+                color: #ffffff;
+                font-size: 16px;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .cart-buy-fixed:hover {
+                background: #f04f17;
+            }
+
+            .cart-scroll-top-btn {
+                z-index: 680;
+            }
+
+            .alarm-page {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 600;
+                transform: none;
+                width: 100%;
+                max-width: none;
+                height: 100vh;
+                min-height: 100vh;
+                background: #f1f2f4;
+                display: none;
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+
+            .alarm-page.show {
+                display: block;
+            }
+
+            .alarm-page::-webkit-scrollbar {
+                display: none;
+            }
+
+            .alarm-header {
+                width: 100%;
+                height: 64px;
+                padding: 0 24px;
+                background: #ffffff;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .alarm-back-btn {
+                width: 24px;
+                height: 24px;
+                color: #111827;
+            }
+
+            .alarm-back-btn svg {
+                width: 24px;
+                height: 24px;
+                stroke: currentColor;
+                stroke-width: 1.5px;
+            }
+
+            .alarm-back-btn:hover {
+                color: #ff5a20;
+            }
+
+            .alarm-title {
+                font-size: 22px;
+                font-weight: 500;
+                color: #111827;
+                line-height: 1;
+            }
+
+            .alarm-content {
+                width: 100%;
+                padding: 24px 24px 86px;
+            }
+
+            .alarm-summary-card {
+                width: 100%;
+                height: 88px;
+                padding: 8px 12px;
+                border-radius: 14px;
+                background: #ffffff;
+                display: grid;
+                grid-template-columns: 72px 1fr 24px;
+                align-items: center;
+                column-gap: 18px;
+                row-gap: 0;
+            }
+
+            .alarm-summary-img {
+                width: 72px;
+                height: 72px;
+                flex: 0 0 72px;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+
+            .alarm-summary-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .alarm-summary-text strong {
+                display: block;
+                font-size: 18px;
+                font-weight: 500;
+                color: #111827;
+                line-height: 1.3;
+            }
+
+            .alarm-summary-text p {
+                margin-top: 10px;
+                font-size: 16px;
+                font-weight: 400;
+                color: #111827;
+                line-height: 126%;
+            }
+
+            .alarm-more-btn {
+                width: 24px;
+                height: 24px;
+                flex: 0 0 24px;
+                color: #6b7280;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .alarm-more-btn svg {
+                width: 24px;
+                height: 24px;
+                stroke: currentColor;
+                stroke-width: 1.5px;
+            }
+
+            .alarm-more-btn:hover {
+                color: #ff5a20;
+            }
+
+            .alarm-list-card {
+                margin-top: 24px;
+                width: 100%;
+                height: 184px;
+                padding: 8px 12px;
+                border-radius: 14px;
+                background: #ffffff;
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .alarm-row {
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .alarm-item-name {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 16px;
+                font-weight: 500;
+                color: #111827;
+            }
+
+            .alarm-item-icon {
+                width: 20px;
+                height: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 17px;
+            }
+
+            .alarm-row-right {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .alarm-state-text {
+                font-size: 16px;
+                font-weight: 500;
+                color: #6b7280;
+            }
+
+            .alarm-row.is-on .alarm-state-text {
+                color: #111827;
+            }
+
+            .alarm-switch {
+                position: relative;
+                width: 48px;
+                height: 24px;
+                border-radius: 999px;
+                background: #ffb7a5;
+                transition: 0.2s ease;
+            }
+
+            .alarm-switch::after {
+                content: "";
+                position: absolute;
+                top: 2px;
+                left: 2px;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: #ffffff;
+                transition: 0.2s ease;
+                box-shadow: 0 2px 5px rgba(17, 24, 39, 0.15);
+            }
+
+            .alarm-switch:hover,
+            .alarm-switch.is-on {
+                background: #ff5a20;
+            }
+
+            .alarm-switch:hover::after,
+            .alarm-switch.is-on::after {
+                left: 26px;
+            }
+
+            .alarm-switch.just-toggled-off:hover {
+                background: #ffb7a5;
+            }
+
+            .alarm-switch.just-toggled-off:hover::after {
+                left: 2px;
+            }
+
+            .bottom-nav {
+                position: fixed;
+                left: 50%;
+                bottom: 0;
+                z-index: 700;
+                transform: translateX(-50%);
+                width: 100%;
+                max-width: 375px;
+                height: 70px;
+                padding: 8px var(--screen-padding) 6px;
+                background: #ffffff;
+                display: flex;
+                justify-content: space-between;
+                border-top: 1px solid #e5e7eb;
+            }
+
+            .scroll-top-btn {
+                position: fixed;
+                right: max(24px, calc((100vw - 375px) / 2 + 24px));
+                bottom: 86px;
+                z-index: 160;
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                background: #ffffff;
+                border: 1px solid #e5e7eb;
+                color: #6b7280;
+                box-shadow: 0 8px 20px rgba(17, 24, 39, 0.12);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 0;
+                pointer-events: none;
+                transform: none;
+                transition: opacity 0.25s ease;
+            }
+
+            .scroll-top-btn.show {
+                opacity: 1;
+                pointer-events: auto;
+                transform: none;
+            }
+
+            .scroll-top-btn.is-fading {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .scroll-top-btn svg {
+                width: 22px;
+                height: 22px;
+                stroke: currentColor;
+                stroke-width: 1.5px;
+            }
+
+            .scroll-top-btn:hover {
+                color: #ff5a20;
+            }
+
+            .nav-item {
+                width: 48px;
+                height: 56px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 3px;
+                color: #6b7280;
+            }
+
+            .nav-item svg {
+                width: 24px;
+                height: 24px;
+                stroke: currentColor;
+                stroke-width: 1.5px;
+            }
+
+            .nav-item span {
+                font-size: 10px;
+                font-weight: 500;
+                letter-spacing: -0.3px;
+            }
+
+            .nav-item.active,
+            .nav-item:hover {
+                color: #ff5a20;
+            }
+
+            @media (max-width: 360px) {
+                .category-list {
+                    column-gap: 29px;
+                    row-gap: 24px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <section
+            class="mobile-app"
+            aria-label="식품 커머스 모바일 화면"
+        >
+            <header class="header">
+                <h1 class="logo">
+                    <a
+                        href="#"
+                        class="logo-home-link"
+                        aria-label="홈으로 이동"
+                    >
+                        <span class="logo-mark"></span>
+                        <span>UTBT</span>
+                    </a>
+                </h1>
+
+                <nav
+                    class="header-icons"
+                    aria-label="상단 메뉴"
+                >
+                    <button
+                        type="button"
+                        class="icon-btn alarm-open-btn"
+                        aria-label="알림"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path
+                                d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 7h18s-3 0-3-7"
+                            />
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                        </svg>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-btn cart-icon-btn"
+                        aria-label="장바구니"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M6 7h12l1 14H5L6 7Z" />
+                            <path d="M9 7a3 3 0 0 1 6 0" />
+                        </svg>
+                        <span
+                            class="cart-count-badge"
+                            aria-label="장바구니 담긴 총 갯수"
+                            aria-live="polite"
+                            >0</span
+                        >
+                    </button>
+                </nav>
+            </header>
+
+            <main class="main">
+                <section
+                    class="hero-section"
+                    aria-label="메인 배너"
+                >
+                    <div class="hero-slider">
+                        <div class="hero-track">
+                            <div class="hero-slide">
+                                <img
+                                    class="hero-banner-img"
+                                    src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=750&q=80"
+                                    alt="못난이 농산물 메인 배너 1"
+                                />
+                            </div>
+                            <div class="hero-slide">
+                                <img
+                                    class="hero-banner-img"
+                                    src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=750&q=80"
+                                    alt="못난이 농산물 메인 배너 2"
+                                />
+                            </div>
+                            <div class="hero-slide">
+                                <img
+                                    class="hero-banner-img"
+                                    src="https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=750&q=80"
+                                    alt="못난이 농산물 메인 배너 3"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-control">
+                        <div
+                            class="hero-page"
+                            aria-label="메인 배너 페이지"
+                        >
+                            <span class="hero-current">1</span>/<span
+                                class="hero-total"
+                                >3</span
+                            >
+                        </div>
+                        <button
+                            type="button"
+                            class="hero-pause-btn"
+                            aria-label="메인 배너 자동 슬라이드 정지"
+                        >
+                            Ⅱ
+                        </button>
+                    </div>
+                </section>
+
+                <nav
+                    class="category-section"
+                    aria-label="상품 카테고리"
+                >
+                    <ul class="category-list">
+                        <li>
+                            <button
+                                type="button"
+                                aria-label="농산물"
+                            >
+                                <span class="category-img"
+                                    ><img
+                                        src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=96&h=96&q=80"
+                                        alt=""
+                                /></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                aria-label="고기"
+                            >
+                                <span class="category-img"
+                                    ><img
+                                        src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=96&h=96&q=80"
+                                        alt=""
+                                /></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                aria-label="수산물"
+                            >
+                                <span class="category-img"
+                                    ><img
+                                        src="https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?auto=format&fit=crop&w=96&h=96&q=80"
+                                        alt=""
+                                /></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                aria-label="유제품"
+                            >
+                                <span class="category-img"
+                                    ><img
+                                        src="https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=96&h=96&q=80"
+                                        alt=""
+                                /></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                aria-label="밀키트"
+                            >
+                                <span class="category-img"
+                                    ><img
+                                        src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=96&h=96&q=80"
+                                        alt=""
+                                /></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                aria-label="가공식품"
+                            >
+                                <span class="category-img"
+                                    ><img
+                                        src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=96&h=96&q=80"
+                                        alt=""
+                                /></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                aria-label="주류"
+                            >
+                                <span class="category-img"
+                                    ><img
+                                        src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=96&h=96&q=80"
+                                        alt=""
+                                /></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                aria-label="펫푸드"
+                            >
+                                <span class="category-img"
+                                    ><img
+                                        src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=96&h=96&q=80"
+                                        alt=""
+                                /></span>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+
+                <section class="product-section">
+                    <h2 class="section-title">✨오늘 구출 식품</h2>
+                    <ul class="product-scroll">
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="못난이 토마토 1kg"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>못난이 토마토 1kg</h3>
+                            <p>4,900원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="못난이 감자 2kg"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>못난이 감자 2kg</h3>
+                            <p>4,900원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="못난이 귤 3kg"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>못난이 귤 3kg</h3>
+                            <p>7,900원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="흠집 사과 2kg"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>흠집 사과 2kg</h3>
+                            <p>8,900원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="못난이 당근 1kg"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>못난이 당근 1kg</h3>
+                            <p>3,900원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="구출 잼 세트"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>구출 잼 세트</h3>
+                            <p>6,900원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="못난이 브로콜리 1kg"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>못난이 브로콜리 1kg</h3>
+                            <p>6,500원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="못난이 망고 2입"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>못난이 망고 2입</h3>
+                            <p>9,900원</p>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="product-section">
+                    <h2 class="section-title">👑베스트 TOP 10👑</h2>
+                    <ul class="product-scroll">
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1629828874514-dcffb45bd776?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="자국 복숭아 4kg"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>자국 복숭아 4kg (8~9과)</h3>
+                            <p>13,000원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1603664454146-50b9bb1e7afa?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="얼룩 귤5kg"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>얼룩 귤5kg (혼합과)</h3>
+                            <p>11,000원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="못난이 브로콜리 1kg"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>못난이 브로콜리 1kg</h3>
+                            <p>6,500원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="대추 방울토마토 2kg"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>대추 방울토마토 2kg</h3>
+                            <p>9,900원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="알감자 3kg"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>알감자 3kg</h3>
+                            <p>7,900원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="가정용 사과 3kg"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>가정용 사과 3kg</h3>
+                            <p>12,900원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="흙당근 2kg"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>흙당근 2kg</h3>
+                            <p>5,900원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1546470427-e212b0d7dc1d?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="파프리카 혼합 1kg"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>파프리카 혼합 1kg</h3>
+                            <p>8,500원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="못난이 과일청"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>못난이 과일청</h3>
+                            <p>10,900원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="못난이 망고 4입"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>못난이 망고 4입</h3>
+                            <p>15,900원</p>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="product-section last-section">
+                    <h2 class="section-title">
+                        🔥지금 당장 사야할 화제의 밀키트🔥
+                    </h2>
+                    <ul class="product-scroll">
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="알뜰 채소 카레"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>알뜰 채소 카레</h3>
+                            <p>7,900원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="듬뿍 감자 짜글이"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>듬뿍 감자 짜글이</h3>
+                            <p>8,500원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1635363638580-c2809d049eee?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="매콤 떡볶이 밀키트"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>매콤 떡볶이 밀키트</h3>
+                            <p>6,900원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="구출 채소 수프"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>구출 채소 수프</h3>
+                            <p>7,500원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="못난이 샐러드 키트"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>못난이 샐러드 키트</h3>
+                            <p>6,500원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="한끼 샐러드 볼"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>한끼 샐러드 볼</h3>
+                            <p>8,900원</p>
+                        </li>
+                        <li class="product-card">
+                            <div class="product-img">
+                                <img
+                                    src="https://images.unsplash.com/photo-1543352634-a1c51d9f1fa7?auto=format&fit=crop&w=310&h=310&q=80"
+                                    alt="채소 듬뿍 볶음밥"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="cart-btn"
+                            >
+                                담기
+                            </button>
+                            <h3>채소 듬뿍 볶음밥</h3>
+                            <p>7,900원</p>
+                        </li>
+                    </ul>
+                </section>
+            </main>
+
+            <nav
+                class="bottom-nav"
+                aria-label="하단 메뉴"
+            >
+                <button
+                    type="button"
+                    class="nav-item nav-home-btn active"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M3 10.5 12 3l9 7.5" />
+                        <path d="M5 10v10h14V10" />
+                        <path d="M9 20v-6h6v6" />
+                    </svg>
+                    <span>홈</span>
+                </button>
+                <button
+                    type="button"
+                    class="nav-item"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M4 4h6v6H4z" />
+                        <path d="M14 4h6v6h-6z" />
+                        <path d="M4 14h6v6H4z" />
+                        <path d="M14 14h6v6h-6z" />
+                    </svg>
+                    <span>카테고리</span>
+                </button>
+                <button
+                    type="button"
+                    class="nav-item"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path
+                            d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2 7.5 14 3 9.6l6.2-.9L12 3z"
+                        />
+                    </svg>
+                    <span>추천</span>
+                </button>
+                <button
+                    type="button"
+                    class="nav-item"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <circle
+                            cx="11"
+                            cy="11"
+                            r="7"
+                        />
+                        <path d="m20 20-3.5-3.5" />
+                    </svg>
+                    <span>검색</span>
+                </button>
+                <button
+                    type="button"
+                    class="nav-item"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <circle
+                            cx="12"
+                            cy="8"
+                            r="4"
+                        />
+                        <path d="M4 21a8 8 0 0 1 16 0" />
+                    </svg>
+                    <span>마이페이지</span>
+                </button>
+            </nav>
+
+            <button
+                type="button"
+                class="scroll-top-btn"
+                aria-label="맨 위로 이동"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M12 19V5" />
+                    <path d="m5 12 7-7 7 7" />
+                </svg>
+            </button>
+
+            <section
+                class="cart-page"
+                aria-label="장바구니 페이지"
+            >
+                <header class="cart-page-header">
+                    <button
+                        type="button"
+                        class="cart-page-back-btn"
+                        aria-label="뒤로가기"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="m15 18-6-6 6-6" />
+                        </svg>
+                    </button>
+                    <h2 class="cart-page-title">장바구니</h2>
+                </header>
+
+                <main class="cart-page-content">
+                    <section
+                        class="cart-shipping-card"
+                        aria-label="배송지 정보"
+                    >
+                        <div class="cart-shipping-top">
+                            <span class="shipping-badge">새벽배송</span>
+                        </div>
+                        <div class="shipping-address-row">
+                            <p class="shipping-address">
+                                서울특별시 종로구 대학로 123,<br />101동 502호
+                                (혜화아파트)
+                            </p>
+                            <button
+                                type="button"
+                                class="shipping-change-btn"
+                            >
+                                변경
+                            </button>
+                        </div>
+                    </section>
+
+                    <section
+                        class="cart-list-card"
+                        aria-label="장바구니 상품 목록"
+                    >
+                        <div class="cart-select-row">
+                            <button
+                                type="button"
+                                class="cart-check-label cart-select-all-btn"
+                                aria-label="전체선택"
+                            >
+                                <span class="cart-check"></span>
+                                <span>전체선택</span>
+                            </button>
+                            <button
+                                type="button"
+                                class="cart-delivery-filter"
+                            >
+                                새벽배송
+                            </button>
+                        </div>
+
+                        <h3 class="cart-delivery-title">새벽배송</h3>
+                        <ul class="cart-items"></ul>
+                    </section>
+
+                    <button
+                        type="button"
+                        class="cart-buy-fixed"
+                    >
+                        구매하기
+                    </button>
+                </main>
+
+                <button
+                    type="button"
+                    class="scroll-top-btn cart-scroll-top-btn"
+                    aria-label="장바구니 맨 위로 이동"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M12 19V5" />
+                        <path d="m5 12 7-7 7 7" />
+                    </svg>
+                </button>
+
+                <div
+                    class="address-modal"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="addressPopupTitle"
+                >
+                    <div class="address-popup">
+                        <h2
+                            class="address-popup-title"
+                            id="addressPopupTitle"
+                        >
+                            배송지 관리
+                        </h2>
+
+                        <div class="address-current-card">
+                            <div class="address-current-top">
+                                <span class="address-current-label"
+                                    >기본 배송지</span
+                                >
+                            </div>
+                            <p class="address-current-text">
+                                서울특별시 종로구 대학로 123,<br />101동 502호
+                                (혜화아파트)
+                            </p>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="address-location-btn"
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path
+                                    d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11Z"
+                                />
+                                <circle
+                                    cx="12"
+                                    cy="10"
+                                    r="2.5"
+                                />
+                            </svg>
+                            <span>현위치로 설정</span>
+                        </button>
+
+                        <div class="address-map-panel">
+                            <div
+                                id="addressMap"
+                                class="address-map"
+                                aria-label="배송지 선택 지도"
+                            ></div>
+                            <p class="address-map-guide">
+                                지도를 클릭해서 배송지를 선택할 수 있어요.
+                            </p>
+                            <p class="address-selected-text">
+                                선택된 주소가 없습니다.
+                            </p>
+                            <div class="address-map-actions">
+                                <button
+                                    type="button"
+                                    class="address-map-close-btn"
+                                >
+                                    지도 닫기
+                                </button>
+                                <button
+                                    type="button"
+                                    class="address-map-apply-btn"
+                                >
+                                    선택 위치 적용
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="address-form">
+                            <div class="address-field">
+                                <label for="addressMainInput">주소</label>
+                                <input
+                                    type="text"
+                                    id="addressMainInput"
+                                    value="서울특별시 종로구 대학로 123"
+                                />
+                            </div>
+
+                            <div class="address-field">
+                                <label for="addressDetailInput">상세주소</label>
+                                <input
+                                    type="text"
+                                    id="addressDetailInput"
+                                    value="101동 502호 (혜화아파트)"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="address-actions">
+                            <button
+                                type="button"
+                                class="address-cancel-btn"
+                            >
+                                취소
+                            </button>
+                            <button
+                                type="button"
+                                class="address-save-btn"
+                            >
+                                저장
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section
+                class="alarm-page"
+                aria-label="알림 페이지"
+            >
+                <header class="alarm-header">
+                    <button
+                        type="button"
+                        class="alarm-back-btn"
+                        aria-label="뒤로가기"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="m15 18-6-6 6-6" />
+                        </svg>
+                    </button>
+                    <h2 class="alarm-title">알림</h2>
+                </header>
+
+                <main class="alarm-content">
+                    <article class="alarm-summary-card">
+                        <div class="alarm-summary-img">
+                            <img
+                                src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=144&h=144&q=80"
+                                alt="관심 품목 알림"
+                            />
+                        </div>
+
+                        <div class="alarm-summary-text">
+                            <strong>관심 품목 알림</strong>
+                            <p>
+                                내가 찜한 식재료,<br />구조 요청 시 알려드려요!
+                            </p>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="alarm-more-btn"
+                            aria-label="관심 품목 알림 더보기"
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M12 6h.01" />
+                                <path d="M12 12h.01" />
+                                <path d="M12 18h.01" />
+                            </svg>
+                        </button>
+                    </article>
+
+                    <section
+                        class="alarm-list-card"
+                        aria-label="관심 품목 알림 설정"
+                    >
+                        <div class="alarm-row is-on">
+                            <div class="alarm-item-name">
+                                <span class="alarm-item-icon">🍓</span>
+                                <span>딸기</span>
+                            </div>
+                            <div class="alarm-row-right">
+                                <span class="alarm-state-text">알림끄기</span>
+                                <button
+                                    type="button"
+                                    class="alarm-switch is-on"
+                                    aria-label="딸기 알림 켜짐"
+                                    aria-pressed="true"
+                                ></button>
+                            </div>
+                        </div>
+
+                        <div class="alarm-row">
+                            <div class="alarm-item-name">
+                                <span class="alarm-item-icon">🍅</span>
+                                <span>토마토</span>
+                            </div>
+                            <div class="alarm-row-right">
+                                <span class="alarm-state-text">알림설정</span>
+                                <button
+                                    type="button"
+                                    class="alarm-switch"
+                                    aria-label="토마토 알림 꺼짐"
+                                    aria-pressed="false"
+                                ></button>
+                            </div>
+                        </div>
+
+                        <div class="alarm-row">
+                            <div class="alarm-item-name">
+                                <span class="alarm-item-icon">🧀</span>
+                                <span>치즈</span>
+                            </div>
+                            <div class="alarm-row-right">
+                                <span class="alarm-state-text">알림설정</span>
+                                <button
+                                    type="button"
+                                    class="alarm-switch"
+                                    aria-label="치즈 알림 꺼짐"
+                                    aria-pressed="false"
+                                ></button>
+                            </div>
+                        </div>
+
+                        <div class="alarm-row">
+                            <div class="alarm-item-name">
+                                <span class="alarm-item-icon">🧅</span>
+                                <span>양파</span>
+                            </div>
+                            <div class="alarm-row-right">
+                                <span class="alarm-state-text">알림설정</span>
+                                <button
+                                    type="button"
+                                    class="alarm-switch"
+                                    aria-label="양파 알림 꺼짐"
+                                    aria-pressed="false"
+                                ></button>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </section>
+
+            <div
+                class="cart-modal"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="cartPopupTitle"
+            >
+                <div class="cart-popup">
+                    <h2
+                        class="cart-popup-title"
+                        id="cartPopupTitle"
+                    >
+                        장바구니 담기
+                    </h2>
+                    <p class="cart-popup-product">상품 정보를 확인해 주세요.</p>
+
+                    <div class="cart-form">
+                        <div class="cart-field">
+                            <label for="cartPriceInput">총 가격</label>
+                            <input
+                                type="text"
+                                id="cartPriceInput"
+                                inputmode="numeric"
+                                placeholder="총 가격"
+                                readonly
+                            />
+                        </div>
+
+                        <div class="cart-field">
+                            <label for="cartCountInput">갯수</label>
+                            <div class="cart-count-control">
+                                <input
+                                    type="number"
+                                    id="cartCountInput"
+                                    min="1"
+                                    value="1"
+                                    placeholder="갯수를 입력하세요"
+                                />
+                                <div
+                                    class="cart-stepper"
+                                    aria-hidden="true"
+                                >
+                                    <button
+                                        type="button"
+                                        class="count-up-btn"
+                                        tabindex="-1"
+                                    >
+                                        ▲
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="count-down-btn"
+                                        tabindex="-1"
+                                    >
+                                        ▼
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cart-popup-actions">
+                        <button
+                            type="button"
+                            class="cart-add-btn"
+                        >
+                            장바구니
+                        </button>
+                        <button
+                            type="button"
+                            class="cart-buy-btn"
+                        >
+                            구매하기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            // 메인 배너 이미지 무한 롤링 슬라이드 + 좌우 드래그 기능
+            const heroSlider = document.querySelector(".hero-slider");
+            const heroTrack = document.querySelector(".hero-track");
+            const heroCurrent = document.querySelector(".hero-current");
+            const heroTotal = document.querySelector(".hero-total");
+            const heroPauseBtn = document.querySelector(".hero-pause-btn");
+            const originalHeroLength = heroTrack.children.length;
+            const firstHeroSlide = heroTrack.firstElementChild.cloneNode(true);
+            const lastHeroSlide = heroTrack.lastElementChild.cloneNode(true);
+            let heroIndex = 1;
+            let heroTimer = null;
+            let isHeroPaused = false;
+
+            heroTotal.textContent = originalHeroLength;
+
+            firstHeroSlide.setAttribute("aria-hidden", "true");
+            lastHeroSlide.setAttribute("aria-hidden", "true");
+            heroTrack.appendChild(firstHeroSlide);
+            heroTrack.insertBefore(lastHeroSlide, heroTrack.firstElementChild);
+
+            heroTrack.querySelectorAll("img").forEach((img) => {
+                img.setAttribute("draggable", "false");
+            });
+
+            const updateHeroPage = () => {
+                let currentPage = heroIndex;
+
+                if (heroIndex === 0) {
+                    currentPage = originalHeroLength;
+                }
+
+                if (heroIndex === originalHeroLength + 1) {
+                    currentPage = 1;
+                }
+
+                heroCurrent.textContent = currentPage;
+            };
+
+            const moveHeroSlide = (useTransition = true) => {
+                heroTrack.classList.toggle("no-transition", !useTransition);
+                heroTrack.style.transform = `translateX(-${heroIndex * 100}%)`;
+                updateHeroPage();
+            };
+
+            const startHeroAutoSlide = () => {
+                clearInterval(heroTimer);
+
+                if (isHeroPaused) return;
+
+                heroTimer = setInterval(() => {
+                    heroIndex += 1;
+                    moveHeroSlide(true);
+                }, 3000);
+            };
+
+            heroPauseBtn.addEventListener("click", () => {
+                isHeroPaused = !isHeroPaused;
+                heroPauseBtn.textContent = isHeroPaused ? "▶" : "Ⅱ";
+                heroPauseBtn.setAttribute(
+                    "aria-label",
+                    isHeroPaused
+                        ? "메인 배너 자동 슬라이드 재생"
+                        : "메인 배너 자동 슬라이드 정지",
+                );
+
+                if (isHeroPaused) {
+                    clearInterval(heroTimer);
+                } else {
+                    startHeroAutoSlide();
+                }
+            });
+
+            moveHeroSlide(false);
+            startHeroAutoSlide();
+
+            heroTrack.addEventListener("transitionend", () => {
+                if (heroIndex === originalHeroLength + 1) {
+                    heroIndex = 1;
+                    moveHeroSlide(false);
+                }
+
+                if (heroIndex === 0) {
+                    heroIndex = originalHeroLength;
+                    moveHeroSlide(false);
+                }
+            });
+
+            let heroPointerDown = false;
+            let heroHorizontalDrag = false;
+            let heroStartX = 0;
+            let heroStartY = 0;
+            let heroMoveX = 0;
+
+            heroSlider.addEventListener("pointerdown", (e) => {
+                heroPointerDown = true;
+                heroHorizontalDrag = false;
+                heroStartX = e.pageX;
+                heroStartY = e.pageY;
+                heroMoveX = 0;
+                clearInterval(heroTimer);
+            });
+
+            heroSlider.addEventListener("pointermove", (e) => {
+                if (!heroPointerDown) return;
+
+                const moveX = e.pageX - heroStartX;
+                const moveY = e.pageY - heroStartY;
+                const absX = Math.abs(moveX);
+                const absY = Math.abs(moveY);
+
+                if (!heroHorizontalDrag && absY > absX && absY > 6) {
+                    heroPointerDown = false;
+                    startHeroAutoSlide();
+                    return;
+                }
+
+                if (!heroHorizontalDrag && absX > absY && absX > 6) {
+                    heroHorizontalDrag = true;
+                    heroSlider.classList.add("is-dragging");
+                    heroSlider.setPointerCapture(e.pointerId);
+                }
+
+                if (!heroHorizontalDrag) return;
+
+                e.preventDefault();
+                heroMoveX = moveX;
+                const movePercent = (heroMoveX / heroSlider.clientWidth) * 100;
+                heroTrack.classList.add("no-transition");
+                heroTrack.style.transform = `translateX(calc(-${heroIndex * 100}% + ${movePercent}%))`;
+            });
+
+            const stopHeroDrag = () => {
+                if (!heroPointerDown) return;
+
+                const threshold = heroSlider.clientWidth * 0.18;
+
+                if (heroHorizontalDrag) {
+                    if (heroMoveX < -threshold) {
+                        heroIndex += 1;
+                    }
+
+                    if (heroMoveX > threshold) {
+                        heroIndex -= 1;
+                    }
+
+                    moveHeroSlide(true);
+                }
+
+                heroPointerDown = false;
+                heroHorizontalDrag = false;
+                heroMoveX = 0;
+                heroSlider.classList.remove("is-dragging");
+                startHeroAutoSlide();
+            };
+
+            heroSlider.addEventListener("pointerup", stopHeroDrag);
+            heroSlider.addEventListener("pointerleave", stopHeroDrag);
+            heroSlider.addEventListener("pointercancel", stopHeroDrag);
+
+            // 알림 페이지 열기/닫기 기능
+            const headerCartOpenBtn = document.querySelector(".cart-icon-btn");
+            const cartPage = document.querySelector(".cart-page");
+            const cartPageBackBtn = document.querySelector(
+                ".cart-page-back-btn",
+            );
+            const cartItemsEl = document.querySelector(".cart-items");
+            const cartSelectAllBtn = document.querySelector(
+                ".cart-select-all-btn",
+            );
+            const cartSelectAllCheck =
+                cartSelectAllBtn.querySelector(".cart-check");
+            const cartPageBuyBtn = document.querySelector(".cart-buy-fixed");
+            const cartScrollTopBtn = document.querySelector(
+                ".cart-scroll-top-btn",
+            );
+            const shippingChangeBtn = document.querySelector(
+                ".shipping-change-btn",
+            );
+            const shippingAddressText =
+                document.querySelector(".shipping-address");
+            const addressModal = document.querySelector(".address-modal");
+            const addressCurrentText = document.querySelector(
+                ".address-current-text",
+            );
+            const addressMainInput =
+                document.querySelector("#addressMainInput");
+            const addressDetailInput = document.querySelector(
+                "#addressDetailInput",
+            );
+            const addressCancelBtn = document.querySelector(
+                ".address-cancel-btn",
+            );
+            const addressSaveBtn = document.querySelector(".address-save-btn");
+            const addressLocationBtn = document.querySelector(
+                ".address-location-btn",
+            );
+            const addressMapPanel =
+                document.querySelector(".address-map-panel");
+            const addressSelectedText = document.querySelector(
+                ".address-selected-text",
+            );
+            const addressMapCloseBtn = document.querySelector(
+                ".address-map-close-btn",
+            );
+            const addressMapApplyBtn = document.querySelector(
+                ".address-map-apply-btn",
+            );
+            let addressMap = null;
+            let addressMarker = null;
+            let addressGeocoder = null;
+            let selectedMapAddress = "";
+            let cartItems = [
+                {
+                    id: Date.now() + 1,
+                    name: "못난이 사과 1.5kg",
+                    unitPrice: 7900,
+                    count: 1,
+                    img: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&w=192&h=192&q=80",
+                    selected: true,
+                },
+                {
+                    id: Date.now() + 2,
+                    name: "못난이 오이 5입",
+                    unitPrice: 9000,
+                    count: 2,
+                    img: "https://images.unsplash.com/photo-1604977042946-1eecc30f269e?auto=format&fit=crop&w=192&h=192&q=80",
+                    selected: false,
+                },
+            ];
+
+            const addItemToCart = ({ name, unitPrice, count, img }) => {
+                const existingItem = cartItems.find(
+                    (item) => item.name === name,
+                );
+
+                if (existingItem) {
+                    existingItem.count += Number(count);
+                    existingItem.selected = true;
+                } else {
+                    cartItems.push({
+                        id: Date.now() + Math.random(),
+                        name,
+                        unitPrice,
+                        count: Number(count),
+                        img,
+                        selected: true,
+                    });
+                }
+            };
+
+            const syncCartTotalCount = () => {
+                totalCartCount = cartItems.reduce(
+                    (sum, item) => sum + item.count,
+                    0,
+                );
+                updateHeaderCartCount();
+            };
+
+            const renderCartPage = () => {
+                cartItemsEl.innerHTML = "";
+
+                if (cartItems.length === 0) {
+                    cartItemsEl.innerHTML = `<li class="cart-empty-text">장바구니에 담긴 상품이 없습니다.</li>`;
+                    cartSelectAllCheck.classList.remove("is-checked");
+                    return;
+                }
+
+                const allSelected = cartItems.every((item) => item.selected);
+                cartSelectAllCheck.classList.toggle("is-checked", allSelected);
+
+                cartItems.forEach((item) => {
+                    const li = document.createElement("li");
+                    li.className = "cart-item";
+                    li.dataset.id = item.id;
+                    li.innerHTML = `
+                        <button type="button" class="cart-check cart-item-check ${item.selected ? "is-checked" : ""}" aria-label="${item.name} 선택"></button>
+                        <div class="cart-item-img">
+                            <img src="${item.img}" alt="${item.name}" />
+                        </div>
+                        <div class="cart-item-info">
+                            <p class="cart-item-name">${item.name}</p>
+                            <p class="cart-item-price">${formatWon(item.unitPrice * item.count)}</p>
+                            <div class="cart-qty-control" aria-label="${item.name} 수량 조절">
+                                <button type="button" class="cart-qty-minus" aria-label="수량 감소">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M5 12h14" /></svg>
+                                </button>
+                                <span class="cart-qty-count">${item.count}</span>
+                                <button type="button" class="cart-qty-plus" aria-label="수량 증가">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" class="cart-remove-btn" aria-label="${item.name} 삭제">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                        </button>
+                    `;
+                    cartItemsEl.appendChild(li);
+                });
+            };
+
+            const openCartPage = () => {
+                mobileApp.scrollTop = 0;
+                mobileApp.classList.remove("alarm-open");
+                mobileApp.classList.add("cart-page-open");
+                alarmPage.classList.remove("show");
+                renderCartPage();
+                cartPage.scrollTop = 0;
+                cartScrollTopBtn.classList.remove("show", "is-fading");
+                cartPage.classList.add("show");
+            };
+
+            const closeCartPage = () => {
+                cartPage.classList.remove("show");
+                cartScrollTopBtn.classList.remove("show", "is-fading");
+                mobileApp.classList.remove("cart-page-open");
+            };
+
+            headerCartOpenBtn.addEventListener("click", openCartPage);
+            cartPageBackBtn.addEventListener("click", closeCartPage);
+
+            const openAddressModal = () => {
+                addressModal.classList.add("show");
+                addressMainInput.focus();
+            };
+
+            const closeAddressModal = () => {
+                addressModal.classList.remove("show");
+            };
+
+            shippingChangeBtn.addEventListener("click", openAddressModal);
+            addressCancelBtn.addEventListener("click", closeAddressModal);
+
+            addressModal.addEventListener("click", (e) => {
+                if (e.target === addressModal) {
+                    closeAddressModal();
+                }
+            });
+
+            const hasKakaoMap = () => {
+                return window.kakao && kakao.maps && kakao.maps.services;
+            };
+
+            const getAddressFromCoords = (lat, lng, callback) => {
+                if (!addressGeocoder) {
+                    addressGeocoder = new kakao.maps.services.Geocoder();
+                }
+
+                addressGeocoder.coord2Address(lng, lat, (result, status) => {
+                    if (
+                        status !== kakao.maps.services.Status.OK ||
+                        !result[0]
+                    ) {
+                        callback("");
+                        return;
+                    }
+
+                    const roadAddress = result[0].road_address?.address_name;
+                    const jibunAddress = result[0].address?.address_name;
+                    callback(roadAddress || jibunAddress || "");
+                });
+            };
+
+            const updateSelectedMapAddress = (lat, lng) => {
+                getAddressFromCoords(lat, lng, (address) => {
+                    if (!address) {
+                        addressSelectedText.textContent =
+                            "선택한 위치의 주소를 찾을 수 없습니다.";
+                        selectedMapAddress = "";
+                        return;
+                    }
+
+                    selectedMapAddress = address;
+                    addressSelectedText.textContent = address;
+                });
+            };
+
+            const openAddressMap = (lat, lng) => {
+                const center = new kakao.maps.LatLng(lat, lng);
+                addressMapPanel.classList.add("show");
+
+                if (!addressMap) {
+                    addressMap = new kakao.maps.Map(
+                        document.getElementById("addressMap"),
+                        {
+                            center,
+                            level: 4,
+                        },
+                    );
+
+                    addressMarker = new kakao.maps.Marker({
+                        position: center,
+                        map: addressMap,
+                    });
+
+                    kakao.maps.event.addListener(
+                        addressMap,
+                        "click",
+                        (mouseEvent) => {
+                            const latlng = mouseEvent.latLng;
+                            addressMarker.setPosition(latlng);
+                            addressMap.setCenter(latlng);
+                            updateSelectedMapAddress(
+                                latlng.getLat(),
+                                latlng.getLng(),
+                            );
+                        },
+                    );
+                } else {
+                    addressMap.setCenter(center);
+                    addressMarker.setPosition(center);
+                    addressMarker.setMap(addressMap);
+                }
+
+                setTimeout(() => {
+                    addressMap.relayout();
+                    addressMap.setCenter(center);
+                }, 50);
+
+                updateSelectedMapAddress(lat, lng);
+            };
+
+            const setCurrentLocationAddress = () => {
+                if (!navigator.geolocation) {
+                    alert("현재 위치를 사용할 수 없는 브라우저입니다.");
+                    return;
+                }
+
+                if (!hasKakaoMap()) {
+                    alert(
+                        "카카오 지도 API 키를 확인해 주세요. YOUR_KAKAO_APP_KEY를 실제 키로 교체해야 합니다.",
+                    );
+                    return;
+                }
+
+                addressLocationBtn.disabled = true;
+                addressLocationBtn.querySelector("span").textContent =
+                    "위치 확인 중...";
+
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+
+                        addressLocationBtn.disabled = false;
+                        addressLocationBtn.querySelector("span").textContent =
+                            "현위치로 설정";
+                        openAddressMap(lat, lng);
+                    },
+                    () => {
+                        addressLocationBtn.disabled = false;
+                        addressLocationBtn.querySelector("span").textContent =
+                            "현위치로 설정";
+                        alert("현재 위치 사용을 허용해 주세요.");
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 0,
+                    },
+                );
+            };
+
+            addressLocationBtn.addEventListener(
+                "click",
+                setCurrentLocationAddress,
+            );
+
+            addressMapCloseBtn.addEventListener("click", () => {
+                addressMapPanel.classList.remove("show");
+            });
+
+            addressMapApplyBtn.addEventListener("click", () => {
+                if (!selectedMapAddress) {
+                    alert("지도에서 위치를 선택해 주세요.");
+                    return;
+                }
+
+                addressMainInput.value = selectedMapAddress;
+                addressDetailInput.value = "";
+                addressCurrentText.innerHTML = `${selectedMapAddress}<br />상세주소를 입력해 주세요.`;
+                addressDetailInput.focus();
+            });
+
+            addressSaveBtn.addEventListener("click", () => {
+                const mainAddress = addressMainInput.value.trim();
+                const detailAddress = addressDetailInput.value.trim();
+
+                if (!mainAddress || !detailAddress) {
+                    alert("주소와 상세주소를 모두 입력해 주세요.");
+                    return;
+                }
+
+                shippingAddressText.innerHTML = `${mainAddress},<br />${detailAddress}`;
+                addressCurrentText.innerHTML = `${mainAddress},<br />${detailAddress}`;
+                closeAddressModal();
+            });
+
+            // 장바구니 페이지 전체를 위아래로 밀어서 스크롤하는 기능
+            let cartPagePointerDown = false;
+            let cartPageVerticalDrag = false;
+            let cartPageStartX = 0;
+            let cartPageStartY = 0;
+            let cartPageStartScrollTop = 0;
+
+            cartPage.addEventListener("pointerdown", (e) => {
+                cartPagePointerDown = true;
+                cartPageVerticalDrag = false;
+                cartPageStartX = e.pageX;
+                cartPageStartY = e.pageY;
+                cartPageStartScrollTop = cartPage.scrollTop;
+            });
+
+            cartPage.addEventListener("pointermove", (e) => {
+                if (!cartPagePointerDown) return;
+
+                const moveX = e.pageX - cartPageStartX;
+                const moveY = e.pageY - cartPageStartY;
+                const absX = Math.abs(moveX);
+                const absY = Math.abs(moveY);
+
+                if (!cartPageVerticalDrag && absY > absX && absY > 6) {
+                    cartPageVerticalDrag = true;
+                    cartPage.classList.add("is-vertical-dragging");
+                    cartPage.setPointerCapture(e.pointerId);
+                }
+
+                if (!cartPageVerticalDrag) return;
+
+                e.preventDefault();
+                cartPage.scrollTop = cartPageStartScrollTop - moveY;
+            });
+
+            const stopCartPageVerticalDrag = () => {
+                cartPagePointerDown = false;
+                cartPageVerticalDrag = false;
+                cartPage.classList.remove("is-vertical-dragging");
+            };
+
+            cartPage.addEventListener("pointerup", stopCartPageVerticalDrag);
+            cartPage.addEventListener("pointerleave", stopCartPageVerticalDrag);
+            cartPage.addEventListener(
+                "pointercancel",
+                stopCartPageVerticalDrag,
+            );
+
+            let isCartTopButtonFading = false;
+
+            cartPage.addEventListener("scroll", () => {
+                if (isCartTopButtonFading) return;
+
+                if (cartPage.scrollTop > 260) {
+                    cartScrollTopBtn.classList.add("show");
+                } else {
+                    cartScrollTopBtn.classList.remove("show");
+                }
+            });
+
+            cartScrollTopBtn.addEventListener("click", () => {
+                isCartTopButtonFading = true;
+                cartScrollTopBtn.classList.add("is-fading");
+
+                cartPage.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                });
+
+                setTimeout(() => {
+                    cartScrollTopBtn.classList.remove("show", "is-fading");
+                    isCartTopButtonFading = false;
+                }, 350);
+            });
+
+            cartSelectAllBtn.addEventListener("click", () => {
+                const nextSelected = !cartItems.every((item) => item.selected);
+                cartItems = cartItems.map((item) => ({
+                    ...item,
+                    selected: nextSelected,
+                }));
+                renderCartPage();
+            });
+
+            cartItemsEl.addEventListener("click", (e) => {
+                const itemEl = e.target.closest(".cart-item");
+                if (!itemEl) return;
+
+                const itemId = Number(itemEl.dataset.id);
+                const item = cartItems.find(
+                    (cartItem) => cartItem.id === itemId,
+                );
+                if (!item) return;
+
+                if (e.target.closest(".cart-item-check")) {
+                    item.selected = !item.selected;
+                    renderCartPage();
+                    return;
+                }
+
+                if (e.target.closest(".cart-qty-minus")) {
+                    item.count = Math.max(1, item.count - 1);
+                    syncCartTotalCount();
+                    renderCartPage();
+                    return;
+                }
+
+                if (e.target.closest(".cart-qty-plus")) {
+                    item.count += 1;
+                    syncCartTotalCount();
+                    renderCartPage();
+                    return;
+                }
+
+                if (e.target.closest(".cart-remove-btn")) {
+                    cartItems = cartItems.filter(
+                        (cartItem) => cartItem.id !== itemId,
+                    );
+                    syncCartTotalCount();
+                    renderCartPage();
+                }
+            });
+
+            cartPageBuyBtn.addEventListener("click", () => {
+                const selectedItems = cartItems.filter((item) => item.selected);
+                if (selectedItems.length === 0) {
+                    alert("구매할 상품을 선택해 주세요.");
+                    return;
+                }
+
+                const totalCount = selectedItems.reduce(
+                    (sum, item) => sum + item.count,
+                    0,
+                );
+                const totalPrice = selectedItems.reduce(
+                    (sum, item) => sum + item.unitPrice * item.count,
+                    0,
+                );
+                alert(
+                    `${totalCount}개 상품, 총 ${formatWon(totalPrice)} 구매하기로 이동합니다.`,
+                );
+            });
+
+            const alarmOpenBtn = document.querySelector(".alarm-open-btn");
+            const alarmPage = document.querySelector(".alarm-page");
+            const alarmBackBtn = document.querySelector(".alarm-back-btn");
+            const alarmSwitches = document.querySelectorAll(".alarm-switch");
+
+            alarmOpenBtn.addEventListener("click", () => {
+                mobileApp.scrollTop = 0;
+                mobileApp.classList.remove("cart-page-open");
+                cartPage.classList.remove("show");
+                mobileApp.classList.add("alarm-open");
+                alarmPage.scrollTop = 0;
+                alarmPage.classList.add("show");
+            });
+
+            alarmBackBtn.addEventListener("click", () => {
+                alarmPage.classList.remove("show");
+                mobileApp.classList.remove("alarm-open");
+            });
+
+            alarmSwitches.forEach((switchBtn) => {
+                switchBtn.addEventListener("click", () => {
+                    const row = switchBtn.closest(".alarm-row");
+                    const itemName = row.querySelector(
+                        ".alarm-item-name span:last-child",
+                    ).textContent;
+                    const stateText = row.querySelector(".alarm-state-text");
+                    const nextOn = !switchBtn.classList.contains("is-on");
+
+                    switchBtn.classList.toggle("is-on", nextOn);
+                    switchBtn.classList.toggle("just-toggled-off", !nextOn);
+                    row.classList.toggle("is-on", nextOn);
+
+                    stateText.textContent = nextOn ? "알림끄기" : "알림설정";
+                    switchBtn.setAttribute("aria-pressed", String(nextOn));
+                    switchBtn.setAttribute(
+                        "aria-label",
+                        `${itemName} 알림 ${nextOn ? "켜짐" : "꺼짐"}`,
+                    );
+                });
+
+                switchBtn.addEventListener("mouseleave", () => {
+                    switchBtn.classList.remove("just-toggled-off");
+                });
+            });
+
+            // 모바일 앱 전체 화면을 위아래로 밀어서 스크롤하는 기능
+            const mobileApp = document.querySelector(".mobile-app");
+
+            let appPointerDown = false;
+            let appVerticalDrag = false;
+            let appStartX = 0;
+            let appStartY = 0;
+            let appStartScrollTop = 0;
+
+            mobileApp.addEventListener("pointerdown", (e) => {
+                appPointerDown = true;
+                appVerticalDrag = false;
+                appStartX = e.pageX;
+                appStartY = e.pageY;
+                appStartScrollTop = mobileApp.scrollTop;
+            });
+
+            mobileApp.addEventListener("pointermove", (e) => {
+                if (
+                    mobileApp.classList.contains("alarm-open") ||
+                    mobileApp.classList.contains("cart-page-open")
+                )
+                    return;
+                if (!appPointerDown) return;
+
+                const moveX = e.pageX - appStartX;
+                const moveY = e.pageY - appStartY;
+                const absX = Math.abs(moveX);
+                const absY = Math.abs(moveY);
+
+                if (!appVerticalDrag && absY > absX && absY > 6) {
+                    appVerticalDrag = true;
+                    mobileApp.classList.add("is-vertical-dragging");
+                    mobileApp.setPointerCapture(e.pointerId);
+                }
+
+                if (!appVerticalDrag) return;
+
+                e.preventDefault();
+                mobileApp.scrollTop = appStartScrollTop - moveY;
+            });
+
+            const stopAppVerticalDrag = () => {
+                appPointerDown = false;
+                appVerticalDrag = false;
+                mobileApp.classList.remove("is-vertical-dragging");
+            };
+
+            mobileApp.addEventListener("pointerup", stopAppVerticalDrag);
+            mobileApp.addEventListener("pointerleave", stopAppVerticalDrag);
+            mobileApp.addEventListener("pointercancel", stopAppVerticalDrag);
+
+            // 위로 가기 버튼 기능
+            const scrollTopBtn = document.querySelector(".scroll-top-btn");
+
+            let isTopButtonFading = false;
+
+            mobileApp.addEventListener("scroll", () => {
+                if (isTopButtonFading) return;
+
+                if (mobileApp.scrollTop > 260) {
+                    scrollTopBtn.classList.add("show");
+                } else {
+                    scrollTopBtn.classList.remove("show");
+                }
+            });
+
+            scrollTopBtn.addEventListener("click", () => {
+                isTopButtonFading = true;
+                scrollTopBtn.classList.add("is-fading");
+
+                mobileApp.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                });
+
+                setTimeout(() => {
+                    scrollTopBtn.classList.remove("show", "is-fading");
+                    isTopButtonFading = false;
+                }, 350);
+            });
+
+            // 상품 카드 리스트 무한 롤링 + 좌우 드래그 기능
+            const productScrolls = document.querySelectorAll(".product-scroll");
+
+            productScrolls.forEach((scrollBox) => {
+                const originalCards = Array.from(scrollBox.children);
+                const gap = 16;
+                const originalWidth = scrollBox.scrollWidth;
+                const loopWidth = originalWidth + gap;
+
+                // 마지막 카드 다음에 첫 카드가 자연스럽게 이어지도록 앞뒤에 카드 복제
+                originalCards.forEach((card) => {
+                    const clone = card.cloneNode(true);
+                    clone.setAttribute("aria-hidden", "true");
+                    scrollBox.appendChild(clone);
+                });
+
+                originalCards
+                    .slice()
+                    .reverse()
+                    .forEach((card) => {
+                        const clone = card.cloneNode(true);
+                        clone.setAttribute("aria-hidden", "true");
+                        scrollBox.insertBefore(clone, scrollBox.firstChild);
+                    });
+
+                scrollBox.querySelectorAll("img").forEach((img) => {
+                    img.setAttribute("draggable", "false");
+                });
+
+                // 가운데 원본 카드 묶음에서 시작
+                scrollBox.scrollLeft = loopWidth;
+
+                const checkInfiniteLoop = () => {
+                    const maxScrollLeft =
+                        scrollBox.scrollWidth - scrollBox.clientWidth;
+
+                    // 왼쪽 복제 영역의 끝까지 갔을 때만 같은 위치의 원본 영역으로 이동
+                    if (scrollBox.scrollLeft <= 0) {
+                        scrollBox.scrollLeft += loopWidth;
+                    }
+
+                    // 오른쪽 복제 영역의 끝까지 갔을 때만 같은 위치의 원본 영역으로 이동
+                    // 마지막 카드 바로 다음에는 복제된 첫 번째 카드가 그대로 이어져 보임
+                    if (scrollBox.scrollLeft >= maxScrollLeft - 1) {
+                        scrollBox.scrollLeft -= loopWidth;
+                    }
+                };
+
+                let isDown = false;
+                let isHorizontalDrag = false;
+                let startX = 0;
+                let startY = 0;
+                let startScrollLeft = 0;
+
+                scrollBox.addEventListener("pointerdown", (e) => {
+                    isDown = true;
+                    isHorizontalDrag = false;
+                    startX = e.pageX;
+                    startY = e.pageY;
+                    startScrollLeft = scrollBox.scrollLeft;
+                });
+
+                scrollBox.addEventListener("pointermove", (e) => {
+                    if (!isDown) return;
+
+                    const moveX = e.pageX - startX;
+                    const moveY = e.pageY - startY;
+                    const absX = Math.abs(moveX);
+                    const absY = Math.abs(moveY);
+
+                    // 위아래로 미는 동작이면 모바일 앱의 세로 스크롤이 자연스럽게 동작하게 둠
+                    if (!isHorizontalDrag && absY > absX && absY > 6) {
+                        isDown = false;
+                        scrollBox.classList.remove("is-dragging");
+                        return;
+                    }
+
+                    // 좌우로 미는 동작일 때만 카드 리스트를 가로 드래그
+                    if (!isHorizontalDrag && absX > absY && absX > 6) {
+                        isHorizontalDrag = true;
+                        scrollBox.classList.add("is-dragging");
+                        scrollBox.setPointerCapture(e.pointerId);
+                    }
+
+                    if (!isHorizontalDrag) return;
+
+                    e.preventDefault();
+                    scrollBox.scrollLeft = startScrollLeft - moveX;
+                    checkInfiniteLoop();
+                });
+
+                const stopDrag = () => {
+                    isDown = false;
+                    isHorizontalDrag = false;
+                    scrollBox.classList.remove("is-dragging");
+                    checkInfiniteLoop();
+                };
+
+                scrollBox.addEventListener("scroll", checkInfiniteLoop);
+                scrollBox.addEventListener("pointerup", stopDrag);
+                scrollBox.addEventListener("pointerleave", stopDrag);
+                scrollBox.addEventListener("pointercancel", stopDrag);
+            });
+
+            const cartButtons = document.querySelectorAll(".cart-btn");
+            const cartModal = document.querySelector(".cart-modal");
+            const cartPopupProduct = document.querySelector(
+                ".cart-popup-product",
+            );
+            const cartPriceInput = document.querySelector("#cartPriceInput");
+            const cartCountInput = document.querySelector("#cartCountInput");
+            const cartAddBtn = document.querySelector(".cart-add-btn");
+            const cartBuyBtn = document.querySelector(".cart-buy-btn");
+            const countUpBtn = document.querySelector(".count-up-btn");
+            const countDownBtn = document.querySelector(".count-down-btn");
+            const cartCountBadge = document.querySelector(".cart-count-badge");
+            let selectedCartButton = null;
+            let selectedUnitPrice = 0;
+            let totalCartCount = 0;
+
+            const updateHeaderCartCount = () => {
+                cartCountBadge.textContent =
+                    totalCartCount > 99 ? "99+" : totalCartCount;
+                cartCountBadge.classList.toggle("show", totalCartCount > 0);
+                cartCountBadge.setAttribute(
+                    "aria-label",
+                    `장바구니 담긴 총 갯수 ${totalCartCount}개`,
+                );
+            };
+
+            // 처음 장바구니에 들어있는 상품 갯수도 헤더 장바구니 배지에 반영
+            syncCartTotalCount();
+
+            const getNumberOnly = (value) => {
+                return Number(String(value).replace(/[^0-9]/g, ""));
+            };
+
+            const formatWon = (value) => {
+                return `${Number(value).toLocaleString()}원`;
+            };
+
+            const updateCartTotalPrice = () => {
+                const count = Math.max(1, Number(cartCountInput.value) || 1);
+                cartCountInput.value = count;
+                cartPriceInput.value = formatWon(selectedUnitPrice * count);
+            };
+
+            const openCartPopup = (button) => {
+                const productCard = button.closest(".product-card");
+                const productName = productCard.querySelector("h3").textContent;
+                const productPrice = productCard.querySelector("p").textContent;
+
+                selectedCartButton = button;
+                selectedUnitPrice = getNumberOnly(productPrice);
+                cartPopupProduct.textContent = `${productName} · 개당 ${formatWon(selectedUnitPrice)}`;
+                cartCountInput.value = 1;
+                updateCartTotalPrice();
+                cartModal.classList.add("show");
+                cartCountInput.focus();
+            };
+
+            const closeCartPopup = () => {
+                cartModal.classList.remove("show");
+                selectedCartButton = null;
+            };
+
+            cartButtons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    openCartPopup(button);
+                });
+            });
+
+            cartCountInput.addEventListener("input", updateCartTotalPrice);
+            cartCountInput.addEventListener("change", updateCartTotalPrice);
+
+            countUpBtn.addEventListener("click", () => {
+                cartCountInput.value = Number(cartCountInput.value || 1) + 1;
+                updateCartTotalPrice();
+            });
+
+            countDownBtn.addEventListener("click", () => {
+                cartCountInput.value = Math.max(
+                    1,
+                    Number(cartCountInput.value || 1) - 1,
+                );
+                updateCartTotalPrice();
+            });
+
+            cartModal.addEventListener("click", (e) => {
+                if (e.target === cartModal) {
+                    closeCartPopup();
+                }
+            });
+
+            const submitCartPopup = (type) => {
+                const price = getNumberOnly(cartPriceInput.value);
+                const count = cartCountInput.value.trim();
+
+                if (!price || !count || Number(count) < 1) {
+                    alert("가격과 갯수를 올바르게 입력해 주세요.");
+                    return;
+                }
+
+                if (selectedCartButton) {
+                    selectedCartButton.classList.add("active");
+                    selectedCartButton.textContent = "담기";
+                }
+
+                if (type === "cart") {
+                    const productCard =
+                        selectedCartButton.closest(".product-card");
+                    const productName =
+                        productCard.querySelector("h3").textContent;
+                    const productImg = productCard.querySelector("img").src;
+
+                    addItemToCart({
+                        name: productName,
+                        unitPrice: selectedUnitPrice,
+                        count: Number(count),
+                        img: productImg,
+                    });
+
+                    syncCartTotalCount();
+                    renderCartPage();
+                }
+
+                if (type === "buy") {
+                    alert(
+                        `${Number(count).toLocaleString()}개, 총 ${formatWon(price)} 구매하기로 이동합니다.`,
+                    );
+                }
+
+                closeCartPopup();
+            };
+
+            cartAddBtn.addEventListener("click", () => {
+                submitCartPopup("cart");
+            });
+
+            cartBuyBtn.addEventListener("click", () => {
+                submitCartPopup("buy");
+            });
+
+            const navItems = document.querySelectorAll(".nav-item");
+            const logoHomeLink = document.querySelector(".logo-home-link");
+            const navHomeBtn = document.querySelector(".nav-home-btn");
+
+            const showHomeTab = () => {
+                alarmPage.classList.remove("show");
+                alarmPage.scrollTop = 0;
+                cartPage.classList.remove("show");
+                cartPage.scrollTop = 0;
+                mobileApp.classList.remove("alarm-open", "cart-page-open");
+
+                navItems.forEach((nav) => nav.classList.remove("active"));
+                navHomeBtn.classList.add("active");
+
+                mobileApp.scrollTop = 0;
+                requestAnimationFrame(() => {
+                    mobileApp.scrollTo({
+                        top: 0,
+                        behavior: "auto",
+                    });
+                });
+            };
+
+            logoHomeLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                showHomeTab();
+            });
+
+            navItems.forEach((item) => {
+                item.addEventListener("click", () => {
+                    navItems.forEach((nav) => nav.classList.remove("active"));
+                    item.classList.add("active");
+
+                    if (item.classList.contains("nav-home-btn")) {
+                        showHomeTab();
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
