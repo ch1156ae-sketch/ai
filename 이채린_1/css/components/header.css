@@ -4,12 +4,18 @@
 .page-header {
     position: fixed;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    transform: none;
     z-index: 800;
-    width: min(100vw, 375px);
+
+    width: 100%;
+    max-width: 375px;
     height: 64px;
+    margin: 0 auto;
     padding: 0 24px;
+
+    box-sizing: border-box;
     background: #ffffff;
     display: flex;
     align-items: center;
