@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>UTBT 식품 커머스</title>
+        <link
+            rel="stylesheet"
+            href="./css/common.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./css/components/header.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./css/components/bottom-nav.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./css/pages/home.css"
+        />
+    </head>
+    <body>
+        <section
+            class="mobile-app"
+            aria-label="UTBT 식품 커머스 모바일 화면"
+        >
+            <div
+                id="appHeader"
+                class="header-slot"
+            ></div>
+            <main class="main has-fixed-header">
+                <section
+                    class="hero-section"
+                    aria-label="메인 배너"
+                >
+                    <div class="hero-slider">
+                        <div class="hero-track">
+                            <div class="hero-slide">
+                                <img
+                                    class="hero-banner-img"
+                                    src="https://ch1156ae-sketch.github.io/ai/banner/rolling_1.png"
+                                    alt="못난이 농산물 메인 배너 1"
+                                />
+                            </div>
+                            <div class="hero-slide">
+                                <img
+                                    class="hero-banner-img"
+                                    src="https://ch1156ae-sketch.github.io/ai/banner/rolling_2.png"
+                                    alt="못난이 농산물 메인 배너 2"
+                                />
+                            </div>
+                            <div class="hero-slide">
+                                <img
+                                    class="hero-banner-img"
+                                    src="https://ch1156ae-sketch.github.io/ai/banner/rolling_3.png"
+                                    alt="못난이 농산물 메인 배너 3"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-control">
+                        <div
+                            class="hero-page"
+                            aria-label="메인 배너 페이지"
+                        >
+                            <span class="hero-current">1</span>/<span
+                                class="hero-total"
+                                >3</span
+                            >
+                        </div>
+                        <button
+                            type="button"
+                            class="hero-pause-btn"
+                            aria-label="메인 배너 자동 슬라이드 정지"
+                        >
+                            Ⅱ
+                        </button>
+                    </div>
+                </section>
+
+                <nav
+                    class="category-section"
+                    aria-label="상품 카테고리"
+                >
+                    <ul
+                        class="category-list"
+                        id="homeCategoryList"
+                    ></ul>
+                </nav>
+
+                <section class="product-section">
+                    <h2 class="section-title">✨오늘 구출 식품</h2>
+                    <ul
+                        class="product-scroll horizontal-list"
+                        id="rescueProductList"
+                    ></ul>
+                </section>
+
+                <section class="product-section">
+                    <h2 class="section-title">👑베스트 TOP 10👑</h2>
+                    <ul
+                        class="product-scroll horizontal-list"
+                        id="bestProductList"
+                    ></ul>
+                </section>
+
+                <section class="product-section last-section">
+                    <h2 class="section-title">
+                        🔥지금 당장 사야할 화제의 밀키트🔥
+                    </h2>
+                    <ul
+                        class="product-scroll horizontal-list"
+                        id="mealKitProductList"
+                    ></ul>
+                </section>
+            </main>
+            <button
+                type="button"
+                class="scroll-top-btn"
+                aria-label="맨 위로 이동"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M12 19V5" />
+                    <path d="m5 12 7-7 7 7" />
+                </svg>
+            </button>
+            <div
+                id="appBottomNav"
+                class="bottom-nav-slot"
+            ></div>
+        </section>
+        <script>
+            window.UTBT_PAGE = "home";
+            window.UTBT_HEADER = { logo: true };
+        </script>
+        <script src="./js/components/header.js"></script>
+        <script src="./js/components/bottom-nav.js"></script>
+        <script src="./js/data.js"></script>
+        <script src="./js/common.js"></script>
+        <script src="./js/pages/home.js"></script>
+    </body>
+</html>

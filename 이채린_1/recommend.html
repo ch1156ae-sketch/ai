@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>추천 - UTBT</title>
+        <link rel="stylesheet" href="./css/common.css" />
+        <link rel="stylesheet" href="./css/components/header.css" />
+        <link rel="stylesheet" href="./css/components/bottom-nav.css" />
+        <link rel="stylesheet" href="./css/pages/recommend.css" />
+    </head>
+    <body>
+        <section class="mobile-app" aria-label="추천 - UTBT 모바일 화면">
+            <div id="appHeader" class="header-slot"></div>
+            <main class="recommend-page app-page" aria-label="추천 페이지">
+                <section class="recommend-page-content">
+                    <section class="recommend-section"><h2 class="recommend-title"><span class="green">권그린</span>님을 위한 추천</h2><ul class="recommend-scroll horizontal-list" data-group="user"></ul></section>
+                    <section class="recommend-section"><h2 class="recommend-title">🧰 오늘 구출 식품</h2><ul class="recommend-scroll horizontal-list" data-group="rescue"></ul></section>
+                    <section class="recommend-section"><h2 class="recommend-title">🌸 제철 추천</h2><ul class="recommend-scroll horizontal-list" data-group="season"></ul></section>
+                    <section class="recommend-section"><h2 class="recommend-title">✨ 인기 상품</h2><ul class="recommend-scroll horizontal-list" data-group="popular"></ul></section>
+                    <section class="recommend-section"><h2 class="recommend-title">🍱 가성비 밀키트 추천</h2><ul class="recommend-scroll horizontal-list" data-group="meal"></ul></section>
+                    <section class="recommend-section"><h2 class="recommend-title">🍽️ 오늘 뭐먹지?</h2><ul class="recipe-scroll horizontal-list"></ul></section>
+                </section>
+            </main>
+            <button type="button" class="scroll-top-btn" aria-label="추천 페이지 맨 위로 이동"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5" /><path d="m5 12 7-7 7 7" /></svg></button>
+            <div class="recipe-modal" role="dialog" aria-modal="true" aria-labelledby="recipePopupTitle">
+                <div class="recipe-popup">
+                    <h2 class="recipe-popup-title" id="recipePopupTitle">레시피</h2>
+                    <p class="recipe-popup-sub">간단하게 따라 만들 수 있어요.</p>
+                    <div class="recipe-popup-section"><strong>주요 재료</strong><p class="recipe-popup-ingredients"></p></div>
+                    <div class="recipe-popup-section"><strong>간단 레시피</strong><ol class="recipe-step-list"></ol></div>
+                    <button type="button" class="recipe-close-btn">확인</button>
+                </div>
+            </div>
+            <div id="appBottomNav" class="bottom-nav-slot"></div>
+        </section>
+        <script>window.UTBT_PAGE = "recommend"; window.UTBT_HEADER = {title: "추천"};</script>
+        <script src="./js/components/header.js"></script>
+        <script src="./js/components/bottom-nav.js"></script>
+        <script src="./js/data.js"></script>
+        <script src="./js/common.js"></script>
+        <script src="./js/pages/recommend.js"></script>
+    </body>
+</html>
