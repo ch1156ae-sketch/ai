@@ -1,0 +1,419 @@
+@charset "UTF-8";
+
+.mypage-main {
+    width: 100%;
+    background: #f3f3f3;
+    padding: 56px 0 78px;
+}
+
+.mypage-layout {
+    width: 1218px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 208px 970px;
+    gap: 40px;
+    align-items: start;
+}
+
+.mypage-side {
+    width: 208px;
+    height: 108px;
+    background: #ffffff;
+    padding: 22px 16px 16px;
+}
+
+.mypage-side h2 {
+    margin-bottom: 16px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #121111;
+}
+
+.side-link {
+    display: flex;
+    align-items: center;
+    width: 168px;
+    height: 38px;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #111111;
+    text-decoration: none;
+}
+
+.side-link.active {
+    color: #ff4747;
+    background: #fff2eb;
+}
+
+.mypage-card {
+    width: 970px;
+    background: #ffffff;
+    padding: 43px 40px 39px;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    font-size: 12px;
+    color: #8b8b8b;
+}
+
+.breadcrumb a {
+    color: #8b8b8b;
+    text-decoration: none;
+}
+
+.breadcrumb strong {
+    font-weight: 700;
+    color: #111111;
+}
+
+.home-link {
+    display: inline-flex;
+    width: 14px;
+    height: 14px;
+}
+
+.home-link svg {
+    width: 14px;
+    height: 14px;
+    fill: #777777;
+}
+
+.crumb-arrow {
+    color: #a6a6a6;
+}
+
+.mo-text {
+    display: none;
+}
+
+.mypage-card h1 {
+    margin: 0;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #bdbdbd;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1;
+    color: #000000;
+}
+
+.profile-form .form-row:first-child {
+    margin-top: 24px;
+}
+
+.profile-form .form-row + .form-row {
+    margin-top: 16px;
+}
+
+.form-row label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    color: #121111;
+}
+
+.form-row input,
+.form-row select {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #cdcccc;
+    border-radius: 0;
+    background-color: #ffffff;
+    padding: 0 14px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #111111;
+    outline: none;
+    font-family: inherit;
+}
+
+.form-row input::placeholder {
+    color: #999999;
+}
+
+.form-row input:focus,
+.form-row select:focus {
+    border-color: #111111;
+}
+
+#userId {
+    background: #eeeeee;
+    color: #8d8d8d;
+}
+
+.help-text {
+    margin-top: 8px;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #777777;
+}
+
+.email-group {
+    display: grid;
+    grid-template-columns: 1fr 20px 1fr 1fr;
+    gap: 8px;
+    align-items: center;
+}
+
+.email-group .at {
+    text-align: center;
+    font-size: 14px;
+    color: #111111;
+}
+
+.phone-group {
+    display: grid;
+    grid-template-columns: 1fr 14px 1fr 14px 1fr;
+    gap: 8px;
+    align-items: center;
+}
+
+.phone-group input,
+.phone-group select,
+.phone-group span {
+    color: #121111;
+}
+
+.phone-group span {
+    text-align: center;
+    font-size: 14px;
+}
+
+.form-row select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image:
+        linear-gradient(45deg, transparent 50%, #111111 50%),
+        linear-gradient(135deg, #111111 50%, transparent 50%);
+    background-position:
+        calc(100% - 18px) 19px,
+        calc(100% - 12px) 19px;
+    background-size: 6px 6px;
+    background-repeat: no-repeat;
+    padding-right: 36px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 40px;
+}
+
+.btn {
+    width: 92px;
+    height: 46px;
+    border: 1px solid #cdcccc;
+    background: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    color: #111111;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.btn-cancel {
+    color: #121111;
+}
+
+.btn-save {
+    border-color: #ff4747;
+    background: #ff4747;
+    color: #ffffff;
+}
+
+.withdraw-area {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid #cdcccc;
+}
+
+.btn-withdraw {
+    width: 73px;
+    height: 40px;
+    border: 1px solid #cdcccc;
+    background: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    color: #121111;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* 회원탈퇴 팝업 */
+.withdraw-modal-wrap {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.18);
+}
+
+.withdraw-modal-wrap.is-open {
+    display: flex;
+}
+
+.withdraw-modal {
+    position: relative;
+    width: 484px;
+    background: #ffffff;
+    padding: 47px 35px 24px;
+    border: 1px solid #e8e8e8;
+}
+
+.withdraw-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 24px;
+    height: 24px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.withdraw-close::before,
+.withdraw-close::after {
+    content: "";
+    position: absolute;
+    top: 11px;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background: #222222;
+}
+
+.withdraw-close::before {
+    transform: rotate(45deg);
+}
+
+.withdraw-close::after {
+    transform: rotate(-45deg);
+}
+
+.withdraw-modal h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: #000000;
+    line-height: 1;
+}
+
+.withdraw-desc {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 1.5;
+}
+
+.withdraw-form {
+    margin-top: 26px;
+}
+
+.withdraw-row + .withdraw-row {
+    margin-top: 16px;
+}
+
+.withdraw-row label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #121111;
+}
+
+.withdraw-row input {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #cdcccc;
+    padding: 0 14px;
+    font-size: 14px;
+    color: #111111;
+    outline: none;
+    font-family: inherit;
+}
+
+#withdrawId {
+    background: #eeeeee;
+    color: #8d8d8d;
+}
+
+.withdraw-help {
+    margin-top: 8px;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #777777;
+}
+
+.withdraw-agree {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #cdcccc;
+    font-size: 14px;
+    font-weight: 600;
+    color: #121111;
+    cursor: pointer;
+}
+
+.withdraw-agree input {
+    position: absolute;
+    opacity: 0;
+}
+
+.check-icon {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #cdcccc;
+    border-radius: 50%;
+    background: #ffffff;
+    flex-shrink: 0;
+}
+
+.check-icon::after {
+    content: "✓";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    font-size: 14px;
+    color: #999999;
+}
+
+.withdraw-agree input:checked + .check-icon {
+    background: #ff4747;
+    border-color: #ff4747;
+}
+
+.withdraw-agree input:checked + .check-icon::after {
+    color: #ffffff;
+}
+
+.withdraw-submit {
+    width: 100%;
+    height: 50px;
+    margin-top: 28px;
+    border: 0;
+    background: #ff4747;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+}

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>로그인 | 한국한복문화예술협회</title>
+        <link
+            rel="stylesheet"
+            href="./css/style.css"
+        />
+        <script
+            src="./js/common.js"
+            defer
+        ></script>
+    </head>
+    <body>
+        <div data-include="./components/header.html"></div>
+
+        <main class="login-main">
+            <section
+                class="login-card"
+                aria-labelledby="loginTitle"
+            >
+                <h2
+                    id="loginTitle"
+                    class="login-title"
+                >
+                    로그인
+                </h2>
+
+                <form
+                    class="login-form"
+                    id="loginForm"
+                    action="#"
+                    method="post"
+                    novalidate
+                >
+                    <div class="field-group">
+                        <div class="login-input-wrap">
+                            <label
+                                class="blind"
+                                for="userId"
+                                >아이디</label
+                            >
+                            <input
+                                class="login-input"
+                                type="text"
+                                id="userId"
+                                name="userId"
+                                placeholder="아이디를 입력하세요."
+                                autocomplete="username"
+                            />
+                        </div>
+
+                        <div class="login-input-wrap password-wrap">
+                            <label
+                                class="blind"
+                                for="userPassword"
+                                >비밀번호</label
+                            >
+                            <input
+                                class="login-input"
+                                type="password"
+                                id="userPassword"
+                                name="userPassword"
+                                placeholder="비밀번호를 입력하세요."
+                                autocomplete="current-password"
+                            />
+
+                            <div
+                                class="password-tools"
+                                aria-label="비밀번호 입력 도구"
+                            >
+                                <button
+                                    class="password-toggle"
+                                    type="button"
+                                    aria-label="비밀번호 보기"
+                                    aria-pressed="false"
+                                >
+                                    <img
+                                        class="password-icon icon-eye"
+                                        src="./images/login_on.png"
+                                        alt=""
+                                        aria-hidden="true"
+                                    />
+                                    <img
+                                        class="password-icon icon-eye-off"
+                                        src="./images/login_off.png"
+                                        alt=""
+                                        aria-hidden="true"
+                                    />
+                                </button>
+
+                                <button
+                                    class="password-clear"
+                                    type="button"
+                                    aria-label="비밀번호 지우기"
+                                >
+                                    <img
+                                        class="password-icon icon-clear"
+                                        src="./images/clear.png"
+                                        alt=""
+                                        aria-hidden="true"
+                                    />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p
+                        class="login-error"
+                        id="loginError"
+                        aria-live="polite"
+                    ></p>
+
+                    <div class="login-options">
+                        <label class="save-check">
+                            <input
+                                type="checkbox"
+                                name="saveIdPw"
+                            />
+                            <span
+                                class="check-icon"
+                                aria-hidden="true"
+                            ></span>
+                            <span>ID/PW 저장</span>
+                        </label>
+
+                        <nav
+                            class="login-links"
+                            aria-label="로그인 관련 메뉴"
+                        >
+                            <a href="signup.html">회원가입</a>
+                            <a href="find-id.html">아이디 찾기</a>
+                            <a href="find-password.html">비밀번호 찾기</a>
+                        </nav>
+                    </div>
+
+                    <button
+                        class="login-submit"
+                        type="submit"
+                    >
+                        로그인
+                    </button>
+                </form>
+            </section>
+        </main>
+
+        <div data-include="./components/footer.html"></div>
+    </body>
+</html>

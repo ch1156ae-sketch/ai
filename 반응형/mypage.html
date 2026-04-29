@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>마이페이지 | 한국한복문화예술협회</title>
+        <link
+            rel="stylesheet"
+            href="./css/style.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./css/style3.css"
+        />
+        <script
+            src="./js/common.js"
+            defer
+        ></script>
+        <script
+            src="./js/mypage.js"
+            defer
+        ></script>
+    </head>
+    <body>
+        <div data-include="./components/header.html"></div>
+
+        <main class="mypage-main">
+            <div class="mypage-layout">
+                <aside class="mypage-side">
+                    <h2>마이페이지</h2>
+                    <a
+                        href="#"
+                        class="side-link active"
+                        >기본정보수정</a
+                    >
+                </aside>
+
+                <section class="mypage-card">
+                    <nav
+                        class="breadcrumb"
+                        aria-label="현재 위치"
+                    >
+                        <a
+                            href="#"
+                            class="home-link"
+                            aria-label="홈"
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M4 11.2 12 4l8 7.2v8.3a.9.9 0 0 1-.9.9h-4.6v-5.8h-5v5.8H4.9a.9.9 0 0 1-.9-.9v-8.3Z"
+                                />
+                            </svg>
+                        </a>
+                        <span class="crumb-arrow">›</span>
+                        <a href="#">마이페이지</a>
+                        <span class="crumb-arrow">›</span>
+                        <strong>
+                            <span class="pc-text">기본정보수정</span>
+                            <span class="mo-text">프로필 관리</span>
+                        </strong>
+                    </nav>
+
+                    <h1>기본정보수정</h1>
+
+                    <form
+                        class="profile-form"
+                        id="profileForm"
+                    >
+                        <div class="form-row">
+                            <label for="userId">아이디</label>
+                            <input
+                                type="text"
+                                id="userId"
+                                value="Honggilldong22"
+                                readonly
+                            />
+                        </div>
+
+                        <div class="form-row">
+                            <label for="userName">이름</label>
+                            <input
+                                type="text"
+                                id="userName"
+                                value="홍길동"
+                            />
+                        </div>
+
+                        <div class="form-row">
+                            <label for="userPw">비밀번호</label>
+                            <input
+                                type="password"
+                                id="userPw"
+                                placeholder="비밀번호를 입력하세요"
+                            />
+                            <p class="help-text">
+                                영문, 숫자, 특수기호(!?,!@#*)를 혼합하여 6자
+                                이상으로 입력하세요.(공백입력불가)
+                            </p>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="userPwCheck">비밀번호 재입력</label>
+                            <input
+                                type="password"
+                                id="userPwCheck"
+                                placeholder="비밀번호를 한번 더 입력하세요"
+                            />
+                        </div>
+
+                        <div class="form-row">
+                            <label for="emailId">이메일 주소</label>
+
+                            <div class="email-group">
+                                <input
+                                    type="text"
+                                    id="emailId"
+                                    value="Honggilldong22"
+                                />
+                                <span class="at">@</span>
+                                <input
+                                    type="text"
+                                    id="emailDomain"
+                                    value="naver.com"
+                                />
+                                <select
+                                    id="emailSelect"
+                                    aria-label="이메일 도메인 선택"
+                                >
+                                    <option value="">직접 입력</option>
+                                    <option
+                                        value="naver.com"
+                                        selected
+                                    >
+                                        naver.com
+                                    </option>
+                                    <option value="gmail.com">gmail.com</option>
+                                    <option value="daum.net">daum.net</option>
+                                    <option value="hanmail.net">
+                                        hanmail.net
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="phoneFirst">전화번호</label>
+
+                            <div class="phone-group">
+                                <select
+                                    id="phoneFirst"
+                                    aria-label="전화번호 앞자리"
+                                >
+                                    <option selected>010</option>
+                                    <option>011</option>
+                                    <option>016</option>
+                                    <option>017</option>
+                                    <option>019</option>
+                                </select>
+                                <span>-</span>
+                                <input
+                                    type="text"
+                                    id="phoneMiddle"
+                                    value="0000"
+                                    maxlength="4"
+                                />
+                                <span>-</span>
+                                <input
+                                    type="text"
+                                    id="phoneLast"
+                                    value="9999"
+                                    maxlength="4"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="activityField">활동분야</label>
+                            <input
+                                type="text"
+                                id="activityField"
+                                placeholder="활동분야를 적어주세요"
+                            />
+                        </div>
+
+                        <div class="form-actions">
+                            <button
+                                type="button"
+                                class="btn btn-cancel"
+                            >
+                                취소
+                            </button>
+                            <button
+                                type="submit"
+                                class="btn btn-save"
+                            >
+                                저장
+                            </button>
+                        </div>
+
+                        <div class="withdraw-area">
+                            <button
+                                type="button"
+                                class="btn-withdraw"
+                                id="openWithdrawModal"
+                            >
+                                회원탈퇴
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </main>
+
+        <div
+            class="withdraw-modal-wrap"
+            id="withdrawModal"
+            aria-hidden="true"
+        >
+            <div
+                class="withdraw-modal"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="withdrawTitle"
+            >
+                <button
+                    type="button"
+                    class="withdraw-close"
+                    id="closeWithdrawModal"
+                    aria-label="닫기"
+                ></button>
+
+                <h2 id="withdrawTitle">회원탈퇴</h2>
+                <p class="withdraw-desc">
+                    탈퇴하시면 모든 데이터는 복구가 불가능합니다.
+                </p>
+
+                <form
+                    class="withdraw-form"
+                    id="withdrawForm"
+                >
+                    <div class="withdraw-row">
+                        <label for="withdrawId">아이디</label>
+                        <input
+                            type="text"
+                            id="withdrawId"
+                            value="Honggilldong22"
+                            readonly
+                        />
+                    </div>
+
+                    <div class="withdraw-row">
+                        <label for="withdrawPw">비밀번호</label>
+                        <input
+                            type="password"
+                            id="withdrawPw"
+                            placeholder="비밀번호를 입력하세요"
+                        />
+                        <p class="withdraw-help">
+                            영문, 숫자, 특수기호(!?,!@#*)를 혼합하여 6자
+                            이상으로 입력하세요.(공백입력불가)
+                        </p>
+                    </div>
+
+                    <div class="withdraw-row">
+                        <label for="withdrawPwCheck">비밀번호 재입력</label>
+                        <input
+                            type="password"
+                            id="withdrawPwCheck"
+                            placeholder="비밀번호를 한번 더 입력하세요"
+                        />
+                    </div>
+
+                    <label class="withdraw-agree">
+                        <input
+                            type="checkbox"
+                            id="withdrawAgree"
+                        />
+                        <span class="check-icon"></span>
+                        <span>(필수) 탈퇴 동의를 체크해주세요.</span>
+                    </label>
+
+                    <button
+                        type="submit"
+                        class="withdraw-submit"
+                    >
+                        확인
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div data-include="./components/footer.html"></div>
+    </body>
+</html>
