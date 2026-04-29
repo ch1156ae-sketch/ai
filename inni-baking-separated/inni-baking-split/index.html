@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이니 베이킹 — 원데이 클래스</title>
+  <meta name="description" content="오븐이 없어도, 소질이 없어도 괜찮아요. 이니 베이킹 원데이 클래스에서 나만을 위한 달콤한 2시간을 경험하세요." />
+  <meta property="og:title" content="이니 베이킹 원데이 클래스" />
+  <meta property="og:description" content="갓 구운 빵 냄새가 가득한 공간에서 나를 위한 달콤한 쉼표" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://script.google.com/macros/s/AKfycbwognd6GiP6wmqyDd_yz79vzqjnw0moRJf_r_0jUCF3u8dd5svF4Rxi5HSUk5OseHgMMw/exec" rel="stylesheet" />
+
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+  <header class="site-header" id="siteHeader">
+    <nav class="nav" aria-label="주 내비게이션">
+      <a href="#hero" class="nav-logo" aria-label="Inni Baking 홈으로 이동">
+        Inni Baking
+        <span>One-day Class</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a class="nav-link" href="#intro">소개</a></li>
+        <li><a class="nav-link" href="#curriculum">클래스</a></li>
+        <li><a class="nav-link" href="#gallery">갤러리</a></li>
+        <li><a class="nav-link" href="#reviews">후기</a></li>
+        <li><a class="nav-link" href="#booking">예약</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="#bookingForm" class="btn btn-primary nav-cta">예약하기</a>
+        <button class="hamburger" type="button" id="hamburger" aria-label="메뉴 열기" aria-controls="mobileMenu" aria-expanded="false">
+          <span class="hamburger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="모바일 메뉴">
+    <button class="mobile-menu-close" type="button" id="mobileMenuClose" aria-label="메뉴 닫기">×</button>
+    <div class="mobile-menu-inner">
+      <ul class="mobile-menu-list">
+        <li><a href="#intro">소개</a></li>
+        <li><a href="#curriculum">클래스</a></li>
+        <li><a href="#gallery">갤러리</a></li>
+        <li><a href="#reviews">후기</a></li>
+        <li><a href="#booking">예약</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero" id="hero" aria-label="메인 배너">
+      <div class="container hero-inner">
+        <div class="hero-copy reveal visible">
+          <p class="hero-eyebrow">Inni Baking · 원데이 클래스</p>
+          <h1 class="hero-title">달콤한<br><span>쉼표</span></h1>
+          <p class="hero-desc">오븐이 없어도, 소질이 없어도 괜찮아요. 갓 구운 빵 냄새가 가득한 공간에서 나만을 위한 2시간을 경험하세요.</p>
+
+          <div class="hero-tags" aria-label="클래스 핵심 장점">
+            <span class="hero-tag">준비물 없이 몸만 오세요</span>
+            <span class="hero-tag">최대 4인 소수 정예</span>
+            <span class="hero-tag">모든 재료 & 도구 제공</span>
+          </div>
+
+          <div class="hero-actions">
+            <a href="#bookingForm" class="btn btn-primary">지금 바로 신청하기</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-plate"><span>🥐</span></div>
+          <div class="hero-small-card">
+            <strong>2 Hours</strong>
+            <p>만드는 과정까지 즐거운 소수 정예 베이킹 클래스</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-indicator" aria-hidden="true">scroll</div>
+    </section>
+
+    <div class="marquee-strip" aria-hidden="true">
+      <div class="marquee-inner">
+        <span>실패 없는 베이킹</span><span class="dot">✦</span>
+        <span>나를 위한 달콤한 휴식</span><span class="dot">✦</span>
+        <span>최고의 재료만 사용합니다</span><span class="dot">✦</span>
+        <span>소수 정예 · 최대 4인</span><span class="dot">✦</span>
+        <span>준비물 없이 몸만 오세요</span><span class="dot">✦</span>
+        <span>갓 구운 빵의 행복</span><span class="dot">✦</span>
+        <span>실패 없는 베이킹</span><span class="dot">✦</span>
+        <span>나를 위한 달콤한 휴식</span><span class="dot">✦</span>
+        <span>최고의 재료만 사용합니다</span><span class="dot">✦</span>
+        <span>소수 정예 · 최대 4인</span><span class="dot">✦</span>
+        <span>준비물 없이 몸만 오세요</span><span class="dot">✦</span>
+        <span>갓 구운 빵의 행복</span><span class="dot">✦</span>
+      </div>
+    </div>
+
+    <section class="section section--cream" id="intro" aria-labelledby="introTitle">
+      <div class="container grid-2">
+        <div class="intro-image-wrap reveal">
+          <div class="intro-image" role="img" aria-label="이니 베이킹 강사 이미지 영역"><span>🧑‍🍳</span></div>
+          <div class="intro-badge"><strong>5년+</strong>베이킹<br>경력</div>
+        </div>
+
+        <div class="intro-content">
+          <p class="section-eyebrow reveal">강사 소개</p>
+          <h2 class="section-title reveal reveal-delay-1" id="introTitle">안녕하세요,<br><em>이니</em>입니다 🍞</h2>
+          <p class="section-desc reveal reveal-delay-2">베이킹은 누구나 즐길 수 있는 행복한 놀이여야 해요. 처음 밀가루를 만지는 분도, 오븐이 없는 분도 편안하게 따라올 수 있도록 초보자의 눈높이에서 함께합니다.</p>
+
+          <div class="value-list reveal reveal-delay-3">
+            <div class="value-item">
+              <span class="value-icon" aria-hidden="true">🎯</span>
+              <div>
+                <h3 class="value-title">전문적이지만 친근한</h3>
+                <p class="value-desc">초보자의 속도에 맞춘 1:1 밀착 가이드를 제공합니다.</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <span class="value-icon" aria-hidden="true">✨</span>
+              <div>
+                <h3 class="value-title">실패 없는 베이킹 경험</h3>
+                <p class="value-desc">단계별 안내로 완성도 높은 결과물을 만들어 갑니다.</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <span class="value-icon" aria-hidden="true">🍵</span>
+              <div>
+                <h3 class="value-title">나를 위한 달콤한 휴식</h3>
+                <p class="value-desc">완성 후 직접 만든 디저트와 함께 조용한 티타임을 즐겨요.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="curriculum" aria-labelledby="curriculumTitle">
+      <div class="container">
+        <div class="curriculum-header">
+          <div>
+            <p class="section-eyebrow reveal">이번 달 메뉴</p>
+            <h2 class="section-title reveal reveal-delay-1" id="curriculumTitle">직접 만드는<br><em>달콤한 작품들</em></h2>
+          </div>
+          <p class="curriculum-month reveal reveal-delay-2">2025년 6월 클래스</p>
+        </div>
+
+        <div class="menu-grid">
+          <article class="card menu-card reveal">
+            <div class="menu-image" role="img" aria-label="프렌치 크루아상 이미지 영역">🥐</div>
+            <div class="menu-body">
+              <span class="tag">베스트 메뉴</span>
+              <h3 class="menu-name">프렌치 크루아상</h3>
+              <p class="menu-desc">버터 층이 살아있는 정통 프렌치 크루아상. 반죽부터 구워내기까지 전 과정을 함께합니다.</p>
+              <div class="menu-meta">
+                <span class="meta-pill">⏱ 2시간 30분</span>
+                <span class="meta-pill">📊 초급</span>
+                <span class="meta-pill">👥 최대 4인</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card menu-card reveal reveal-delay-1">
+            <div class="menu-image" role="img" aria-label="딸기 쇼트케이크 이미지 영역">🎂</div>
+            <div class="menu-body">
+              <span class="tag">신규 메뉴</span>
+              <h3 class="menu-name">딸기 쇼트케이크</h3>
+              <p class="menu-desc">동물성 생크림을 직접 휘핑하고 신선한 딸기와 함께 데코하는 생일케이크 스타일 클래스.</p>
+              <div class="menu-meta">
+                <span class="meta-pill">⏱ 2시간</span>
+                <span class="meta-pill">📊 입문</span>
+                <span class="meta-pill">👥 최대 4인</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card menu-card reveal reveal-delay-2">
+            <div class="menu-image" role="img" aria-label="뉴욕 브라우니 이미지 영역">🍪</div>
+            <div class="menu-body">
+              <span class="tag">인기</span>
+              <h3 class="menu-name">뉴욕 브라우니</h3>
+              <p class="menu-desc">진하고 묵직한 초콜릿 브라우니. 쫀쫀한 식감의 비밀과 완벽한 굽기 타이밍을 배워가세요.</p>
+              <div class="menu-meta">
+                <span class="meta-pill">⏱ 1시간 30분</span>
+                <span class="meta-pill">📊 입문</span>
+                <span class="meta-pill">👥 최대 4인</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="class-info-band reveal">
+          <div class="info-band-item">
+            <div class="info-band-icon">👥</div>
+            <div class="info-band-value">최대 4인</div>
+            <div class="info-band-label">소수 정예 클래스</div>
+          </div>
+          <div class="info-band-item">
+            <div class="info-band-icon">🎒</div>
+            <div class="info-band-value">준비물 0</div>
+            <div class="info-band-label">재료 & 도구 제공</div>
+          </div>
+          <div class="info-band-item">
+            <div class="info-band-icon">🍵</div>
+            <div class="info-band-value">티타임</div>
+            <div class="info-band-label">완성 후 함께 즐기는 시간</div>
+          </div>
+          <div class="info-band-item">
+            <div class="info-band-icon">📦</div>
+            <div class="info-band-value">포장 포함</div>
+            <div class="info-band-label">예쁜 패키징 제공</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--butter" id="why" aria-labelledby="whyTitle">
+      <div class="container grid-2">
+        <div>
+          <p class="section-eyebrow reveal">이니 베이킹인 이유</p>
+          <h2 class="section-title reveal reveal-delay-1" id="whyTitle">오븐이 없어도,<br><em>소질이 없어도</em><br>괜찮아요</h2>
+          <div class="why-list">
+            <article class="why-item reveal reveal-delay-2">
+              <div class="why-num">01</div>
+              <div>
+                <h3 class="why-title">준비물 제로, 몸만 오세요</h3>
+                <p class="why-desc">모든 도구와 재료, 앞치마와 위생장갑까지 이니 베이킹이 준비합니다.</p>
+              </div>
+            </article>
+            <article class="why-item reveal reveal-delay-2">
+              <div class="why-num">02</div>
+              <div>
+                <h3 class="why-title">1:1 밀착 가이드</h3>
+                <p class="why-desc">최대 4인 소수 정예 진행으로 강사가 항상 곁에서 과정을 함께합니다.</p>
+              </div>
+            </article>
+            <article class="why-item reveal reveal-delay-3">
+              <div class="why-num">03</div>
+              <div>
+                <h3 class="why-title">과정 자체가 힐링</h3>
+                <p class="why-desc">결과물보다 만드는 즐거움에 집중하는 따뜻하고 편안한 시간을 제공합니다.</p>
+              </div>
+            </article>
+            <article class="why-item reveal reveal-delay-4">
+              <div class="why-num">04</div>
+              <div>
+                <h3 class="why-title">예쁜 기록으로 남기기</h3>
+                <p class="why-desc">포토존과 패키징으로 오늘의 결과물을 선물처럼 가져갈 수 있어요.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="why-visual" aria-hidden="true">
+          <div class="why-circle">🥐</div>
+          <div class="floating-tag">오늘 만든 빵이 가장 맛있어요 🍞</div>
+          <div class="floating-tag">소질 없어도 OK ✨</div>
+          <div class="floating-tag">추억이 되는 2시간 💛</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--cream" id="gallery" aria-labelledby="galleryTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow reveal">갤러리</p>
+          <h2 class="section-title reveal reveal-delay-1" id="galleryTitle">클래스 현장을<br><em>미리 만나보세요</em></h2>
+        </div>
+
+        <div class="gallery-slider reveal" aria-roledescription="carousel">
+          <div class="gallery-track" id="galleryTrack">
+            <article class="gallery-slide">
+              <div class="gallery-slide-icon">🥐</div>
+              <div class="gallery-caption">
+                <h3>크루아상 클래스</h3>
+                <p>버터의 결이 살아있는 정통 프렌치 크루아상 완성</p>
+              </div>
+            </article>
+            <article class="gallery-slide">
+              <div class="gallery-slide-icon">🎂</div>
+              <div class="gallery-caption">
+                <h3>케이크 데코 클래스</h3>
+                <p>생크림 휘핑부터 딸기 데코까지, 나만의 케이크</p>
+              </div>
+            </article>
+            <article class="gallery-slide">
+              <div class="gallery-slide-icon">🍵</div>
+              <div class="gallery-caption">
+                <h3>베이킹 후 티타임</h3>
+                <p>직접 만든 디저트와 함께하는 조용하고 따뜻한 시간</p>
+              </div>
+            </article>
+            <article class="gallery-slide">
+              <div class="gallery-slide-icon">📦</div>
+              <div class="gallery-caption">
+                <h3>예쁜 패키징</h3>
+                <p>소중한 사람에게 선물하고 싶어지는 포장</p>
+              </div>
+            </article>
+            <article class="gallery-slide">
+              <div class="gallery-slide-icon">🍪</div>
+              <div class="gallery-caption">
+                <h3>브라우니 클래스</h3>
+                <p>쫀쫀한 식감의 뉴욕 스타일 초콜릿 브라우니</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="gallery-controls" aria-label="갤러리 슬라이드 제어">
+          <button class="gallery-btn" type="button" id="galleryPrev" aria-label="이전 슬라이드">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <div class="gallery-dots" id="galleryDots" role="tablist" aria-label="슬라이드 선택"></div>
+          <button class="gallery-btn" type="button" id="galleryNext" aria-label="다음 슬라이드">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <div class="gallery-grid reveal" aria-label="갤러리 썸네일">
+          <button class="gallery-thumb" type="button" aria-label="크루아상 사진 확대">🥐</button>
+          <button class="gallery-thumb" type="button" aria-label="케이크 사진 확대">🎂</button>
+          <button class="gallery-thumb" type="button" aria-label="티타임 사진 확대">🍵</button>
+          <button class="gallery-thumb" type="button" aria-label="패키징 사진 확대">📦</button>
+          <button class="gallery-thumb" type="button" aria-label="브라우니 사진 확대">🍪</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dark" id="quality" aria-labelledby="qualityTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow reveal">최고의 재료</p>
+          <h2 class="section-title reveal reveal-delay-1" id="qualityTitle">재료에서 시작되는<br><em>정직한 달콤함</em></h2>
+        </div>
+
+        <div class="quality-grid">
+          <article class="quality-card reveal">
+            <div class="quality-num">01</div>
+            <div class="quality-icon">🧈</div>
+            <h3 class="quality-name">고메 AOP 버터</h3>
+            <p class="quality-origin">프랑스산 · Beurre de Qualité</p>
+            <p class="quality-desc">풍부한 풍미와 낮은 수분 함량으로 크루아상의 결을 완성하는 최상급 버터.</p>
+          </article>
+          <article class="quality-card reveal reveal-delay-1">
+            <div class="quality-num">02</div>
+            <div class="quality-icon">🥛</div>
+            <h3 class="quality-name">동물성 생크림</h3>
+            <p class="quality-origin">식물성 성분 무첨가</p>
+            <p class="quality-desc">식물성 성분 없이 순수 동물성 유지방만으로 휘핑한 부드러운 생크림.</p>
+          </article>
+          <article class="quality-card reveal reveal-delay-2">
+            <div class="quality-num">03</div>
+            <div class="quality-icon">🌾</div>
+            <h3 class="quality-name">유기농 밀가루</h3>
+            <p class="quality-origin">무농약 인증</p>
+            <p class="quality-desc">은은한 고소함으로 반죽 전체의 맛을 탄탄하게 잡아주는 밀가루.</p>
+          </article>
+          <article class="quality-card reveal reveal-delay-3">
+            <div class="quality-num">04</div>
+            <div class="quality-icon">🌿</div>
+            <h3 class="quality-name">마다가스카르 바닐라</h3>
+            <p class="quality-origin">Madagascar · Bourbon</p>
+            <p class="quality-desc">인공 향료 대신 부르봉 바닐라 빈의 씨를 직접 긁어 사용합니다.</p>
+          </article>
+          <article class="quality-card reveal reveal-delay-4">
+            <div class="quality-num">05</div>
+            <div class="quality-icon">🍫</div>
+            <h3 class="quality-name">발로나 초콜릿</h3>
+            <p class="quality-origin">Valrhona · France</p>
+            <p class="quality-desc">깊고 복합적인 풍미가 브라우니의 완성도를 높이는 쿠베르튀르 초콜릿.</p>
+          </article>
+          <article class="quality-card reveal reveal-delay-4">
+            <div class="quality-num">06</div>
+            <div class="quality-icon">🥚</div>
+            <h3 class="quality-name">무항생제 달걀</h3>
+            <p class="quality-origin">국내산 · 친환경 인증</p>
+            <p class="quality-desc">탄탄한 흰자와 진한 노른자로 반죽의 기초를 완성합니다.</p>
+          </article>
+        </div>
+
+        <div class="quality-promise reveal">
+          <p class="quality-promise-text">내가 먹고, 사랑하는 사람에게 선물할 것이기에<br>재료와 타협하지 않습니다.</p>
+          <p class="quality-promise-sub">— Inni Baking 브랜드 철학</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--cream" id="reviews" aria-labelledby="reviewsTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow reveal">수강생 후기</p>
+          <h2 class="section-title reveal reveal-delay-1" id="reviewsTitle">함께한 분들의<br><em>이야기</em></h2>
+        </div>
+
+        <div class="reviews-grid">
+          <article class="card review-card featured reveal">
+            <div class="review-mark">“</div>
+            <div class="review-stars" aria-label="별점 5점">★★★★★</div>
+            <p class="review-text">베이킹이 이렇게 재밌는 줄 몰랐어요! 처음에 너무 긴장했는데 이니 선생님이 친절하게 가르쳐주셔서 금방 편해졌어요.</p>
+            <div class="review-author">
+              <div class="review-avatar">🌸</div>
+              <div>
+                <div class="review-name">김지연 님</div>
+                <div class="review-date">크루아상 클래스 · 2025.05</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card review-card reveal reveal-delay-1">
+            <div class="review-mark">“</div>
+            <div class="review-stars" aria-label="별점 5점">★★★★★</div>
+            <p class="review-text">친구 생일 선물로 케이크 클래스를 신청했는데, 우리 둘 다 너무 행복한 시간이었어요. 케이크도 카페 케이크처럼 나왔어요!</p>
+            <div class="review-author">
+              <div class="review-avatar">🎂</div>
+              <div>
+                <div class="review-name">박서연 님</div>
+                <div class="review-date">케이크 데코 클래스 · 2025.05</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card review-card reveal reveal-delay-2">
+            <div class="review-mark">“</div>
+            <div class="review-stars" aria-label="별점 5점">★★★★★</div>
+            <p class="review-text">재료가 확실히 달라요. 버터 향부터 다른 게 느껴지더라고요. 집에서도 따라 만들 수 있을 것 같아요.</p>
+            <div class="review-author">
+              <div class="review-avatar">🧁</div>
+              <div>
+                <div class="review-name">이민호 님</div>
+                <div class="review-date">브라우니 클래스 · 2025.04</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card review-card reveal reveal-delay-3">
+            <div class="review-mark">“</div>
+            <div class="review-stars" aria-label="별점 5점">★★★★★</div>
+            <p class="review-text">회사 스트레스가 극에 달했을 때 신청했어요. 2시간 동안 완전히 다른 세계에 있는 기분이었어요.</p>
+            <div class="review-author">
+              <div class="review-avatar">☕</div>
+              <div>
+                <div class="review-name">최수진 님</div>
+                <div class="review-date">크루아상 클래스 · 2025.04</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card review-card review-wide reveal reveal-delay-4">
+            <div class="review-mark">“</div>
+            <div class="review-stars" aria-label="별점 5점">★★★★★</div>
+            <p class="review-text">4인 정원이라서 선생님 집중도가 달라요. 내가 반죽을 어떻게 하고 있는지 바로바로 봐주셔서 안심이 됐어요. 가이드 북도 주셔서 집에서 복습할 수 있었고, 정말 레시피 완성도가 높아요.</p>
+            <div class="review-author">
+              <div class="review-avatar">🍞</div>
+              <div>
+                <div class="review-name">정하은 님</div>
+                <div class="review-date">케이크 데코 클래스 · 2025.03</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--butter" id="booking" aria-labelledby="bookingTitle">
+      <div class="container booking-grid">
+        <div>
+          <p class="section-eyebrow reveal">클래스 예약</p>
+          <h2 class="section-title reveal reveal-delay-1" id="bookingTitle">달콤한 시간을<br><em>예약하세요</em></h2>
+          <p class="booking-desc reveal reveal-delay-2">준비물은 없어도 됩니다. 설레는 마음 하나만 가지고 오세요.</p>
+
+          <div class="booking-actions reveal reveal-delay-3">
+            <a href="#bookingForm" class="btn btn-dark">지금 바로 원데이 클래스 신청하기</a>
+            <p class="booking-note">⏰ 구글 폼 신청 후 카카오톡으로 확정 연락드립니다.</p>
+          </div>
+        </div>
+
+        <div class="booking-right reveal reveal-delay-2">
+          <article class="info-card">
+            <h3 class="info-card-title">📅 6월 클래스 일정</h3>
+            <div class="info-card-content">
+              <div class="schedule-list">
+                <div class="schedule-item"><span class="schedule-date">6월 7일 (토) 14:00 — 크루아상</span><span class="schedule-status open">신청 가능</span></div>
+                <div class="schedule-item"><span class="schedule-date">6월 15일 (일) 11:00 — 크루아상</span><span class="schedule-status open">신청 가능</span></div>
+                <div class="schedule-item"><span class="schedule-date">6월 29일 (일) 14:00 — 크루아상</span><span class="schedule-status few">잔여 2석</span></div>
+                <div class="schedule-item"><span class="schedule-date">6월 14일 (토) 14:00 — 케이크</span><span class="schedule-status few">잔여 1석</span></div>
+                <div class="schedule-item"><span class="schedule-date">6월 22일 (일) 11:00 — 케이크</span><span class="schedule-status open">신청 가능</span></div>
+                <div class="schedule-item"><span class="schedule-date">6월 28일 (토) 14:00 — 케이크</span><span class="schedule-status open">신청 가능</span></div>
+                <div class="schedule-item"><span class="schedule-date">6월 21일 (토) 11:00 — 브라우니</span><span class="schedule-status open">신청 가능</span></div>
+                <div class="schedule-item"><span class="schedule-date">6월 22일 (일) 16:00 — 브라우니</span><span class="schedule-status few">잔여 2석</span></div>
+                <div class="schedule-item"><span class="schedule-date">6월 29일 (일) 11:00 — 브라우니</span><span class="schedule-status open">신청 가능</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="info-card">
+            <h3 class="info-card-title">📍 장소 안내</h3>
+            <div class="info-card-content">
+              <strong>이니 베이킹 스튜디오</strong><br>
+              서울시 마포구 ○○로 ○○길 ○○<br>
+              상세 주소는 예약 확정 후 안내드립니다.
+              <div class="map-placeholder" role="img" aria-label="지도 영역">
+                <span>📍</span>
+                <span>카카오맵 또는 구글 지도 임베드 영역</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="info-card">
+            <h3 class="info-card-title">❔ 주의사항 & FAQ</h3>
+            <div class="notice-list">
+              <div class="notice-item">
+                <button class="notice-q" type="button"><span>취소 및 환불 정책이 어떻게 되나요?</span><span class="notice-toggle">+</span></button>
+                <p class="notice-a">클래스 3일 전까지 취소 시 전액 환불됩니다. 2일 이내 취소는 50% 환불, 당일 취소 및 노쇼는 환불이 어렵습니다.</p>
+              </div>
+              <div class="notice-item">
+                <button class="notice-q" type="button"><span>완성된 결과물은 가져갈 수 있나요?</span><span class="notice-toggle">+</span></button>
+                <p class="notice-a">네, 예쁜 패키징으로 포장해서 가져가실 수 있어요. 선물용으로도 좋습니다.</p>
+              </div>
+              <div class="notice-item">
+                <button class="notice-q" type="button"><span>알레르기가 있는 경우 어떻게 하나요?</span><span class="notice-toggle">+</span></button>
+                <p class="notice-a">신청 시 알레르기 정보를 함께 알려주세요. 유제품, 달걀, 밀가루 등 주요 알레르기 성분이 포함되어 있습니다.</p>
+              </div>
+              <div class="notice-item">
+                <button class="notice-q" type="button"><span>주차 가능한가요?</span><span class="notice-toggle">+</span></button>
+                <p class="notice-a">근처 유료 주차장 이용이 가능합니다. 대중교통 이용을 권장드려요.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="container">
+        <article class="booking-form-panel reveal" id="bookingForm" aria-labelledby="bookingFormTitle">
+          <div class="booking-form-header">
+            <div>
+              <p class="section-eyebrow">Quick Form</p>
+              <h3 class="booking-form-title" id="bookingFormTitle">신청서 작성</h3>
+              <p class="booking-form-desc">희망 클래스와 연락처를 남겨주시면 예약 확인 후 연락드립니다. 실제 접수 연동 전까지는 제출 후 안내 메시지로 확인됩니다.</p>
+            </div>
+            <span class="booking-form-badge">최대 4인 소수 정예</span>
+          </div>
+
+          <form class="booking-form" id="quickBookingForm">
+            <div class="booking-form-row">
+              <div class="booking-form-field">
+                <label for="bookingName">이름</label>
+                <input type="text" id="bookingName" name="name" placeholder="예: 김이니" required />
+              </div>
+              <div class="booking-form-field">
+                <label for="bookingPhone">연락처</label>
+                <input type="tel" id="bookingPhone" name="phone" placeholder="예: 010-1234-5678" required />
+              </div>
+            </div>
+
+            <div class="booking-form-row">
+              <div class="booking-form-field">
+                <label for="bookingClass">희망 클래스</label>
+                <select id="bookingClass" name="className" required>
+                  <option value="">클래스 선택</option>
+                  <option value="프렌치 크루아상">프렌치 크루아상</option>
+                  <option value="딸기 쇼트케이크">딸기 쇼트케이크</option>
+                  <option value="뉴욕 브라우니">뉴욕 브라우니</option>
+                </select>
+              </div>
+              <div class="booking-form-field">
+                <label for="bookingDate">희망 일정</label>
+                <select id="bookingDate" name="date" required disabled>
+                  <option value="">희망 클래스를 먼저 선택해주세요</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="booking-form-field">
+              <label for="bookingMessage">문의사항</label>
+              <textarea id="bookingMessage" name="message" placeholder="알레르기, 동반 인원, 문의사항 등을 적어주세요."></textarea>
+            </div>
+
+            <div class="booking-consent">
+              <input type="checkbox" id="bookingAgree" name="agree" required />
+              <div>
+                <label for="bookingAgree">개인정보 수집 및 예약 안내 연락에 동의합니다.</label>
+                <p>입력한 정보는 클래스 예약 확인 및 안내 연락 목적으로만 사용됩니다.</p>
+              </div>
+            </div>
+
+            <button class="btn btn-dark booking-form-submit" type="submit">신청하기</button>
+            <p class="booking-form-guide">예약 확정은 카카오톡 또는 연락처 확인 후 진행됩니다.</p>
+          </form>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">Inni Baking</div>
+          <p class="footer-tagline">갓 구운 빵 냄새가 가득한 공간에서 나를 위한 달콤한 쉼표.</p>
+          <div class="footer-social" aria-label="SNS 링크">
+            <a href="#" class="social-btn" aria-label="인스타그램">📷</a>
+            <a href="#" class="social-btn" aria-label="카카오톡">💬</a>
+            <a href="#" class="social-btn" aria-label="유튜브">▶️</a>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="footer-heading">클래스</h2>
+          <ul class="footer-links">
+            <li><a href="#curriculum">이번 달 메뉴</a></li>
+            <li><a href="#gallery">클래스 갤러리</a></li>
+            <li><a href="#reviews">수강생 후기</a></li>
+            <li><a href="#booking">예약하기</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="footer-heading">문의</h2>
+          <ul class="footer-links">
+            <li><a href="#">카카오톡 채널</a></li>
+            <li><a href="#">인스타그램 DM</a></li>
+            <li><a href="#">이메일 문의</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 Inni Baking. All rights reserved.</p>
+        <p class="footer-copy">Warm Minimalism · Made with 🧈</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="sticky-cta" aria-hidden="true">
+    <a href="#bookingForm" class="btn btn-primary">지금 바로 클래스 신청하기</a>
+  </div>
+
+  <script src="./js/main.js"></script>
+</body>
+</html>
