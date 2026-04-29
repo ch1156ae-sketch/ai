@@ -1,0 +1,2707 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>한국한복문화예술협회 반응형 홈페이지</title>
+        <style>
+            @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+
+            :root {
+                --black: #111;
+                --text: #222;
+                --muted: #6f6f6f;
+                --line: #ececec;
+                --red: #e85050;
+                --wrap: 1224px;
+                --content: 1224px;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                min-width: 320px;
+                font-family:
+                    "Pretendard",
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    system-ui,
+                    sans-serif;
+                color: var(--text);
+                background: #fff;
+                line-height: 1.45;
+                word-break: keep-all;
+            }
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+            ul {
+                list-style: none;
+            }
+            button {
+                border: 0;
+                background: none;
+                font: inherit;
+                color: inherit;
+                cursor: pointer;
+            }
+            img {
+                display: block;
+                max-width: 100%;
+            }
+
+            .wrap {
+                width: min(var(--wrap), calc(100% - 80px));
+                margin: 0 auto;
+            }
+            .content-wrap {
+                width: min(var(--content), calc(100% - 80px));
+                margin: 0 auto;
+            }
+
+            /* 상단 유틸 */
+            .top-util {
+                height: 49px;
+                background: #f2f2f2;
+                border-bottom: 1px solid #ededed;
+                font-size: 14px;
+                font-weight: 400;
+                color: #121111;
+            }
+            .top-util .wrap {
+                height: 100%;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 16px;
+            }
+            .top-util a {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                color: #121111;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 1;
+            }
+            .top-util .login-icon {
+                width: 16px;
+                height: 16px;
+                flex: 0 0 16px;
+                object-fit: contain;
+            }
+            .top-util .util-divider {
+                display: block;
+                width: 1px;
+                height: 12px;
+                background: #cdcccc;
+                flex: 0 0 1px;
+            }
+
+            /* 헤더 */
+            .site-header {
+                height: 180px;
+                background: #fff;
+                border-bottom: 1px solid #eee;
+                position: sticky;
+                top: 0;
+                z-index: 50;
+                display: flex;
+                flex-direction: column;
+            }
+            .site-header > .wrap {
+                height: 110px;
+                margin-top: auto;
+                margin-bottom: auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .logo {
+                width: 325px;
+                height: 56px;
+                flex: 0 0 325px;
+                display: flex;
+                align-items: center;
+            }
+            .logo-img {
+                width: 325px;
+                height: 56px;
+                object-fit: contain;
+            }
+            .logo-mark {
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                background: conic-gradient(
+                    from 30deg,
+                    #4679be 0 18%,
+                    #50a868 18% 35%,
+                    #e1ca4b 35% 50%,
+                    #d94848 50% 66%,
+                    #386bb0 66% 100%
+                );
+                position: relative;
+                box-shadow:
+                    inset 0 0 0 5px #fff,
+                    0 0 0 1px #ddd;
+                flex: none;
+            }
+            .logo-mark::after {
+                content: "";
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: 30px;
+                height: 12px;
+                background: #fff;
+                transform: translate(-50%, -50%) rotate(-16deg);
+                border-radius: 999px;
+            }
+            .logo-text strong {
+                display: block;
+                font-size: 21px;
+                line-height: 1;
+            }
+            .logo-text span {
+                display: block;
+                margin-top: 4px;
+                font-size: 7px;
+                color: #444;
+                letter-spacing: 0.2px;
+            }
+
+            .gnb ul {
+                display: flex;
+                align-items: center;
+                gap: 32px;
+                font-size: 20px;
+                font-weight: 400;
+                color: #000;
+            }
+            .gnb a {
+                position: relative;
+                display: block;
+                padding: 26px 0;
+            }
+            .gnb a::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: 18px;
+                width: 0;
+                height: 2px;
+                background: #111;
+                transition: 0.25s;
+            }
+            .gnb a:hover::after {
+                width: 100%;
+            }
+
+            .menu-btn {
+                display: none;
+                width: 24px;
+                height: 24px;
+                align-items: center;
+                justify-content: center;
+            }
+            .menu-btn span,
+            .menu-btn span::before,
+            .menu-btn span::after {
+                width: 24px;
+                height: 1.5px;
+                background: #121111;
+                border-radius: 999px;
+                display: block;
+                transition: 0.25s;
+            }
+            .menu-btn span {
+                position: relative;
+            }
+            .menu-btn span::before,
+            .menu-btn span::after {
+                content: "";
+                position: absolute;
+                left: 0;
+            }
+            .menu-btn span::before {
+                top: -7px;
+            }
+            .menu-btn span::after {
+                top: 7px;
+            }
+            .site-header.open .menu-btn span {
+                background: transparent;
+            }
+            .site-header.open .menu-btn span::before {
+                top: 0;
+                transform: rotate(45deg);
+            }
+            .site-header.open .menu-btn span::after {
+                top: 0;
+                transform: rotate(-45deg);
+            }
+
+            /* 메인 배너 */
+            .main-banner {
+                height: 720px;
+                position: relative;
+                overflow: hidden;
+            }
+            .main-banner-images {
+                position: absolute;
+                inset: 0;
+                z-index: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .banner-img {
+                position: absolute;
+                inset: 0;
+                display: none !important;
+                width: 100%;
+                height: 100%;
+                max-width: none;
+                object-fit: cover;
+                object-position: center;
+            }
+            @media (min-width: 1025px) {
+                .banner-img-pc {
+                    display: block !important;
+                }
+                .banner-img-tab,
+                .banner-img-mo {
+                    display: none !important;
+                }
+            }
+            .hero {
+                display: none;
+            }
+            .hero::before {
+                display: none;
+                content: "";
+                position: absolute;
+                inset: 0;
+                background:
+                    radial-gradient(
+                        circle at 7% 73%,
+                        rgba(255, 255, 255, 0.65),
+                        transparent 16%
+                    ),
+                    radial-gradient(
+                        circle at 74% 76%,
+                        rgba(222, 74, 60, 0.42) 0 2%,
+                        transparent 7%
+                    ),
+                    radial-gradient(
+                        circle at 25% 45%,
+                        rgba(255, 255, 255, 0.85) 0 1.5%,
+                        transparent 7%
+                    ),
+                    linear-gradient(
+                        180deg,
+                        rgba(255, 255, 255, 0.04),
+                        rgba(255, 255, 255, 0.1)
+                    );
+            }
+            .hero-inner {
+                display: none;
+            }
+            .hero-visual {
+                align-self: end;
+                height: 315px;
+                position: relative;
+            }
+            .flower-branch {
+                position: absolute;
+                left: 36px;
+                bottom: 55px;
+                width: 140px;
+                height: 210px;
+                border-left: 5px solid rgba(80, 84, 59, 0.35);
+                transform: rotate(18deg);
+                border-radius: 60% 0 0 0;
+            }
+            .flower-branch i {
+                position: absolute;
+                width: 35px;
+                height: 35px;
+                background: #e75b4f;
+                border-radius: 50% 50% 45% 45%;
+                box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.42);
+            }
+            .flower-branch i:nth-child(1) {
+                left: -28px;
+                top: 24px;
+            }
+            .flower-branch i:nth-child(2) {
+                left: 36px;
+                top: 70px;
+            }
+            .flower-branch i:nth-child(3) {
+                left: -25px;
+                top: 128px;
+            }
+            .people {
+                position: absolute;
+                left: 190px;
+                bottom: 0;
+                width: 380px;
+                height: 298px;
+            }
+            .person {
+                position: absolute;
+                bottom: 0;
+                width: 168px;
+                height: 250px;
+                border-radius: 80px 80px 18px 18px;
+                background: linear-gradient(
+                    135deg,
+                    #17449c,
+                    #245cca 45%,
+                    #d92731 45% 63%,
+                    #f7d14a 63% 68%,
+                    #173d86 68%
+                );
+                box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
+            }
+            .person::before {
+                content: "";
+                position: absolute;
+                left: 50%;
+                top: -52px;
+                width: 76px;
+                height: 76px;
+                transform: translateX(-50%);
+                border-radius: 50%;
+                background: #f5d6c3;
+                box-shadow: 0 -30px 0 12px #111;
+            }
+            .person::after {
+                content: "";
+                position: absolute;
+                left: 50%;
+                top: -112px;
+                width: 134px;
+                height: 82px;
+                transform: translateX(-50%);
+                border-radius: 70px 70px 12px 12px;
+                background: linear-gradient(
+                    135deg,
+                    #111 0 30%,
+                    #2e2e2e 30% 55%,
+                    #ef5571 55% 70%,
+                    #f1d982 70%
+                );
+                box-shadow: 0 5px 0 rgba(0, 0, 0, 0.08);
+            }
+            .person.man {
+                left: 188px;
+                width: 172px;
+                background: linear-gradient(
+                    135deg,
+                    #0c2e62,
+                    #163a74 55%,
+                    #f3f3f3 55% 63%,
+                    #d92731 63%
+                );
+            }
+            .person.man::after {
+                width: 170px;
+                height: 82px;
+                top: -116px;
+                border-radius: 8px 8px 70px 70px;
+                background: linear-gradient(
+                    90deg,
+                    #1f543e 0 18%,
+                    #d6bd45 18% 25%,
+                    #e03733 25% 42%,
+                    #1a4c3e 42% 70%,
+                    #d6bd45 70% 100%
+                );
+            }
+            .person.woman {
+                left: 48px;
+            }
+            .bird {
+                position: absolute;
+                width: 70px;
+                height: 36px;
+                opacity: 0.42;
+            }
+            .bird::before,
+            .bird::after {
+                content: "";
+                position: absolute;
+                width: 42px;
+                height: 18px;
+                border-top: 4px solid #647075;
+                border-radius: 50%;
+            }
+            .bird::before {
+                left: 0;
+                top: 14px;
+                transform: rotate(20deg);
+            }
+            .bird::after {
+                right: 0;
+                top: 13px;
+                transform: rotate(-20deg);
+            }
+            .bird.left {
+                left: 50px;
+                top: 148px;
+            }
+            .bird.right {
+                right: 40px;
+                top: 92px;
+            }
+
+            .hero-copy {
+                text-align: center;
+                padding-bottom: 25px;
+                color: #111;
+            }
+            .hero-copy h2 {
+                font-size: 56px;
+                font-weight: 800;
+                letter-spacing: -3px;
+                line-height: 1.05;
+                margin-bottom: 14px;
+            }
+            .hero-copy h3 {
+                font-size: 35px;
+                font-weight: 400;
+                letter-spacing: -2px;
+                margin-bottom: 22px;
+            }
+            .hero-copy p {
+                font-size: 18px;
+                color: #333;
+                line-height: 1.55;
+            }
+            .hero-copy em {
+                display: block;
+                margin-top: 76px;
+                font-size: 10px;
+                color: #887d73;
+                font-style: normal;
+                letter-spacing: 0.4px;
+            }
+
+            /* 배너 하단 소개 */
+            .feature-strip {
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 1;
+                height: 192px;
+                padding: 24px 0;
+                overflow: hidden;
+                background: rgba(255, 255, 255, 0.7);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+            }
+            .feature-strip::before {
+                display: none;
+            }
+            .feature-inner {
+                position: relative;
+                z-index: 1;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .feature-info {
+                display: grid;
+                grid-template-columns: 40px 1fr;
+                column-gap: 24px;
+                align-items: start;
+            }
+            .feature-num {
+                width: 40px;
+                height: 40px;
+                border: 1px solid #121111;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                font-weight: 400;
+                color: #121111;
+                background: rgba(255, 255, 255, 0.2);
+                line-height: 1;
+            }
+            .feature-meta {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 18px;
+                font-weight: 400;
+                color: #121111;
+                margin-bottom: 8px;
+            }
+            .feature-meta-icon {
+                width: 24px;
+                height: 24px;
+                flex: 0 0 24px;
+                object-fit: contain;
+            }
+            .feature-meta .meta-mo {
+                display: none;
+            }
+            .feature-title {
+                font-size: 32px;
+                line-height: 1.1;
+                font-weight: 600;
+                margin-bottom: 16px;
+                letter-spacing: -1px;
+            }
+            .feature-text {
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 1.65;
+                color: #121111;
+            }
+            .feature-text-br {
+                display: block;
+            }
+            .feature-thumb {
+                width: 240px;
+                height: 135px;
+                border: 0;
+                background: none;
+                position: relative;
+                overflow: hidden;
+            }
+            .feature-thumb-img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .feature-thumb::after {
+                display: none;
+            }
+
+            /* 포스터/동영상/유튜브 */
+            .media-section {
+                height: 437px;
+                padding: 48px 0;
+                background: #fff;
+                overflow: hidden;
+            }
+            .media-grid {
+                display: grid;
+                grid-template-columns: 1.05fr 1fr 1fr;
+                gap: 18px;
+            }
+            .section-head {
+                display: block;
+                margin-bottom: 24px;
+            }
+            .section-title-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 16px;
+            }
+            .section-title {
+                font-size: 32px;
+                font-weight: 600;
+                letter-spacing: -1px;
+                line-height: 1.05;
+            }
+            .section-subtitle {
+                display: block;
+                margin-top: 4px;
+                font-size: 18px;
+                font-weight: 400;
+                color: #111;
+                letter-spacing: 0;
+                line-height: 1.2;
+                text-align: left;
+            }
+            .plus-btn {
+                width: 48px;
+                height: 48px;
+                border: 1px solid #cdcccc;
+                position: relative;
+                background: #fff;
+            }
+            .plus-btn::before,
+            .plus-btn::after {
+                content: "";
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                background: #121111;
+                border-radius: 999px;
+                transform: translate(-50%, -50%);
+            }
+            .plus-btn::before {
+                width: 24px;
+                height: 1.5px;
+            }
+            .plus-btn::after {
+                width: 1.5px;
+                height: 24px;
+            }
+            .poster-list {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 24px;
+            }
+            .poster-card {
+                height: 260px;
+                padding: 0;
+                background: none;
+                color: inherit;
+                position: relative;
+                overflow: hidden;
+                display: block;
+            }
+            .poster-card::after {
+                display: none;
+            }
+            .poster-card-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+            .video-box {
+                height: 260px;
+                background: #9d9d9d;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                text-align: center;
+            }
+            .video-logo {
+                width: 55px;
+                height: 55px;
+                border-radius: 50%;
+                background: #fff;
+                margin-bottom: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            }
+            .video-logo .logo-mark {
+                width: 34px;
+                height: 34px;
+                box-shadow:
+                    inset 0 0 0 4px #fff,
+                    0 0 0 1px #ddd;
+            }
+            .video-box strong {
+                font-size: 22px;
+                letter-spacing: -1px;
+            }
+            .video-box span {
+                font-size: 11px;
+                opacity: 0.9;
+            }
+            .youtube-box {
+                height: 260px;
+                background: #fff;
+            }
+
+            /* 공지사항 */
+            .notice-section {
+                height: 902px;
+                padding: 48px 0;
+                background: #f2f2f2;
+                position: relative;
+                overflow: hidden;
+            }
+            .notice-section::before,
+            .notice-section::after {
+                display: none;
+            }
+            .section-center {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            .section-center h2 {
+                font-size: 32px;
+                font-weight: 600;
+                letter-spacing: -1px;
+                margin-bottom: 8px;
+                color: #1e1e1e;
+            }
+            .section-center p {
+                font-size: 18px;
+                font-weight: 400;
+                color: #1e1e1e;
+            }
+            .notice-tabs {
+                display: flex;
+                justify-content: center;
+                gap: 16px;
+                margin-bottom: 40px;
+            }
+            .notice-tabs button {
+                width: auto;
+                min-width: 0;
+                height: 48px;
+                padding: 0 32px;
+                border-radius: 999px;
+                background: #fff;
+                color: #121111;
+                font-size: 18px;
+                font-weight: 400;
+                box-shadow: 0 3px 9px rgba(0, 0, 0, 0.04);
+            }
+            .notice-tabs button.active,
+            .notice-tabs button:hover {
+                background: #121111;
+                color: #fff;
+                font-weight: 600;
+            }
+            .notice-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 288px);
+                gap: 24px;
+                justify-content: center;
+            }
+            .notice-card {
+                width: 288px;
+                height: 288px;
+                min-height: 288px;
+                background: #fff;
+                padding: 24px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+                border: 1px solid transparent;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .notice-card.is-hidden {
+                display: none !important;
+            }
+            .notice-card.is-active {
+                border-color: transparent;
+            }
+            .notice-card:hover {
+                border: 2px solid #ff4747;
+            }
+            .badge {
+                width: 48px;
+                height: 24px;
+                padding: 0 12px;
+                border: 1px solid #ff4747;
+                border-radius: 4px;
+                color: #ff4747;
+                font-size: 14px;
+                font-weight: 400;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 16px;
+                background: #fff2eb;
+                line-height: 1;
+            }
+            .badge.news {
+                border-color: #cdcccc;
+                color: #827f7f;
+                background: #f2f2f2;
+            }
+            .notice-card h3 {
+                width: 240px;
+                max-width: 100%;
+                height: 56px;
+                font-size: 20px;
+                line-height: 1.4;
+                font-weight: 600;
+                color: #1e1e1e;
+                letter-spacing: -0.04em;
+                margin-bottom: 16px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+            .notice-title-pc-br {
+                display: block;
+            }
+            .notice-title-nowrap {
+                width: max-content;
+                max-width: none;
+                white-space: nowrap;
+                display: block;
+                -webkit-line-clamp: unset;
+                overflow: visible;
+            }
+            .notice-title-custom {
+                display: block;
+                -webkit-line-clamp: unset;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .notice-title-pc-text {
+                display: block;
+            }
+            .notice-title-responsive-text {
+                display: none;
+            }
+            .notice-card p {
+                width: 240px;
+                max-width: 100%;
+                height: 66px;
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 1.4;
+                letter-spacing: -0.04em;
+                color: #1e1e1e;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .notice-news-text {
+                display: block;
+                -webkit-line-clamp: unset;
+            }
+            .news-body-pc {
+                display: block;
+            }
+            .news-body-responsive {
+                display: none;
+            }
+            .mo-card-text {
+                display: none;
+            }
+            .pc-card-text {
+                display: inline;
+            }
+            .date {
+                margin-top: auto;
+                font-size: 16px;
+                font-weight: 400;
+                color: #827f7f;
+            }
+
+            /* 갤러리 */
+            .gallery-section {
+                height: 580px;
+                padding: 62px 0 55px;
+                background: #fff;
+                position: relative;
+                overflow: hidden;
+            }
+            .gallery-section::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 410px;
+                height: 205px;
+                background: linear-gradient(
+                    180deg,
+                    rgba(245, 245, 245, 0.2),
+                    rgba(239, 239, 239, 0.75)
+                );
+                clip-path: polygon(0 48%, 50% 8%, 100% 50%, 100% 100%, 0 100%);
+                opacity: 0.75;
+            }
+            .gallery-layout {
+                position: relative;
+                z-index: 1;
+                display: grid;
+                grid-template-columns: 182px 1fr;
+                gap: 23px;
+                align-items: start;
+            }
+            .gallery-title {
+                width: 182px;
+                height: 484px;
+            }
+            .gallery-title h2 {
+                font-size: 32px;
+                font-weight: 600;
+                color: #121111;
+                letter-spacing: -1px;
+            }
+            .gallery-title p {
+                font-size: 18px;
+                font-weight: 400;
+                margin-top: 8px;
+                color: #121111;
+                white-space: nowrap;
+            }
+            .gallery-scroll {
+                display: flex;
+                gap: 18px;
+                overflow-x: auto;
+                padding-bottom: 14px;
+                scroll-snap-type: x mandatory;
+            }
+            .gallery-scroll::-webkit-scrollbar {
+                height: 0;
+            }
+            .gallery-card {
+                flex: 0 0 236px;
+                scroll-snap-align: start;
+            }
+            .gallery-img {
+                height: 172px;
+                position: relative;
+                overflow: hidden;
+                background: #d8d0bc;
+            }
+            .gallery-img::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(
+                    135deg,
+                    #1f6946 0 18%,
+                    #c8a65a 18% 32%,
+                    #f0f0f0 32% 45%,
+                    #f5b6c7 45% 60%,
+                    #7446ce 60% 74%,
+                    #2f8f49 74%
+                );
+            }
+            .gallery-card:nth-child(2) .gallery-img::before {
+                background: linear-gradient(
+                    135deg,
+                    #d9c0a2,
+                    #fff 35%,
+                    #f4c6d8 36% 60%,
+                    #f6f1f4 60%
+                );
+            }
+            .gallery-card:nth-child(3) .gallery-img::before {
+                background: linear-gradient(
+                    135deg,
+                    #9b633b,
+                    #f0d79a 18%,
+                    #3bcd89 18% 40%,
+                    #5939d8 40% 64%,
+                    #f3cae1 64%
+                );
+            }
+            .gallery-card:nth-child(4) .gallery-img::before {
+                background: linear-gradient(
+                    135deg,
+                    #0b5c42,
+                    #fff 28%,
+                    #fbd4de 28% 52%,
+                    #2740a8 52% 72%,
+                    #e43030 72%
+                );
+            }
+            .gallery-card:nth-child(5) .gallery-img::before {
+                background: linear-gradient(
+                    135deg,
+                    #443,
+                    #fff 20%,
+                    #3846c7 20% 45%,
+                    #f7e6ee 45% 60%,
+                    #d22 60%
+                );
+            }
+            .gallery-card h3 {
+                position: relative;
+                font-size: 13px;
+                font-weight: 800;
+                line-height: 1.4;
+                margin-top: 12px;
+                padding-right: 28px;
+            }
+            .gallery-card h3::after {
+                content: "↗";
+                position: absolute;
+                right: 0;
+                top: -1px;
+                font-size: 22px;
+                font-weight: 300;
+            }
+            .gallery-card .date {
+                margin-top: 7px;
+            }
+
+            /* 푸터 */
+            .site-footer {
+                background: #f1f1f1;
+                border-top: 1px solid #e5e5e5;
+                padding: 31px 0 38px;
+                color: #555;
+            }
+            .footer-logo {
+                display: flex;
+                align-items: center;
+                gap: 9px;
+                color: #777;
+                margin-bottom: 12px;
+            }
+            .footer-logo .logo-mark {
+                width: 34px;
+                height: 34px;
+                filter: grayscale(1);
+                opacity: 0.8;
+            }
+            .footer-logo strong {
+                font-size: 15px;
+                display: block;
+            }
+            .footer-logo span {
+                font-size: 6px;
+                display: block;
+            }
+            .footer-info {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px 13px;
+                font-size: 11px;
+                line-height: 1.55;
+                margin-bottom: 20px;
+            }
+            .sns {
+                display: flex;
+                gap: 10px;
+            }
+            .sns a {
+                width: 34px;
+                height: 34px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                font-size: 13px;
+                font-weight: 800;
+            }
+            .sns a:nth-child(1) {
+                background: #f00;
+            }
+            .sns a:nth-child(2) {
+                background: linear-gradient(135deg, #f8c142, #d52ca1, #4b68d7);
+            }
+            .sns a:nth-child(3) {
+                background: #1877f2;
+            }
+            .sns a:nth-child(4) {
+                background: #2fca4f;
+                font-size: 10px;
+            }
+
+            .top-btn {
+                position: fixed;
+                right: 34px;
+                bottom: 72px;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                background: #fff;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+                z-index: 40;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 26px;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transform: translateY(16px);
+                transition:
+                    opacity 0.35s ease,
+                    visibility 0.35s ease,
+                    transform 0.35s ease;
+            }
+            .top-btn.show {
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                transform: translateY(0);
+            }
+
+            /* 태블릿 */
+            @media (max-width: 1024px) {
+                .top-util {
+                    display: none;
+                }
+                .wrap,
+                .content-wrap {
+                    width: calc(100% - 48px);
+                }
+                .site-header {
+                    height: 64px;
+                    top: 0;
+                }
+                .site-header > .wrap {
+                    width: calc(100% - 48px);
+                    height: 64px;
+                    position: relative;
+                    justify-content: center;
+                }
+                .logo {
+                    width: 209px;
+                    height: 36px;
+                    flex: 0 0 209px;
+                }
+                .logo-img {
+                    width: 209px;
+                    height: 36px;
+                    object-fit: contain;
+                    max-height: none;
+                }
+                .logo-mark {
+                    width: 21px;
+                    height: 21px;
+                    box-shadow:
+                        inset 0 0 0 3px #fff,
+                        0 0 0 1px #ddd;
+                }
+                .logo-mark::after {
+                    width: 12px;
+                    height: 5px;
+                }
+                .logo-text strong {
+                    font-size: 9px;
+                    letter-spacing: -0.4px;
+                }
+                .logo-text span {
+                    font-size: 3px;
+                    margin-top: 1px;
+                }
+                .menu-btn {
+                    display: flex;
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+                .gnb {
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    top: 64px;
+                    background: #fff;
+                    border-top: 1px solid #eee;
+                    border-bottom: 1px solid #eee;
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: 0.25s;
+                }
+                .site-header.open .gnb {
+                    max-height: 340px;
+                }
+                .gnb ul {
+                    display: block;
+                    padding: 8px 15px;
+                }
+                .gnb a {
+                    padding: 12px 0;
+                    font-size: 14px;
+                }
+                .gnb a::after {
+                    display: none;
+                }
+                .main-banner {
+                    height: 800px;
+                }
+                .banner-img-pc {
+                    display: none !important;
+                }
+                .banner-img-tab {
+                    display: block !important;
+                }
+                .banner-img-mo {
+                    display: none !important;
+                }
+                .hero {
+                    display: none;
+                }
+                .hero-inner {
+                    display: none;
+                }
+                .hero-visual {
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    height: 255px;
+                }
+                .people {
+                    left: 50%;
+                    bottom: 0;
+                    transform: translateX(-50%) scale(0.72);
+                    transform-origin: bottom center;
+                }
+                .flower-branch {
+                    left: 22%;
+                    bottom: 54px;
+                    transform: rotate(18deg) scale(0.72);
+                }
+                .hero-copy {
+                    position: absolute;
+                    right: 20px;
+                    top: 31px;
+                    text-align: right;
+                    padding: 0;
+                }
+                .hero-copy h2 {
+                    font-size: 36px;
+                    letter-spacing: -2px;
+                    margin-bottom: 6px;
+                }
+                .hero-copy h3 {
+                    font-size: 25px;
+                    letter-spacing: -1.5px;
+                    margin-bottom: 13px;
+                }
+                .hero-copy p {
+                    font-size: 13px;
+                }
+                .hero-copy em {
+                    margin-top: 38px;
+                    font-size: 8px;
+                }
+                .feature-strip {
+                    height: 167px;
+                }
+                .feature-inner {
+                    width: calc(100% - 48px);
+                    padding: 0;
+                }
+                .feature-info {
+                    grid-template-columns: 40px 1fr;
+                    column-gap: 24px;
+                    row-gap: 0;
+                }
+                .feature-num {
+                    width: 40px;
+                    height: 40px;
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: #121111;
+                    border-color: #121111;
+                    background: rgba(255, 255, 255, 0.2);
+                }
+                .feature-meta {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    font-size: 18px;
+                    font-weight: 400;
+                    color: #121111;
+                    margin-bottom: 8px;
+                }
+                .feature-title {
+                    font-size: 32px;
+                    font-weight: 600;
+                    margin-bottom: 5px;
+                }
+                .feature-text {
+                    font-size: 18px;
+                    font-weight: 400;
+                    color: #121111;
+                    white-space: nowrap;
+                }
+                .feature-text-br {
+                    display: none;
+                }
+                .feature-thumb {
+                    display: none !important;
+                }
+                .media-section {
+                    height: 1732px;
+                    padding: 48px 0;
+                    overflow: hidden;
+                }
+                .media-grid {
+                    display: block;
+                    width: calc(100% - 48px);
+                    margin: 0 auto;
+                }
+                .media-box {
+                    margin-bottom: 22px;
+                }
+                .section-title {
+                    font-size: 32px;
+                    font-weight: 600;
+                }
+                .section-subtitle {
+                    font-size: 18px;
+                    font-weight: 400;
+                    margin-top: 4px;
+                }
+                .plus-btn {
+                    width: 48px;
+                    height: 48px;
+                    border-color: #cdcccc;
+                }
+                .poster-list {
+                    gap: 24px;
+                }
+                .poster-card {
+                    height: 473px;
+                }
+                .video-box {
+                    height: 404px;
+                }
+                .youtube-box {
+                    height: 404px;
+                }
+                .notice-section {
+                    height: 1526px;
+                    padding: 48px 0;
+                }
+                .notice-section::before,
+                .notice-section::after {
+                    display: none;
+                }
+                .section-center {
+                    margin-bottom: 40px;
+                }
+                .section-center h2 {
+                    font-size: 32px;
+                    font-weight: 600;
+                    margin-bottom: 8px;
+                    color: #1e1e1e;
+                }
+                .section-center p {
+                    font-size: 18px;
+                    font-weight: 400;
+                    color: #1e1e1e;
+                }
+                .notice-tabs {
+                    gap: 16px;
+                    margin-bottom: 40px;
+                }
+                .notice-tabs button {
+                    width: auto;
+                    min-width: 0;
+                    height: 48px;
+                    padding: 0 32px;
+                    font-size: 18px;
+                    font-weight: 400;
+                }
+                .notice-tabs button.active,
+                .notice-tabs button:hover {
+                    font-weight: 600;
+                }
+                .notice-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 13px;
+                    width: calc(100% - 48px);
+                    margin: 0 auto;
+                }
+                .notice-card {
+                    width: 100%;
+                    height: 288px;
+                    min-height: 288px;
+                    padding: 24px;
+                }
+                .badge {
+                    width: 48px;
+                    height: 24px;
+                    padding: 0 12px;
+                    border: 1px solid #ff4747;
+                    border-radius: 4px;
+                    color: #ff4747;
+                    background: #fff2eb;
+                    font-size: 14px;
+                    font-weight: 400;
+                    margin-bottom: 16px;
+                    line-height: 1;
+                }
+                .badge.news {
+                    border-color: #cdcccc;
+                    color: #827f7f;
+                    background: #f2f2f2;
+                }
+                .notice-card h3 {
+                    width: 300px;
+                    max-width: 100%;
+                    height: 56px;
+                    font-size: 20px;
+                    line-height: 1.4;
+                    font-weight: 600;
+                    color: #1e1e1e;
+                    letter-spacing: -0.04em;
+                    margin-bottom: 16px;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                }
+                .notice-title-pc-br {
+                    display: none;
+                }
+                .notice-title-nowrap {
+                    width: 300px;
+                    max-width: 100%;
+                    white-space: normal;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    overflow: hidden;
+                }
+                .notice-title-custom {
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    overflow: hidden;
+                }
+                .notice-title-pc-text {
+                    display: none;
+                }
+                .notice-title-responsive-text {
+                    display: inline;
+                }
+                .notice-card p {
+                    width: 300px;
+                    max-width: 100%;
+                    height: 66px;
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: #1e1e1e;
+                    line-height: 1.4;
+                    letter-spacing: -0.04em;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                }
+                .notice-news-text {
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                }
+                .news-body-pc {
+                    display: none;
+                }
+                .news-body-responsive {
+                    display: none;
+                }
+                .pc-card-text {
+                    display: none;
+                }
+                .mo-card-text {
+                    display: block;
+                }
+                .pc-card-text {
+                    display: inline;
+                }
+                .mo-card-text {
+                    display: none;
+                }
+                .date {
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: #827f7f;
+                }
+                .pc-card-text {
+                    display: inline !important;
+                }
+                .mo-card-text {
+                    display: none !important;
+                }
+                .news-body-pc {
+                    display: block !important;
+                }
+                .news-body-responsive {
+                    display: none !important;
+                }
+                .gallery-section {
+                    height: 698px;
+                    padding: 32px 0 23px;
+                }
+                .gallery-section::before {
+                    width: 230px;
+                    height: 120px;
+                }
+                .gallery-layout {
+                    display: block;
+                    width: calc(100% - 48px);
+                    margin: 0 auto;
+                }
+                .gallery-title {
+                    width: auto;
+                    height: auto;
+                    margin-bottom: 17px;
+                }
+                .gallery-title h2 {
+                    font-size: 32px;
+                    font-weight: 600;
+                    color: #121111;
+                }
+                .gallery-title p {
+                    font-size: 18px;
+                    font-weight: 400;
+                    margin-top: 8px;
+                    color: #121111;
+                    white-space: nowrap;
+                }
+                .gallery-scroll {
+                    gap: 14px;
+                }
+                .gallery-card {
+                    flex-basis: 181px;
+                }
+                .gallery-img {
+                    height: 181px;
+                }
+                .gallery-card h3 {
+                    font-size: 9px;
+                }
+                .gallery-card h3::after {
+                    font-size: 18px;
+                }
+                .site-footer {
+                    padding: 20px 20px 22px;
+                }
+                .footer-logo strong {
+                    font-size: 10px;
+                }
+                .footer-info {
+                    display: block;
+                    font-size: 8px;
+                }
+                .sns a {
+                    width: 26px;
+                    height: 26px;
+                    font-size: 10px;
+                }
+                .top-btn {
+                    right: 15px;
+                    bottom: 446px;
+                    width: 40px;
+                    height: 40px;
+                    font-size: 23px;
+                }
+            }
+
+            /* 모바일 */
+            @media (max-width: 480px) {
+                .wrap,
+                .content-wrap {
+                    width: calc(100% - 32px);
+                }
+                .site-header {
+                    height: 64px;
+                }
+                .logo {
+                    width: 180px;
+                    height: auto;
+                    flex: 0 0 180px;
+                }
+                .logo-img {
+                    width: 180px;
+                    height: auto;
+                    max-height: 36px;
+                }
+                .hero-inner {
+                    width: calc(100% - 32px);
+                }
+                .feature-inner {
+                    width: calc(100% - 32px);
+                }
+                .media-grid {
+                    width: calc(100% - 32px);
+                }
+                .notice-grid {
+                    width: calc(100% - 32px);
+                }
+                .gallery-layout {
+                    width: calc(100% - 32px);
+                }
+                .main-banner {
+                    height: 480px;
+                }
+                .banner-img-pc {
+                    display: none !important;
+                }
+                .banner-img-tab {
+                    display: none !important;
+                }
+                .banner-img-mo {
+                    display: block !important;
+                }
+                .hero {
+                    display: none;
+                }
+                .hero-visual {
+                    height: 188px;
+                }
+                .people {
+                    transform: translateX(-50%) scale(0.52);
+                    left: 50%;
+                }
+                .flower-branch {
+                    left: 10%;
+                    bottom: 35px;
+                    transform: rotate(18deg) scale(0.55);
+                }
+                .bird.left {
+                    left: 12px;
+                    top: 118px;
+                    transform: scale(0.6);
+                }
+                .bird.right {
+                    right: 8px;
+                    top: 83px;
+                    transform: scale(0.55);
+                }
+                .hero-copy {
+                    right: 17px;
+                    top: 23px;
+                }
+                .hero-copy h2 {
+                    font-size: 29px;
+                    margin-bottom: 2px;
+                }
+                .hero-copy h3 {
+                    font-size: 19px;
+                    margin-bottom: 8px;
+                }
+                .hero-copy p {
+                    font-size: 10px;
+                }
+                .hero-copy em {
+                    margin-top: 25px;
+                    font-size: 6px;
+                }
+                .feature-strip {
+                    height: 108px;
+                    padding: 12px 0;
+                }
+                .feature-inner {
+                    position: relative;
+                }
+                .feature-info {
+                    grid-template-columns: 32px 1fr;
+                    column-gap: 8px;
+                    position: relative;
+                    z-index: 2;
+                }
+                .feature-num {
+                    width: 32px;
+                    height: 32px;
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #121111;
+                    border-color: #121111;
+                    background: rgba(255, 255, 255, 0.2);
+                }
+                .feature-meta {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: #121111;
+                    margin-bottom: 8px;
+                }
+                .feature-meta .meta-pc {
+                    display: none;
+                }
+                .feature-meta .meta-mo {
+                    display: inline;
+                }
+                .feature-title {
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .feature-text {
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #121111;
+                }
+                .feature-thumb {
+                    display: none !important;
+                }
+                .media-section {
+                    height: 933px;
+                    padding: 40px 0;
+                    overflow: hidden;
+                }
+                .section-head {
+                    margin-bottom: 16px;
+                }
+                .plus-btn {
+                    width: 40px;
+                    height: 40px;
+                    border: 1px solid #cdcccc;
+                }
+                .plus-btn::before {
+                    width: 16px;
+                    height: 1px;
+                    border-radius: 999px;
+                }
+                .plus-btn::after {
+                    width: 1px;
+                    height: 16px;
+                    border-radius: 999px;
+                }
+                .section-title {
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .section-subtitle {
+                    font-size: 16px;
+                    font-weight: 400;
+                }
+                .poster-list {
+                    gap: 16px;
+                }
+                .poster-card {
+                    height: 215px;
+                    padding: 0;
+                }
+                .poster-card-img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .video-box {
+                    height: 180px;
+                }
+                .youtube-box {
+                    height: 180px;
+                }
+                .notice-section {
+                    height: auto;
+                    min-height: 2472px;
+                    padding: 40px 0;
+                    overflow: visible;
+                }
+                .notice-center {
+                    margin-bottom: 24px;
+                }
+                .section-center {
+                    margin-bottom: 24px;
+                }
+                .notice-grid {
+                    display: grid !important;
+                    grid-template-columns: 1fr !important;
+                    grid-auto-flow: row !important;
+                    gap: 16px;
+                    width: calc(100% - 32px);
+                    margin: 0 auto;
+                }
+                .notice-tabs {
+                    gap: 16px;
+                    margin-bottom: 24px;
+                }
+                .notice-tabs button {
+                    width: auto;
+                    min-width: 0;
+                    height: 40px;
+                    padding: 0 24px;
+                    font-size: 16px;
+                    font-weight: 400;
+                }
+                .notice-tabs button.active,
+                .notice-tabs button:hover {
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+                .section-center h2 {
+                    font-size: 24px;
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    color: #1e1e1e;
+                }
+                .section-center p {
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: #1e1e1e;
+                }
+                .notice-grid {
+                    display: grid !important;
+                    grid-template-columns: 1fr !important;
+                    gap: 16px;
+                    width: calc(100% - 32px);
+                    margin: 0 auto;
+                }
+                .notice-card {
+                    width: 100%;
+                    height: 272px;
+                    min-height: 272px;
+                    padding: 16px;
+                }
+                .notice-card h3 {
+                    width: 296px;
+                    max-width: 100%;
+                    height: 56px;
+                    font-size: 20px;
+                    line-height: 1.4;
+                    font-weight: 600;
+                    color: #1e1e1e;
+                    letter-spacing: -0.04em;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                }
+                .notice-title-pc-br {
+                    display: none;
+                }
+                .notice-title-nowrap {
+                    width: 296px;
+                    max-width: 100%;
+                    white-space: normal;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    overflow: hidden;
+                }
+                .notice-title-custom {
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    overflow: hidden;
+                }
+                .notice-title-pc-text {
+                    display: none;
+                }
+                .notice-title-responsive-text {
+                    display: inline;
+                }
+                .notice-card p {
+                    width: 296px;
+                    max-width: 100%;
+                    height: 66px;
+                    font-size: 16px;
+                    line-height: 1.4;
+                    letter-spacing: -0.04em;
+                    font-weight: 400;
+                    color: #1e1e1e;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                }
+                .notice-news-text {
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                }
+                .news-body-pc {
+                    display: none;
+                }
+                .news-body-responsive {
+                    display: inline;
+                }
+                .gallery-section {
+                    height: 1900px;
+                }
+                .gallery-title h2 {
+                    font-size: 24px;
+                    font-weight: 600;
+                    color: #121111;
+                }
+                .gallery-title p {
+                    font-size: 16px;
+                    font-weight: 400;
+                    margin-top: 8px;
+                    color: #121111;
+                    white-space: nowrap;
+                }
+                .gallery-scroll {
+                    display: block !important;
+                    overflow: visible;
+                }
+                .gallery-card {
+                    display: block !important;
+                    width: 100%;
+                    max-width: 100%;
+                    flex: none;
+                    margin-bottom: 18px;
+                }
+                .gallery-img {
+                    height: auto;
+                    aspect-ratio: 1.55/1;
+                }
+                .gallery-card h3 {
+                    font-size: 10px;
+                    margin-top: 9px;
+                }
+                .site-footer {
+                    text-align: left;
+                }
+                .footer-info span {
+                    display: block;
+                    margin-bottom: 2px;
+                }
+                .top-btn {
+                    right: 12px;
+                    bottom: 430px;
+                    width: 38px;
+                    height: 38px;
+                }
+
+                /* 모바일 공지카드: 카드 1개씩 세로 일렬 */
+                .notice-grid {
+                    display: flex !important;
+                    flex-direction: column !important;
+                    flex-wrap: nowrap !important;
+                    gap: 16px !important;
+                    width: calc(100% - 32px) !important;
+                    margin: 0 auto !important;
+                }
+                .notice-card {
+                    display: flex !important;
+                    width: 100% !important;
+                    flex: 0 0 auto !important;
+                }
+            }
+
+            @media (max-width: 360px) {
+                .poster-card {
+                    height: 148px;
+                }
+                .main-banner {
+                    height: 480px;
+                }
+                .hero-copy h2 {
+                    font-size: 25px;
+                }
+                .hero-copy h3 {
+                    font-size: 17px;
+                }
+                .people {
+                    transform: translateX(-50%) scale(0.45);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header
+            class="site-header"
+            id="siteHeader"
+        >
+            <div class="top-util">
+                <div class="wrap">
+                    <a
+                        href="#login"
+                        class="login-link"
+                        ><img
+                            src="./images/login-icon.svg"
+                            alt="로그인 아이콘"
+                            class="login-icon"
+                        />로그인</a
+                    >
+                    <span
+                        class="util-divider"
+                        aria-hidden="true"
+                    ></span>
+                    <a href="#join">회원가입</a>
+                    <span
+                        class="util-divider"
+                        aria-hidden="true"
+                    ></span>
+                    <a href="#mypage">마이페이지</a>
+                </div>
+            </div>
+
+            <div class="wrap">
+                <a
+                    href="#"
+                    class="logo"
+                    aria-label="한국한복문화예술협회 홈"
+                >
+                    <img
+                        src="./images/pc_logo.png"
+                        alt="한국한복문화예술협회"
+                        class="logo-img"
+                    />
+                </a>
+                <nav
+                    class="gnb"
+                    aria-label="주 메뉴"
+                >
+                    <ul>
+                        <li><a href="#about">협회소개</a></li>
+                        <li><a href="#promo">홍보광장</a></li>
+                        <li><a href="#artist">아젤리아패션그룹</a></li>
+                        <li><a href="#exchange">국제교류체험관</a></li>
+                        <li><a href="#donate">나눔과기쁨 & 복지관</a></li>
+                        <li><a href="#partner">협력기관</a></li>
+                    </ul>
+                </nav>
+                <button
+                    type="button"
+                    class="menu-btn"
+                    id="menuBtn"
+                    aria-label="메뉴 열기"
+                >
+                    <span></span>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <section
+                class="main-banner"
+                aria-label="메인 배너"
+            >
+                <div
+                    class="main-banner-images"
+                    aria-hidden="true"
+                >
+                    <img
+                        src="./images/pc_banner.jpg"
+                        alt="한국한복문화예술협회 PC 메인 배너"
+                        class="banner-img banner-img-pc"
+                    />
+                    <img
+                        src="./images/tab_banner.jpg"
+                        alt="한국한복문화예술협회 태블릿 메인 배너"
+                        class="banner-img banner-img-tab"
+                    />
+                    <img
+                        src="./images/mo_banner.jpg"
+                        alt="한국한복문화예술협회 모바일 메인 배너"
+                        class="banner-img banner-img-mo"
+                    />
+                </div>
+
+                <div class="feature-strip">
+                    <div class="content-wrap feature-inner">
+                        <div class="feature-info">
+                            <span class="feature-num">01</span>
+                            <div>
+                                <p class="feature-meta">
+                                    <img
+                                        src="./images/태극문양.png"
+                                        alt="태극문양"
+                                        class="feature-meta-icon"
+                                    /><span class="meta-pc"
+                                        >태극문양디자인등록</span
+                                    ><span class="meta-mo">태극문양디자인</span>
+                                </p>
+                                <h2 class="feature-title">한복드레스</h2>
+                                <p class="feature-text">
+                                    디자인등록특허<span
+                                        class="feature-text-space"
+                                    >
+                                    </span
+                                    ><br
+                                        class="feature-text-br"
+                                    />제30-1087062호
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            class="feature-thumb"
+                            aria-hidden="true"
+                        >
+                            <img
+                                src="./images/pc_banner_small.jpg"
+                                alt="한복드레스 디자인등록특허 썸네일"
+                                class="feature-thumb-img"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section
+                class="media-section"
+                id="promo"
+            >
+                <div class="content-wrap media-grid">
+                    <article class="media-box">
+                        <div class="section-head">
+                            <div class="section-title-row">
+                                <h2 class="section-title">포스터</h2>
+                                <button
+                                    class="plus-btn"
+                                    type="button"
+                                    aria-label="포스터 더보기"
+                                ></button>
+                            </div>
+                            <small class="section-subtitle">Poster</small>
+                        </div>
+                        <div class="poster-list">
+                            <a
+                                href="#"
+                                class="poster-card"
+                                ><img
+                                    src="./images/poster1.jpg"
+                                    alt="무궁화 퀸 모델 콘테스트 포스터"
+                                    class="poster-card-img"
+                            /></a>
+                            <a
+                                href="#"
+                                class="poster-card"
+                                ><img
+                                    src="./images/poster2.jpg"
+                                    alt="인터내셔널 CEO K스타 포스터"
+                                    class="poster-card-img"
+                            /></a>
+                        </div>
+                    </article>
+
+                    <article class="media-box">
+                        <div class="section-head">
+                            <div class="section-title-row">
+                                <h2 class="section-title">동영상</h2>
+                                <button
+                                    class="plus-btn"
+                                    type="button"
+                                    aria-label="동영상 더보기"
+                                ></button>
+                            </div>
+                            <small class="section-subtitle">Video</small>
+                        </div>
+                        <a
+                            href="#"
+                            class="video-box"
+                        >
+                            <span class="video-logo"
+                                ><span
+                                    class="logo-mark"
+                                    aria-hidden="true"
+                                ></span
+                            ></span>
+                            <strong>한국한복문화예술협회</strong>
+                            <span
+                                >Korean Hanbok Culture and Arts
+                                Association</span
+                            >
+                        </a>
+                    </article>
+
+                    <article class="media-box">
+                        <div class="section-head">
+                            <div class="section-title-row">
+                                <h2 class="section-title">유튜브</h2>
+                                <button
+                                    class="plus-btn"
+                                    type="button"
+                                    aria-label="유튜브 더보기"
+                                ></button>
+                            </div>
+                            <small class="section-subtitle">Youtube</small>
+                        </div>
+                        <div class="youtube-box"></div>
+                    </article>
+                </div>
+            </section>
+
+            <section
+                class="notice-section"
+                id="notice"
+            >
+                <div class="content-wrap">
+                    <div class="section-center">
+                        <h2>공지사항</h2>
+                        <p>한국한복문화예술협회 문화 소통구</p>
+                    </div>
+                    <div
+                        class="notice-tabs"
+                        role="tablist"
+                        aria-label="공지 분류"
+                    >
+                        <button
+                            type="button"
+                            class="active"
+                            data-filter="all"
+                        >
+                            전체
+                        </button>
+                        <button
+                            type="button"
+                            data-filter="notice"
+                        >
+                            공지사항
+                        </button>
+                        <button
+                            type="button"
+                            data-filter="news"
+                        >
+                            뉴스
+                        </button>
+                    </div>
+                    <div class="notice-grid">
+                        <article
+                            class="notice-card is-active"
+                            data-type="notice"
+                        >
+                            <span class="badge">공지</span>
+                            <h3 class="notice-title-first">
+                                <span class="pc-card-text"
+                                    ><span>2025년도 한국한복문화예술협</span
+                                    ><br class="notice-title-pc-br" /><span
+                                        >회 공지사항</span
+                                    ></span
+                                ><span class="mo-card-text"
+                                    >2025년도 한국한복문화예술협회 공지<br />사항</span
+                                >
+                            </h3>
+                            <p>
+                                <span class="pc-card-text"
+                                    >행사 및 프로그램과 관련된 중요한 소식과
+                                    안내를 확인하세요. 최신 정보를 통해 원활한
+                                    참여와 소통을 도와드립니다.</span
+                                ><span class="mo-card-text"
+                                    >행사 및 프로그램과 관련된 중요한 소식을
+                                    빠르게<br />안내해 드립니다. 업데이트되는
+                                    공지사항을 확인하<br />시고, 놓치지 말고
+                                    필요한 정보를 챙겨보세요!</span
+                                >
+                            </p>
+                            <span class="date">2025-01-16</span>
+                        </article>
+                        <article
+                            class="notice-card"
+                            data-type="notice"
+                        >
+                            <span class="badge">공지</span>
+                            <h3>
+                                <span class="pc-card-text">공지사항</span
+                                ><span class="mo-card-text">공지사항</span>
+                            </h3>
+                            <p>
+                                <span class="pc-card-text"
+                                    >행사 및 프로그램과 관련된 중요한 소식과
+                                    안내를 확인하세요. 최신 정보를 통해 원활한
+                                    참여와 소통을 도와드립니다.</span
+                                ><span class="mo-card-text"
+                                    >행사 및 프로그램과 관련된 중요한 소식과
+                                    안내를 <br />확인하세요. 최신 정보를 통해
+                                    원활한 참여와 소통<br />을
+                                    도와드립니다.</span
+                                >
+                            </p>
+                            <span class="date">2025-01-12</span>
+                        </article>
+                        <article
+                            class="notice-card"
+                            data-type="notice"
+                        >
+                            <span class="badge">공지</span>
+                            <h3 class="notice-title-nowrap">
+                                <span class="pc-card-text"
+                                    >2025 K-선비한복모델 선발대회</span
+                                ><span class="mo-card-text"
+                                    >2025 K-선비한복모델 선발대회</span
+                                >
+                            </h3>
+                            <p>
+                                <span class="pc-card-text"
+                                    >전통과 현대가 어우러진 축제의 장으로
+                                    여러분을 초대합니다! 다양한 공연, 체험
+                                    프로그램, 전시 등이 마련되어 있으며, 한국의
+                                    문화와 예술을 가까이에서 즐길 수 있는 특별한
+                                    기회입니다. 가족, 친구와 함께 오셔서 잊지
+                                    못할 추억을 만들어보세요!</span
+                                ><span class="mo-card-text"
+                                    >전통과 현대가 어우러진 축제의 장으로
+                                    여러분을 <br />초대합니다! 다양한 공연, 체험
+                                    프로그램, 전시 등이 <br />마련되어 있으며,
+                                    한국의 문화와 예술을 가까이에...</span
+                                >
+                            </p>
+                            <span class="date">2025-01-09</span>
+                        </article>
+                        <article
+                            class="notice-card"
+                            data-type="notice"
+                        >
+                            <span class="badge">공지</span>
+                            <h3
+                                class="notice-title-custom notice-title-donation"
+                            >
+                                <span class="pc-card-text"
+                                    ><span class="notice-title-pc-text"
+                                        >2025년도 각 복지센터와 함께하<br />는
+                                        소외 계층을 위한 전통문화...</span
+                                    ><span class="notice-title-responsive-text"
+                                        >2025년도 각 복지센터와 함께하는 소외
+                                        계층을 위한 전통문화 기부 프로젝트</span
+                                    ></span
+                                ><span class="mo-card-text"
+                                    >2025년도 각 복지센터와 함께하는 소외<br />계층을
+                                    위한 전통문화 기부 프로젝트</span
+                                >
+                            </h3>
+                            <p>
+                                <span class="pc-card-text"
+                                    >한복을 기부받아 전통문화 체험 프로그램이나
+                                    해외 문화 교류 행사에 활용하는 경우가
+                                    많습니다. 예를 들어, 지역 문화재단이나
+                                    전통문화 보존 단체에서 한복 기부를 받고 이를
+                                    행사에 사용하거나 보급합니다.</span
+                                ><span class="mo-card-text"
+                                    >한복을 기부받아 전통문화 체험 프로그램이나
+                                    해외<br />문화 교류 행사에 활용하는 경우가
+                                    많습니다. 예를 <br />들어, 지역 문화재단이나
+                                    전통문화 보존 단체에서...</span
+                                >
+                            </p>
+                            <span class="date">2025-01-03</span>
+                        </article>
+                        <article
+                            class="notice-card"
+                            data-type="news"
+                        >
+                            <span class="badge news">뉴스</span>
+                            <h3 class="notice-title-custom notice-title-news">
+                                <span class="pc-card-text"
+                                    ><span class="notice-title-pc-text"
+                                        >[MJ포토] 아젤리아드레스 임은<br />주
+                                        &quot;문화 지킴이·알리미 디자이...</span
+                                    ><span class="notice-title-responsive-text"
+                                        >[MJ포토] 아젤리아드레스 임은주
+                                        &quot;문화 지킴이·알리미 디자이너
+                                        목표&quot;</span
+                                    ></span
+                                ><span class="mo-card-text"
+                                    >[MJ포토] 아젤리아드레스 임은주
+                                    &quot;문화<br />지킴이·알리미 디자이너
+                                    목표&quot;</span
+                                >
+                            </h3>
+                            <p class="notice-news-text">
+                                <span class="pc-card-text"
+                                    ><span class="news-body-pc"
+                                        >대한민국 경제살리기 포럼
+                                        데이터자산공<br />제회 공정회가 지난 6월
+                                        25일 서울 영등<br />포구 여의도
+                                        63컨벤션센터 그랜드볼룸...</span
+                                    ><span class="news-body-responsive"
+                                        >대한민국 경제살리기 포럼
+                                        데이터자산공제회 공정회가 지난 6월 25일
+                                        서울 영등포구 여의도 63컨벤션센터
+                                        그랜드볼룸에서 개최됐다. 이날 3부 행사로
+                                        진행된 아젤리아 드레스 패션쇼(AZALEA
+                                        Dress Fashion Show)에 앞서 아젤리아
+                                        드레스 임은주 디자이너가 포토타임을 갖고
+                                        있다.</span
+                                    ></span
+                                ><span class="mo-card-text"
+                                    >대한민국 경제살리기 포럼 데이터자산공제회
+                                    공정<br />회가 지난 6월 25일 서울 영등포구
+                                    여의도 63컨벤<br />션센터 그랜드볼룸에서
+                                    개최됐다. 이날 3부 행사...</span
+                                >
+                            </p>
+                            <span class="date">2021-07-05</span>
+                        </article>
+                        <article
+                            class="notice-card"
+                            data-type="news"
+                        >
+                            <span class="badge news">뉴스</span>
+                            <h3 class="notice-title-custom notice-title-news">
+                                <span class="pc-card-text"
+                                    ><span class="notice-title-pc-text"
+                                        >[MJ포토] 아젤리아드레스 임은<br />주
+                                        &quot;문화 지킴이·알리미 디자이...</span
+                                    ><span class="notice-title-responsive-text"
+                                        >[MJ포토] 아젤리아드레스 임은주
+                                        &quot;문화 지킴이·알리미 디자이너
+                                        목표&quot;</span
+                                    ></span
+                                ><span class="mo-card-text"
+                                    >[MJ포토] 아젤리아드레스 임은주
+                                    &quot;문화<br />지킴이·알리미 디자이너
+                                    목표&quot;</span
+                                >
+                            </h3>
+                            <p class="notice-news-text">
+                                <span class="pc-card-text"
+                                    ><span class="news-body-pc"
+                                        >대한민국 경제살리기 포럼
+                                        데이터자산공<br />제회 공정회가 지난 6월
+                                        25일 서울 영등<br />포구 여의도
+                                        63컨벤션센터 그랜드볼룸...</span
+                                    ><span class="news-body-responsive"
+                                        >대한민국 경제살리기 포럼
+                                        데이터자산공제회 공정회가 지난 6월 25일
+                                        서울 영등포구 여의도 63컨벤션센터
+                                        그랜드볼룸에서 개최됐다. 이날 3부 행사로
+                                        진행된 아젤리아 드레스 패션쇼(AZALEA
+                                        Dress Fashion Show)에 앞서 아젤리아
+                                        드레스 임은주 디자이너가 포토타임을 갖고
+                                        있다.</span
+                                    ></span
+                                ><span class="mo-card-text"
+                                    >대한민국 경제살리기 포럼 데이터자산공제회
+                                    공정<br />회가 지난 6월 25일 서울 영등포구
+                                    여의도 63컨벤<br />션센터 그랜드볼룸에서
+                                    개최됐다. 이날 3부 행사...</span
+                                >
+                            </p>
+                            <span class="date">2021-07-05</span>
+                        </article>
+                        <article
+                            class="notice-card"
+                            data-type="news"
+                        >
+                            <span class="badge news">뉴스</span>
+                            <h3 class="notice-title-custom notice-title-news">
+                                <span class="pc-card-text"
+                                    ><span class="notice-title-pc-text"
+                                        >[MJ포토] 아젤리아드레스 임은<br />주
+                                        &quot;문화 지킴이·알리미 디자이...</span
+                                    ><span class="notice-title-responsive-text"
+                                        >[MJ포토] 아젤리아드레스 임은주
+                                        &quot;문화 지킴이·알리미 디자이너
+                                        목표&quot;</span
+                                    ></span
+                                ><span class="mo-card-text"
+                                    >[MJ포토] 아젤리아드레스 임은주
+                                    &quot;문화<br />지킴이·알리미 디자이너
+                                    목표&quot;</span
+                                >
+                            </h3>
+                            <p class="notice-news-text">
+                                <span class="pc-card-text"
+                                    ><span class="news-body-pc"
+                                        >대한민국 경제살리기 포럼
+                                        데이터자산공<br />제회 공정회가 지난 6월
+                                        25일 서울 영등<br />포구 여의도
+                                        63컨벤션센터 그랜드볼룸...</span
+                                    ><span class="news-body-responsive"
+                                        >대한민국 경제살리기 포럼
+                                        데이터자산공제회 공정회가 지난 6월 25일
+                                        서울 영등포구 여의도 63컨벤션센터
+                                        그랜드볼룸에서 개최됐다. 이날 3부 행사로
+                                        진행된 아젤리아 드레스 패션쇼(AZALEA
+                                        Dress Fashion Show)에 앞서 아젤리아
+                                        드레스 임은주 디자이너가 포토타임을 갖고
+                                        있다.</span
+                                    ></span
+                                ><span class="mo-card-text"
+                                    >대한민국 경제살리기 포럼 데이터자산공제회
+                                    공정<br />회가 지난 6월 25일 서울 영등포구
+                                    여의도 63컨벤<br />션센터 그랜드볼룸에서
+                                    개최됐다. 이날 3부 행사...</span
+                                >
+                            </p>
+                            <span class="date">2021-07-05</span>
+                        </article>
+                        <article
+                            class="notice-card"
+                            data-type="news"
+                        >
+                            <span class="badge news">뉴스</span>
+                            <h3 class="notice-title-custom notice-title-news">
+                                <span class="pc-card-text"
+                                    ><span class="notice-title-pc-text"
+                                        >[MJ포토] 아젤리아드레스 임은<br />주
+                                        &quot;문화 지킴이·알리미 디자이...</span
+                                    ><span class="notice-title-responsive-text"
+                                        >[MJ포토] 아젤리아드레스 임은주
+                                        &quot;문화 지킴이·알리미 디자이너
+                                        목표&quot;</span
+                                    ></span
+                                ><span class="mo-card-text"
+                                    >[MJ포토] 아젤리아드레스 임은주
+                                    &quot;문화<br />지킴이·알리미 디자이너
+                                    목표&quot;</span
+                                >
+                            </h3>
+                            <p class="notice-news-text">
+                                <span class="pc-card-text"
+                                    ><span class="news-body-pc"
+                                        >대한민국 경제살리기 포럼
+                                        데이터자산공<br />제회 공정회가 지난 6월
+                                        25일 서울 영등<br />포구 여의도
+                                        63컨벤션센터 그랜드볼룸...</span
+                                    ><span class="news-body-responsive"
+                                        >대한민국 경제살리기 포럼
+                                        데이터자산공제회 공정회가 지난 6월 25일
+                                        서울 영등포구 여의도 63컨벤션센터
+                                        그랜드볼룸에서 개최됐다. 이날 3부 행사로
+                                        진행된 아젤리아 드레스 패션쇼(AZALEA
+                                        Dress Fashion Show)에 앞서 아젤리아
+                                        드레스 임은주 디자이너가 포토타임을 갖고
+                                        있다.</span
+                                    ></span
+                                ><span class="mo-card-text"
+                                    >대한민국 경제살리기 포럼 데이터자산공제회
+                                    공정<br />회가 지난 6월 25일 서울 영등포구
+                                    여의도 63컨벤<br />션센터 그랜드볼룸에서
+                                    개최됐다. 이날 3부 행사...</span
+                                >
+                            </p>
+                            <span class="date">2021-07-05</span>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section
+                class="gallery-section"
+                id="gallery"
+            >
+                <div class="content-wrap gallery-layout">
+                    <div class="gallery-title">
+                        <h2>갤러리</h2>
+                        <p>사진으로 본 문화현장</p>
+                    </div>
+                    <div class="gallery-scroll">
+                        <a
+                            class="gallery-card"
+                            href="#"
+                            ><div class="gallery-img"></div>
+                            <h3>제13회 호창원 8위 선열 숭모제전</h3>
+                            <span class="date">2023-11-15</span></a
+                        >
+                        <a
+                            class="gallery-card"
+                            href="#"
+                            ><div class="gallery-img"></div>
+                            <h3>제13회 호창원 8위 선열 숭모제전</h3>
+                            <span class="date">2023-11-15</span></a
+                        >
+                        <a
+                            class="gallery-card"
+                            href="#"
+                            ><div class="gallery-img"></div>
+                            <h3>제13회 호창원 8위 선열 숭모제전</h3>
+                            <span class="date">2023-11-15</span></a
+                        >
+                        <a
+                            class="gallery-card"
+                            href="#"
+                            ><div class="gallery-img"></div>
+                            <h3>제13회 호창원 8위 선열 숭모제전</h3>
+                            <span class="date">2023-11-15</span></a
+                        >
+                        <a
+                            class="gallery-card"
+                            href="#"
+                            ><div class="gallery-img"></div>
+                            <h3>제13회 호창원 8위 선열 숭모제전</h3>
+                            <span class="date">2023-11-15</span></a
+                        >
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="wrap">
+                <div class="footer-logo">
+                    <span
+                        class="logo-mark"
+                        aria-hidden="true"
+                    ></span>
+                    <span
+                        ><strong>한국한복문화예술협회</strong
+                        ><span
+                            >KOREAN HANBOK CULTURE AND ARTS ASSOCIATION</span
+                        ></span
+                    >
+                </div>
+                <div class="footer-info">
+                    <span>Homepage : www.khanbok.or.kr</span>
+                    <span>Mobile : 010-7385-7888</span>
+                    <span>Email : tjf42536@naver.com</span>
+                    <span>Office : 서울특별시 용산구 후암로47길 64, 6층</span>
+                </div>
+                <div
+                    class="sns"
+                    aria-label="SNS 링크"
+                >
+                    <a
+                        href="#"
+                        aria-label="유튜브"
+                        >▶</a
+                    >
+                    <a
+                        href="#"
+                        aria-label="인스타그램"
+                        >◎</a
+                    >
+                    <a
+                        href="#"
+                        aria-label="페이스북"
+                        >f</a
+                    >
+                    <a
+                        href="#"
+                        aria-label="블로그"
+                        >blog</a
+                    >
+                </div>
+            </div>
+        </footer>
+
+        <button
+            type="button"
+            class="top-btn"
+            id="topBtn"
+            aria-label="맨 위로 이동"
+        >
+            ↑
+        </button>
+
+        <script>
+            const header = document.getElementById("siteHeader");
+            const menuBtn = document.getElementById("menuBtn");
+            const topBtn = document.getElementById("topBtn");
+            const tabButtons = document.querySelectorAll(".notice-tabs button");
+            const cards = document.querySelectorAll(".notice-card");
+
+            menuBtn.addEventListener("click", () => {
+                header.classList.toggle("open");
+                menuBtn.setAttribute(
+                    "aria-label",
+                    header.classList.contains("open")
+                        ? "메뉴 닫기"
+                        : "메뉴 열기",
+                );
+            });
+
+            document.querySelectorAll(".gnb a").forEach((link) => {
+                link.addEventListener("click", () =>
+                    header.classList.remove("open"),
+                );
+            });
+
+            tabButtons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    const filter = button.dataset.filter;
+                    tabButtons.forEach((item) =>
+                        item.classList.remove("active"),
+                    );
+                    button.classList.add("active");
+                    cards.forEach((card) => {
+                        const shouldShow =
+                            filter === "all" || card.dataset.type === filter;
+                        card.classList.toggle("is-hidden", !shouldShow);
+                    });
+                });
+            });
+
+            const toggleTopButton = () => {
+                if (window.scrollY > 280) {
+                    topBtn.classList.add("show");
+                } else {
+                    topBtn.classList.remove("show");
+                }
+            };
+
+            window.addEventListener("scroll", toggleTopButton, {
+                passive: true,
+            });
+            toggleTopButton();
+
+            topBtn.addEventListener("click", () =>
+                window.scrollTo({ top: 0, behavior: "smooth" }),
+            );
+        </script>
+    </body>
+</html>
