@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>결제 완료 - UTBT</title>
+        <link rel="stylesheet" href="./css/common.css" />
+        <link rel="stylesheet" href="./css/components/header.css" />
+        <link rel="stylesheet" href="./css/components/bottom-nav.css" />
+        <link rel="stylesheet" href="./css/pages/complete.css" />
+    </head>
+    <body>
+        <section class="mobile-app" aria-label="결제 완료 - UTBT 모바일 화면">
+            <div id="appHeader" class="header-slot"></div>
+            <main class="complete-content app-page white" aria-label="결제 완료 페이지">
+                <div class="complete-icon" aria-hidden="true">✓</div>
+                <h1 class="complete-title">결제가 완료되었습니다</h1>
+                <p class="complete-text">주문이 정상적으로 접수되었어요.<br />홈으로 돌아가 계속 둘러볼 수 있습니다.</p>
+                <a href="index.html" class="complete-home-btn">홈으로 돌아가기</a>
+            </main>
+            <div id="appBottomNav" class="bottom-nav-slot"></div>
+        </section>
+        <script>window.UTBT_PAGE = "home"; window.UTBT_HEADER = {title: "결제 완료", backHref: "index.html"};</script>
+        <script src="./js/components/header.js"></script>
+        <script src="./js/components/bottom-nav.js"></script>
+        <script src="./js/data.js"></script>
+        <script src="./js/common.js"></script>
+        <script src="./js/pages/complete.js"></script>
+
+    </body>
+</html>

@@ -1,0 +1,232 @@
+@charset "utf-8";
+
+/* Pretendard 웹폰트 불러오기 */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+
+/* 공통 좌우 여백 값 */
+:root {
+    --side-padding: 24px;
+}
+
+/* 기본 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Pretendard", sans-serif;
+    background: #ffffff;
+    color: #111827;
+}
+
+button {
+    border: none;
+    background: none;
+    font-family: "Pretendard", sans-serif;
+    cursor: pointer;
+}
+
+/* 모바일 스플래쉬 전체 화면 */
+.splash-wrap {
+    width: 100%;
+    max-width: 375px;
+    height: 812px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+/* 각 스플래쉬 슬라이드 */
+.splash-slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 102px var(--side-padding) 0;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.45s ease,
+        visibility 0.45s ease;
+}
+
+.splash-slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 메인 타이틀 */
+.text-box h1 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.28;
+    letter-spacing: -0.8px;
+    color: #111827;
+}
+
+/* 서브 타이틀 */
+.text-box p {
+    margin-top: 9px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: -0.4px;
+    color: #6b7280;
+}
+
+/* 이미지 영역 */
+.image-box {
+    width: 100%;
+    margin-top: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-box img {
+    width: auto;
+    max-width: 100%;
+    height: 327px;
+    object-fit: contain;
+    display: block;
+}
+
+.image-box.slide-2 {
+    margin-top: 70px;
+}
+
+.image-box.slide-3 {
+    margin-top: 70px;
+}
+
+.image-box.slide-3 img {
+    width: auto;
+    max-width: 100%;
+    height: 327px;
+    object-fit: contain;
+}
+
+/* 하단 페이지바와 Skip 영역 */
+.bottom-area {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 138px;
+    padding: 0 var(--side-padding);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 20;
+}
+
+/* 페이지바 아이콘 그룹 */
+.indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: #ecedee;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    width: 40px;
+    height: 10px;
+    background: #ff5a20;
+}
+
+/* Skip 버튼 */
+.skip-btn {
+    font-size: 11px;
+    font-weight: 700;
+    color: #8b8f97;
+    transition: color 0.25s ease;
+}
+
+.skip-btn:hover {
+    color: #ff5a20;
+}
+
+/* 로그인 이미지 버튼 */
+.login-btn {
+    width: 327px;
+    height: 54px;
+    position: absolute;
+    left: var(--side-padding);
+    bottom: 127px;
+    padding: 0;
+    border-radius: 8px;
+    background: transparent;
+    overflow: hidden;
+    z-index: 30;
+    display: none;
+}
+
+.login-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.login-img-hover {
+    display: none !important;
+}
+
+.login-btn:hover .login-img-default {
+    display: none;
+}
+
+.login-btn:hover .login-img-hover {
+    display: block !important;
+}
+
+.login-btn:active {
+    transform: scale(0.98);
+}
+
+.login-btn.show {
+    display: block;
+}
+
+.bottom-area.hide {
+    display: none;
+}
+
+/* 374px 이하 작은 모바일 화면 대응 */
+@media (max-width: 374px) {
+    .splash-wrap {
+        max-width: 100%;
+        height: 100vh;
+    }
+
+    .splash-slide {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .image-box img {
+        width: auto;
+        max-width: 100%;
+        height: 327px;
+    }
+
+    .image-box.slide-3 img {
+        width: auto;
+        max-width: 100%;
+        height: 327px;
+    }
+
+    .login-btn {
+        width: calc(100% - (var(--side-padding) * 2));
+    }
+}

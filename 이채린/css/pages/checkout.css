@@ -1,0 +1,317 @@
+.buy-page {
+    background: #ecedee;
+}
+
+.buy-page-content {
+    width: 100%;
+    padding: 16px 24px 166px;
+}
+
+.buy-card {
+    width: 100%;
+    padding: 20px 12px;
+    border-radius: 12px;
+    background: #ffffff;
+    margin-bottom: 16px;
+}
+
+.buy-section-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #111827;
+    line-height: 1;
+    margin-bottom: 16px;
+}
+
+.buy-row,
+.buy-coupon-row,
+.buy-point-row,
+.buy-payment-row,
+.buy-summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.buy-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #6b7280;
+    line-height: 126%;
+}
+
+.buy-value {
+    font-size: 13px;
+    font-weight: 500;
+    color: #111827;
+    line-height: 126%;
+    text-align: right;
+}
+
+.buy-change-btn,
+.buy-coupon-btn,
+.buy-point-all-btn {
+    height: 31px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: #e6eeec;
+    color: #111827;
+    font-size: 13px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.buy-change-btn:hover,
+.buy-coupon-btn:hover,
+.buy-point-all-btn:hover {
+    background: #ffefe9;
+    color: #ff5a20;
+}
+
+.buy-address-text {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 400;
+    color: #111827;
+    line-height: 126%;
+}
+
+.buy-item-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.buy-item {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 12px;
+    align-items: center;
+}
+
+.buy-item-img {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ecedee;
+}
+
+.buy-item-name {
+    font-size: 14px;
+    font-weight: 400;
+    color: #111827;
+    line-height: 126%;
+}
+
+.buy-item-price {
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.buy-coupon-row,
+.buy-point-row,
+.buy-payment-row,
+.buy-summary-row {
+    min-height: 44px;
+    padding: 8px 0;
+    border-bottom: 0.5px solid #ecedee;
+}
+
+.buy-coupon-row:last-child,
+.buy-point-row:last-child,
+.buy-payment-row:last-child,
+.buy-summary-row:last-child {
+    border-bottom: 0;
+}
+
+.buy-point-input-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    flex: 1;
+}
+
+.buy-point-input {
+    width: 96px;
+    height: 31px;
+    padding: 0 8px;
+    border: 1px solid #ecedee;
+    border-radius: 8px;
+    outline: none;
+    text-align: right;
+    font-size: 13px;
+    color: #111827;
+    caret-color: #ff5a20;
+}
+
+.buy-point-input:focus {
+    border-color: #ff5a20;
+}
+
+.buy-point-guide {
+    display: none;
+    margin-top: 8px;
+    color: #ff5a20;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.buy-point-guide.show {
+    display: block;
+}
+
+.buy-method-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.buy-method-btn {
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #ecedee;
+    background: #ffffff;
+    color: #6b7280;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.buy-method-btn.active,
+.buy-method-btn:hover {
+    border-color: #ff5a20;
+    background: #ffefe9;
+    color: #ff5a20;
+}
+
+.buy-final-card {
+    margin-bottom: 0;
+}
+
+.buy-final-price .buy-label,
+.buy-final-price .buy-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.buy-benefit-text {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #ffefe9;
+    color: #ff5a20;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 126%;
+}
+
+.buy-submit-btn {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: calc(70px + 10px);
+    z-index: 690;
+    width: min(calc(100vw - 48px), 327px);
+    height: 52px;
+    margin: 0 auto;
+    border-radius: 8px;
+    background: #ff5a20;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.buy-submit-btn:hover {
+    background: #f04f17;
+}
+
+.coupon-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.coupon-item {
+    width: 100%;
+    min-height: 72px;
+    padding: 12px;
+    border: 1px solid #ecedee;
+    border-radius: 12px 10px 13px 11px / 10px 13px 11px 12px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    text-align: left;
+}
+
+.coupon-item:hover,
+.coupon-item.is-selected {
+    border-color: #ff5a20;
+    background: #ffefe9;
+}
+
+.coupon-name {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #111827;
+    line-height: 1.3;
+}
+
+.coupon-desc {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #6b7280;
+    line-height: 1.3;
+}
+
+.coupon-best-badge {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    margin-top: 8px;
+    padding: 0 8px;
+    border-radius: 99px;
+    background: #ffefe9;
+    color: #ff5a20;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 22px;
+}
+
+.coupon-check {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    border-radius: 58% 42% 55% 45% / 45% 55% 42% 58%;
+    border: 1.5px solid #d1d5db;
+    background: #ffffff;
+    position: relative;
+}
+
+.coupon-item.is-selected .coupon-check {
+    border-color: #ff5a20;
+    background: #ff5a20;
+}
+
+.coupon-item.is-selected .coupon-check::after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 8px;
+    width: 6px;
+    height: 10px;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    transform: rotate(45deg);
+}

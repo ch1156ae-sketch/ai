@@ -1,0 +1,108 @@
+.recommend-page {
+    background: #ecedee;
+}
+
+.recommend-page-content {
+    width: 100%;
+    padding: 24px 0 86px 24px;
+}
+
+.recommend-section {
+    margin-bottom: 32px;
+}
+
+.recommend-title {
+    margin-bottom: 16px;
+    letter-spacing: 0;
+}
+
+.recommend-title .green {
+    color: #2d7065;
+}
+
+.recommend-scroll,
+.recipe-scroll {
+    width: 100%;
+    gap: 10px;
+}
+
+.recipe-card {
+    flex: 0 0 142px;
+    width: 142px;
+    cursor: pointer;
+}
+
+.recipe-img {
+    width: 142px;
+    height: 253px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ecedee;
+}
+
+.recipe-name {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #111827;
+    text-align: center;
+}
+
+.recipe-label {
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #ff5a20;
+    text-align: center;
+}
+
+.recipe-desc {
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #6b7280;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.recipe-popup-sub {
+    color: #ff5a20;
+    font-weight: 500;
+}
+
+.recipe-popup-section {
+    margin-top: 16px;
+}
+
+.recipe-popup-section strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #ff5a20;
+}
+
+.recipe-popup-section p,
+.recipe-popup-section li {
+    font-size: 13px;
+    font-weight: 500;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.recipe-step-list {
+    padding-left: 16px;
+}
+
+.recipe-step-list li {
+    list-style: decimal;
+}
+
+.recipe-close-btn {
+    width: 100%;
+    height: 44px;
+    margin-top: 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}

@@ -1,0 +1,136 @@
+.main {
+    width: 100%;
+    padding-bottom: 86px;
+    background: #ecedee;
+}
+
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 375px;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.hero-slider {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    cursor: grab;
+    touch-action: pan-y;
+}
+
+.hero-slider.is-dragging {
+    cursor: grabbing;
+}
+
+.hero-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.45s ease;
+}
+
+.hero-track.no-transition {
+    transition: none;
+}
+
+.hero-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+}
+
+.hero-banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    background: #ffffff;
+}
+
+.hero-control {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hero-page,
+.hero-pause-btn {
+    height: 24px;
+    border-radius: 999px;
+    background: rgba(17, 24, 39, 0.65);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+}
+
+.hero-page {
+    min-width: 48px;
+    padding: 0 10px;
+}
+
+.hero-pause-btn {
+    width: 24px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.category-section {
+    width: 100%;
+    padding: 24px var(--screen-padding) 18px;
+    background: #ecedee;
+}
+
+.category-list {
+    display: grid;
+    grid-template-columns: repeat(4, 48px);
+    column-gap: 29px;
+    row-gap: 24px;
+    justify-content: space-between;
+}
+
+.category-list a {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.category-img {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.category-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-section {
+    width: 100%;
+    padding: 0 var(--screen-padding) 24px;
+    background: #ecedee;
+}
+
+.product-section.last-section {
+    padding-bottom: 32px;
+}
+
+.product-scroll {
+    width: calc(100% + var(--screen-padding));
+    margin-right: calc(var(--screen-padding) * -1);
+    gap: 16px;
+}

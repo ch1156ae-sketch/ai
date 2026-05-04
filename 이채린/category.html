@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>카테고리 - UTBT</title>
+
+        <link
+            rel="stylesheet"
+            href="./css/common.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./css/components/header.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./css/components/bottom-nav.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./css/pages/category.css"
+        />
+    </head>
+
+    <body>
+        <section
+            class="mobile-app"
+            aria-label="카테고리 - UTBT 모바일 화면"
+        >
+            <div
+                id="appHeader"
+                class="header-slot"
+            ></div>
+
+            <main
+                class="category-page app-page has-fixed-header"
+                aria-label="카테고리 페이지"
+            >
+                <!-- 상단 아이콘 카테고리 섹션 -->
+                <section
+                    class="category-quick-section"
+                    aria-label="카테고리 바로가기"
+                >
+                    <ul class="category-quick-list horizontal-list">
+                        <li>
+                            <button
+                                type="button"
+                                class="category-quick-btn"
+                            >
+                                <span class="category-quick-img">
+                                    <img
+                                        src="https://ch1156ae-sketch.github.io/ai/%EC%9D%B4%EB%B2%A4%ED%8A%B8/best.png"
+                                        alt="Best"
+                                    />
+                                </span>
+                                <span>Best</span>
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                class="category-quick-btn"
+                            >
+                                <span class="category-quick-img">
+                                    <img
+                                        src="https://ch1156ae-sketch.github.io/ai/%EC%9D%B4%EB%B2%A4%ED%8A%B8/이벤트.png"
+                                        alt="이벤트"
+                                    />
+                                </span>
+                                <span>이벤트</span>
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                class="category-quick-btn"
+                            >
+                                <span class="category-quick-img">
+                                    <img
+                                        src="https://ch1156ae-sketch.github.io/ai/%EC%9D%B4%EB%B2%A4%ED%8A%B8/선물하기.png"
+                                        alt="선물하기"
+                                    />
+                                </span>
+                                <span>선물하기</span>
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                class="category-quick-btn"
+                            >
+                                <span class="category-quick-img">
+                                    <img
+                                        src="https://ch1156ae-sketch.github.io/ai/%EC%9D%B4%EB%B2%A4%ED%8A%B8/sale.png"
+                                        alt="Sale"
+                                    />
+                                </span>
+                                <span>Sale</span>
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                class="category-quick-btn"
+                            >
+                                <span class="category-quick-img">
+                                    <img
+                                        src="https://ch1156ae-sketch.github.io/ai/%EC%9D%B4%EB%B2%A4%ED%8A%B8/제철음식.png"
+                                        alt="제철음식"
+                                    />
+                                </span>
+                                <span>제철음식</span>
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                class="category-quick-btn"
+                            >
+                                <span class="category-quick-img">
+                                    <img
+                                        src="https://ch1156ae-sketch.github.io/ai/%EC%9D%B4%EB%B2%A4%ED%8A%B8/레시피북.png"
+                                        alt="레시피북"
+                                    />
+                                </span>
+                                <span>레시피북</span>
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                class="category-quick-btn"
+                            >
+                                <span class="category-quick-img">
+                                    <img
+                                        src="https://ch1156ae-sketch.github.io/ai/%EC%9D%B4%EB%B2%A4%ED%8A%B8/밀키트.png"
+                                        alt="밀키트"
+                                    />
+                                </span>
+                                <span>밀키트</span>
+                            </button>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="category-body">
+                    <aside
+                        class="category-side-list"
+                        aria-label="대분류 카테고리"
+                    ></aside>
+
+                    <section
+                        class="category-grid-wrap"
+                        aria-label="세부 카테고리"
+                    >
+                        <div class="category-top-grid">
+                            <button
+                                type="button"
+                                class="category-promo-card"
+                            >
+                                BEST
+                            </button>
+                            <button
+                                type="button"
+                                class="category-promo-card"
+                            >
+                                SEASON
+                            </button>
+                            <button
+                                type="button"
+                                class="category-promo-card"
+                            >
+                                ECO<br />
+                                FRIENDLY
+                            </button>
+                        </div>
+
+                        <div class="category-promo-labels">
+                            <span>베스트</span>
+                            <span>제철</span>
+                            <span>친환경</span>
+                        </div>
+
+                        <ul class="category-detail-grid"></ul>
+                    </section>
+                </section>
+            </main>
+
+            <div
+                id="appBottomNav"
+                class="bottom-nav-slot"
+            ></div>
+        </section>
+
+        <script>
+            window.UTBT_PAGE = "category";
+            window.UTBT_HEADER = {
+                title: "카테고리",
+            };
+        </script>
+
+        <script src="./js/components/header.js"></script>
+        <script src="./js/components/bottom-nav.js"></script>
+        <script src="./js/data.js"></script>
+        <script src="./js/common.js"></script>
+        <script src="./js/pages/category.js"></script>
+    </body>
+</html>
