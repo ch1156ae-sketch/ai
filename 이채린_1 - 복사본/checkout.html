@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>구매하기 - UTBT</title>
+        <link rel="stylesheet" href="./css/common.css" />
+        <link rel="stylesheet" href="./css/components/header.css" />
+        <link rel="stylesheet" href="./css/components/bottom-nav.css" />
+        <link rel="stylesheet" href="./css/pages/checkout.css" />
+    </head>
+    <body>
+        <section class="mobile-app" aria-label="구매하기 - UTBT 모바일 화면">
+            <div id="appHeader" class="header-slot"></div>
+            <main class="buy-page app-page" aria-label="구매하기 페이지">
+                <section class="buy-page-content">
+                    <section class="buy-card" aria-label="배송지"><h2 class="buy-section-title">주소</h2><div class="buy-row"><p class="buy-address-text"></p><button type="button" class="buy-change-btn buy-address-change-btn">주소 변경</button></div></section>
+                    <section class="buy-card" aria-label="구매 상품"><h2 class="buy-section-title">상품</h2><ul class="buy-item-list"></ul></section>
+                    <section class="buy-card" aria-label="쿠폰 선택"><h2 class="buy-section-title">쿠폰 선택</h2><div class="buy-coupon-row"><span class="buy-label">상품 쿠폰</span><button type="button" class="buy-coupon-btn">쿠폰 변경</button></div><div class="buy-coupon-row"><span class="buy-label">적용 쿠폰</span><span class="buy-value buy-coupon-name">구출 장바구니 10% 쿠폰</span></div></section>
+                    <section class="buy-card" aria-label="적립금 사용"><h2 class="buy-section-title">보유 적립 사용</h2><div class="buy-point-row"><span class="buy-label">보유 적립금</span><span class="buy-value buy-owned-point">3,000원</span></div><div class="buy-point-row"><span class="buy-label">사용 적립금</span><div class="buy-point-input-wrap"><input type="number" class="buy-point-input" min="0" step="1000" value="0" aria-label="사용 적립금" /><button type="button" class="buy-point-all-btn">모두사용</button></div></div><p class="buy-point-guide" aria-live="polite">적립금은 1,000원 단위로 입력해 주세요.</p></section>
+                    <section class="buy-card" aria-label="결제방법"><h2 class="buy-section-title">결제방법</h2><div class="buy-method-list"><button type="button" class="buy-method-btn active" data-method="카드결제">카드결제</button><button type="button" class="buy-method-btn" data-method="간편결제">간편결제</button><button type="button" class="buy-method-btn" data-method="무통장입금">무통장입금</button><button type="button" class="buy-method-btn" data-method="휴대폰결제">휴대폰결제</button></div></section>
+                    <section class="buy-card buy-final-card" aria-label="결제 금액"><h2 class="buy-section-title">결제 금액</h2><div class="buy-summary-row"><span class="buy-label">총 상품 금액</span><span class="buy-value buy-product-total">0원</span></div><div class="buy-summary-row"><span class="buy-label">쿠폰 할인 금액</span><span class="buy-value buy-coupon-discount">-0원</span></div><div class="buy-summary-row"><span class="buy-label">적립금 사용</span><span class="buy-value buy-point-discount">-0원</span></div><div class="buy-summary-row buy-final-price"><span class="buy-label">최종 결제 금액</span><span class="buy-value buy-final-total">0원</span></div><p class="buy-benefit-text">적립 혜택: 결제 금액의 1%가 적립돼요.</p><button type="button" class="buy-submit-btn" aria-label="결제하기">결제하기</button></section>
+                </section>
+                <div class="coupon-modal" role="dialog" aria-modal="true" aria-labelledby="couponPopupTitle"><div class="coupon-popup"><h2 class="coupon-popup-title" id="couponPopupTitle">보유 쿠폰</h2><p class="coupon-popup-sub">사용할 쿠폰을 선택해 주세요.</p><ul class="coupon-list" aria-label="보유 쿠폰 목록"></ul><div class="coupon-actions"><button type="button" class="coupon-close-btn">닫기</button><button type="button" class="coupon-use-btn">사용하기</button></div></div></div>
+            </main>
+            <div id="appBottomNav" class="bottom-nav-slot"></div>
+        </section>
+        <script>window.UTBT_PAGE = "home"; window.UTBT_HEADER = {title: "구매하기", backHref: "cart.html"};</script>
+        <script src="./js/components/header.js"></script>
+        <script src="./js/components/bottom-nav.js"></script>
+        <script src="./js/data.js"></script>
+        <script src="./js/common.js"></script>
+        <script src="./js/pages/checkout.js"></script>
+    </body>
+</html>

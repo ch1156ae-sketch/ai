@@ -1,0 +1,474 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    font-family: "Pretendard", sans-serif;
+    background: #ffffff;
+    color: #111827;
+}
+
+html {
+    overflow: hidden;
+}
+
+body {
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+}
+
+button,
+a,
+input {
+    font-family: inherit;
+}
+
+button {
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+.mobile-app {
+    --screen-padding: 24px;
+    position: relative;
+    width: 100%;
+    max-width: 375px;
+    height: 100dvh;
+    min-height: 100dvh;
+    background: #ecedee;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    overscroll-behavior-y: contain;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.mobile-app::-webkit-scrollbar,
+.horizontal-list::-webkit-scrollbar {
+    display: none;
+}
+
+.app-page {
+    width: 100%;
+    min-height: calc(100dvh - 64px);
+    padding-bottom: 86px;
+    background: #ecedee;
+}
+
+.app-page.white {
+    background: #ffffff;
+}
+
+.horizontal-list,
+.product-scroll,
+.recommend-scroll,
+.recipe-scroll {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+}
+
+.horizontal-list.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+}
+
+.section-title,
+.recommend-title {
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: #111827;
+    letter-spacing: -0.8px;
+}
+
+.product-card {
+    flex: 0 0 155px;
+    width: 155px;
+}
+
+.product-img {
+    width: 155px;
+    height: 155px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #ecedee;
+}
+
+.product-img img,
+.recommend-product-img img,
+.recipe-img img,
+.cart-item-img img,
+.alarm-summary-img img,
+.buy-item-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cart-btn {
+    width: 155px;
+    height: 32px;
+    margin-top: 16px;
+    border: 1px solid #969ba5;
+    border-radius: 8px;
+    background: transparent;
+    color: #969ba5;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.cart-btn:hover,
+.cart-btn.active {
+    border-color: #ff5a20;
+    color: #ff5a20;
+}
+
+.product-card h3 {
+    margin-top: 16px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.25;
+    color: #111827;
+    letter-spacing: -0.7px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-card p {
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #6b7280;
+}
+
+.recommend-product-card {
+    flex: 0 0 280px;
+    width: 280px;
+    height: 112px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #ffffff;
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 16px;
+    align-items: center;
+}
+
+.recommend-product-img {
+    width: 96px;
+    height: 96px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ecedee;
+}
+
+.recommend-product-info h3 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #111827;
+    line-height: 126%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.recommend-product-info p {
+    margin-top: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.recommend-product-info .cart-btn {
+    width: 44px;
+    height: 24px;
+    margin-top: 8px;
+    border: 0;
+    border-radius: 99px;
+    background: #ffefe9;
+    color: #ff5a20;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.recommend-product-info .cart-btn:hover {
+    background: #ff5a20;
+    color: #ffffff;
+}
+
+.scroll-top-btn {
+    position: fixed;
+    right: max(24px, calc((100vw - 375px) / 2 + 24px));
+    bottom: 86px;
+    z-index: 680;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    color: #6b7280;
+    box-shadow: 0 8px 20px rgba(17, 24, 39, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.scroll-top-btn.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.scroll-top-btn.is-fading {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.scroll-top-btn svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    stroke-width: 1.5px;
+}
+
+.scroll-top-btn:hover {
+    color: #ff5a20;
+}
+
+.cart-modal,
+.recipe-modal,
+.coupon-modal,
+.address-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(17, 24, 39, 0.45);
+    padding: 0 24px;
+}
+
+.cart-modal.show,
+.recipe-modal.show,
+.coupon-modal.show,
+.address-modal.show {
+    display: flex;
+}
+
+.cart-popup,
+.recipe-popup,
+.coupon-popup,
+.address-popup {
+    width: 100%;
+    max-width: 327px;
+    border-radius: 16px;
+    background: #ffffff;
+    padding: 24px;
+    box-shadow: 0 16px 40px rgba(17, 24, 39, 0.18);
+}
+
+.cart-popup-title,
+.recipe-popup-title,
+.coupon-popup-title,
+.address-popup-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #111827;
+    line-height: 1.3;
+}
+
+.cart-popup-product,
+.recipe-popup-sub,
+.coupon-popup-sub {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+.cart-form,
+.address-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cart-field label,
+.address-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #111827;
+}
+
+.cart-field input,
+.address-field input {
+    width: 100%;
+    height: 44px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #111827;
+    outline: none;
+}
+
+.cart-field input:focus,
+.address-field input:focus {
+    border-color: #ff5a20;
+}
+
+.cart-field input[readonly] {
+    background: #ecedee;
+    color: #6b7280;
+}
+
+.cart-count-control {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 44px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.cart-count-control input {
+    flex: 1;
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+}
+
+.cart-count-control input::-webkit-outer-spin-button,
+.cart-count-control input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.cart-count-control input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.cart-stepper {
+    width: 36px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-stepper button {
+    width: 100%;
+    height: 50%;
+    color: #969ba5;
+    font-size: 10px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-stepper button:hover {
+    color: #ff5a20;
+}
+
+.cart-popup-actions,
+.address-actions,
+.address-map-actions,
+.coupon-actions {
+    margin-top: 24px;
+    display: flex;
+    gap: 8px;
+}
+
+.cart-popup-actions button,
+.address-actions button,
+.address-map-actions button,
+.coupon-actions button {
+    flex: 1;
+    height: 44px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.cart-add-btn,
+.address-cancel-btn,
+.address-map-close-btn,
+.coupon-close-btn {
+    border: 1px solid #d1d5db;
+    color: #6b7280;
+    background: #ffffff;
+}
+
+.cart-add-btn {
+    border-color: #ff5a20;
+    color: #ff5a20;
+}
+
+.cart-buy-btn,
+.address-save-btn,
+.address-map-apply-btn,
+.coupon-use-btn,
+.recipe-close-btn {
+    color: #ffffff;
+    background: #ff5a20;
+}
+
+.cart-buy-btn:hover,
+.address-save-btn:hover,
+.address-map-apply-btn:hover,
+.coupon-use-btn:hover,
+.recipe-close-btn:hover {
+    background: #f04f17;
+}
+
+.has-fixed-header {
+    padding-top: 64px;
+}

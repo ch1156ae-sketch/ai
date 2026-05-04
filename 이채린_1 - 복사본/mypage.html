@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>마이페이지 - UTBT</title>
+        <link
+            rel="stylesheet"
+            href="./css/common.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./css/components/header.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./css/components/bottom-nav.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./css/pages/mypage.css"
+        />
+    </head>
+    <body>
+        <section
+            class="mobile-app"
+            aria-label="마이페이지 - UTBT 모바일 화면"
+        >
+            <div
+                id="appHeader"
+                class="header-slot"
+            ></div>
+            <main
+                class="mypage-page app-page white"
+                aria-label="마이페이지"
+            >
+                <section class="mypage-content">
+                    <section
+                        class="mypage-profile"
+                        aria-label="회원 정보"
+                    >
+                        <strong class="mypage-name">권그린</strong
+                        ><span class="mypage-level">Newbie</span>
+                    </section>
+                    <section
+                        class="mypage-eco-card"
+                        aria-label="이번 주 환경 기여 정보"
+                    >
+                        <strong class="mypage-eco-title">🌱 권그린님!</strong>
+                        <p class="mypage-eco-text">
+                            이번 주 구조한 농산물은 3.2Kg 입니다.<br />탄소
+                            5.1Kg을 절감했어요!
+                        </p>
+                    </section>
+                    <section
+                        class="mypage-stat-list"
+                        aria-label="마이페이지 요약 정보"
+                    >
+                        <article class="mypage-stat-card">
+                            <span class="mypage-stat-icon">🥗</span>
+                            <p>
+                                <span class="mypage-stat-title"
+                                    >구출 농산물</span
+                                ><span class="mypage-stat-value"
+                                    ><span class="mypage-stat-number">12</span
+                                    ><span class="mypage-stat-unit"
+                                        >kg</span
+                                    ></span
+                                >
+                            </p>
+                        </article>
+                        <article class="mypage-stat-card">
+                            <span class="mypage-stat-icon">📦</span>
+                            <p>
+                                <span class="mypage-stat-title"
+                                    >절약 폐기량</span
+                                ><span class="mypage-stat-value"
+                                    ><span class="mypage-stat-number">8.5</span
+                                    ><span class="mypage-stat-unit"
+                                        >box</span
+                                    ></span
+                                >
+                            </p>
+                        </article>
+                        <article class="mypage-stat-card">
+                            <span class="mypage-stat-icon">🌱</span>
+                            <p>
+                                <span class="mypage-stat-title">탄소 절감</span
+                                ><span class="mypage-stat-value"
+                                    ><span class="mypage-stat-number">9.3</span
+                                    ><span class="mypage-stat-unit"
+                                        >kg</span
+                                    ></span
+                                >
+                            </p>
+                        </article>
+                    </section>
+                    <nav
+                        class="mypage-shortcut-list"
+                        aria-label="마이페이지 바로가기"
+                    >
+                        <button
+                            type="button"
+                            class="mypage-shortcut-btn"
+                        >
+                            <span class="mypage-shortcut-icon">
+                                <img
+                                    class="shortcut-icon-default"
+                                    src="./images/icons/list.png"
+                                    alt="주문내역"
+                                />
+                                <img
+                                    class="shortcut-icon-active"
+                                    src="./images/icons/list.png"
+                                    alt="주문내역"
+                                />
+                            </span>
+                            <span>주문내역</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="mypage-shortcut-btn"
+                        >
+                            <span class="mypage-shortcut-icon">
+                                <img
+                                    class="shortcut-icon-default"
+                                    src="./images/icons/coupon.png"
+                                    alt="쿠폰"
+                                />
+                                <img
+                                    class="shortcut-icon-active"
+                                    src="./images/icons/coupon.png"
+                                    alt="쿠폰"
+                                />
+                            </span>
+                            <span>쿠폰</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="mypage-shortcut-btn"
+                        >
+                            <span class="mypage-shortcut-icon">
+                                <img
+                                    class="shortcut-icon-default"
+                                    src="./images/icons/heart.png"
+                                    alt="찜"
+                                />
+                                <img
+                                    class="shortcut-icon-active"
+                                    src="./images/icons/heart.png"
+                                    alt="찜"
+                                />
+                            </span>
+                            <span>찜</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="mypage-shortcut-btn"
+                        >
+                            <span class="mypage-shortcut-icon">
+                                <img
+                                    class="shortcut-icon-default"
+                                    src="./images/icons/review.png"
+                                    alt="후기"
+                                />
+                                <img
+                                    class="shortcut-icon-active"
+                                    src="./images/icons/review.png"
+                                    alt="후기"
+                                />
+                            </span>
+                            <span>후기</span>
+                        </button>
+                    </nav>
+                    <section
+                        class="mypage-account-section"
+                        aria-label="계정 관리"
+                    >
+                        <h2 class="mypage-account-title">계정 관리</h2>
+                        <ul class="mypage-account-list">
+                            <li>
+                                <button
+                                    type="button"
+                                    class="mypage-account-item"
+                                >
+                                    회원 정보 수정
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    type="button"
+                                    class="mypage-account-item"
+                                >
+                                    맞춤 정보
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    type="button"
+                                    class="mypage-account-item"
+                                >
+                                    멤버십 혜택
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    type="button"
+                                    class="mypage-account-item"
+                                >
+                                    쿠폰
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    type="button"
+                                    class="mypage-account-item"
+                                >
+                                    적립금
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    type="button"
+                                    class="mypage-account-item"
+                                >
+                                    설정
+                                </button>
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+            </main>
+            <div
+                id="appBottomNav"
+                class="bottom-nav-slot"
+            ></div>
+        </section>
+        <script>
+            window.UTBT_PAGE = "mypage";
+            window.UTBT_HEADER = { title: "마이페이지" };
+        </script>
+        <script src="./js/components/header.js"></script>
+        <script src="./js/components/bottom-nav.js"></script>
+        <script src="./js/data.js"></script>
+        <script src="./js/common.js"></script>
+        <script src="./js/pages/mypage.js"></script>
+    </body>
+</html>

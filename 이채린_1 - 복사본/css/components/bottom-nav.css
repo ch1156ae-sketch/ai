@@ -1,0 +1,74 @@
+.bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 700;
+    width: min(100vw, 375px);
+    margin: 0 auto;
+    height: 70px;
+    padding: 8px var(--screen-padding) 6px;
+    background: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #e5e7eb;
+}
+
+.nav-item {
+    width: 48px;
+    height: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: #6b7280;
+    text-decoration: none;
+}
+
+.nav-icon-wrap {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+}
+
+.nav-icon {
+    position: absolute;
+    inset: 0;
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.nav-icon-active {
+    display: none;
+}
+
+.nav-item span:last-child {
+    font-size: 10px;
+    font-weight: 500;
+    color: #6b7280;
+    letter-spacing: -0.3px;
+    white-space: nowrap;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    color: #ff5a20;
+}
+
+.nav-item:hover .nav-icon-default,
+.nav-item.active .nav-icon-default {
+    display: none;
+}
+
+.nav-item:hover .nav-icon-active,
+.nav-item.active .nav-icon-active {
+    display: block;
+}
+
+.nav-item:hover span:last-child,
+.nav-item.active span:last-child {
+    color: #ff5a20;
+}
