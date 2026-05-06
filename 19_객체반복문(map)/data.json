@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "쭈꾸미 풋마늘 파스타",
+    "descr": "봄기운 가득!쭈꾸미와 풋마늘의 찰떡 궁합",
+    "price": 12800,
+    "img": "https://yhstop.github.io/ai/01_banchan/banchan1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "쭈꾸미 미나리 파스타",
+    "descr": "지금이 제철!쭈꾸미와 미나리의 만남",
+    "price": 12800,
+    "img": "https://yhstop.github.io/ai/01_banchan/banchan2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "잡채",
+    "descr": "탱글한 면발과 맛깔진 고명이 가득",
+    "price": 12800,
+    "img": "https://yhstop.github.io/ai/01_banchan/banchan3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "한끼 한돈제육_완조리",
+    "descr": "혼자 먹기 딱 좋은.1인분 제육볶음",
+    "price": 6800,
+    "img": "https://yhstop.github.io/ai/01_banchan/banchan4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "메추리알 간장조림",
+    "descr": "탱글한 메추리알과 달콤한 소스",
+    "price": 3400,
+    "img": "https://yhstop.github.io/ai/01_banchan/banchan5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "한우야채카레",
+    "descr": "담백하고 부드러운 야채들로 풍성하게",
+    "price": 3800,
+    "img": "https://yhstop.github.io/ai/01_banchan/banchan6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "[윈더스푼] 배추 된장국",
+    "descr": "배추의 단맛과 된장의 구수함",
+    "price": 3500,
+    "img": "https://yhstop.github.io/ai/01_banchan/banchan7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "한우사골곰탕(냉동)",
+    "descr": "국물이 진하고 담백해요",
+    "price": 6800,
+    "img": "https://yhstop.github.io/ai/01_banchan/banchan8.jpg"
+  }
+]
