@@ -21,11 +21,11 @@ $(function () {
 
         console.log(movieData);
 
-        render();
+        rander();
     };
 
     // card UI 반복문 함수
-    const render = () => {
+    const rander = () => {
         let movieCard = "";
 
         movieData.map((item) => {
