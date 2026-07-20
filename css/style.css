@@ -1202,3 +1202,18 @@
                 min-height: 190px;
             }
         }
+.case-visual {
+    height: auto;
+    aspect-ratio: 16 / 10;
+    padding: 14px;
+    background: var(--blue-soft);
+}
+
+.case-thumb-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 18px;
+    background: var(--white);
+}
